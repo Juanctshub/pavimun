@@ -1,311 +1,335 @@
 import { useState, useEffect, useRef } from 'react';
-import { Scale, Gavel, Download, ChevronDown, Play, Pause } from 'lucide-react';
+import { FileText, Gavel, Scale, Search, X, FolderOpen } from 'lucide-react';
+
+// --- Assets & Icons ---
+// Using Lucide icons for UI elements
+// Background is procedurally generated via CSS to ensure performance
 
 // --- Subcomponents ---
 
-const SectionTitle = ({ children, subtitle }: { children: React.ReactNode, subtitle?: string }) => (
-  <div className="text-center mb-16 relative">
-    <div className="flex flex-col items-center gap-4">
-      <div className="w-[1px] h-20 bg-gradient-to-b from-transparent via-amber-200/50 to-transparent" />
-      {subtitle && (
-        <span className="text-amber-400/60 text-[10px] tracking-[0.4em] uppercase font-cinzel">
-          {subtitle}
-        </span>
-      )}
-      <h2 className="text-3xl md:text-5xl font-playfair text-white tracking-wide">
-        {children}
-      </h2>
-      <div className="w-[1px] h-20 bg-gradient-to-b from-amber-200/50 via-transparent to-transparent" />
-    </div>
-  </div>
-);
+const Polaroid = ({
+  src,
+  caption,
+  rotate = 0,
+  top,
+  left,
+  delay = 0,
+  scale = 1
+}: {
+  src: string,
+  caption: string,
+  rotate: number,
+  top: string,
+  left: string,
+  delay?: number,
+  scale?: number
+}) => {
+  const [isHovered, setIsHovered] = useState(false);
+  const [isFocused, setIsFocused] = useState(false);
 
-const EvidenceItem = ({ img, title, number }: { img: string, title: string, number: string }) => (
-  <div className="group relative w-full aspect-[4/5] overflow-hidden cursor-none">
-    <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-all duration-700 z-10" />
+  return (
+    <div
+      className={`absolute transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] group cursor-grab active:cursor-grabbing z-10 hover:z-50`}
+      style={{
+        top,
+        left,
+        transform: isFocused
+          ? 'translate(-50%, -50%) scale(2) rotate(0deg)'
+          : `translate(-50%, -50%) scale(${scale}) rotate(${isHovered ? 0 : rotate}deg)`,
+        transitionDelay: `${delay}ms`
+      }}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      onClick={() => setIsFocused(!isFocused)}
+    >
+      {/* Tape */}
+      <div className="absolute -top-4 left-1/2 -translate-x-1/2 w-32 h-8 bg-yellow-100/20 backdrop-blur-[2px] rotate-2 shadow-sm z-20" />
 
-    {/* Image */}
-    <div className="w-full h-full overflow-hidden">
-      <img
-        src={img}
-        alt={title}
-        className="w-full h-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-[1.5s] ease-[cubic-bezier(0.25,1,0.5,1)] grayscale-[0.5] group-hover:grayscale-0"
-      />
-    </div>
+      {/* Photo Frame */}
+      <div className="bg-[#f0f0f0] p-4 pb-12 shadow-[0_10px_40px_rgba(0,0,0,0.6)] w-64 md:w-72 relative">
+        {/* Gritty Image Filter Layer */}
+        <div className="relative overflow-hidden aspect-square bg-gray-900 border border-gray-300">
+          <img
+            src={src}
+            alt={caption}
+            className="w-full h-full object-cover filter contrast-[1.2] sepia-[0.3] brightness-[0.9] grayscale-[0.2]"
+          />
+          {/* Dust/Scratch Overlay */}
+          <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 mix-blend-overlay pointer-events-none" />
+          <div className="absolute inset-0 shadow-[inset_0_0_40px_rgba(0,0,0,0.5)] pointer-events-none" />
+        </div>
 
-    {/* Overlay Content */}
-    <div className="absolute inset-0 p-8 flex flex-col justify-between z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-500 bg-gradient-to-t from-black/80 via-transparent to-transparent">
-      <span className="text-amber-200/50 font-cinzel text-xl border-l border-amber-500/50 pl-4">{number}</span>
-      <div>
-        <h4 className="text-white font-playfair text-2xl italic mb-2">{title}</h4>
-        <div className="h-[1px] w-0 group-hover:w-full bg-amber-500/50 transition-all duration-700 delay-100" />
+        {/* Caption */}
+        <p className="absolute bottom-4 left-0 w-full text-center font-['Permanent_Marker'] text-gray-800 text-lg rotate-[-1deg]">
+          {caption}
+        </p>
+
+        {/* Paper Clip */}
+        <div className="absolute -right-2 top-10 w-4 h-12 border-2 border-gray-400 rounded-full rotate-12" />
       </div>
+
+      {isFocused && (
+        <button
+          className="absolute -top-10 -right-10 bg-red-600 text-white p-2 rounded-full shadow-lg hover:scale-110 transition-transform"
+          onClick={(e) => { e.stopPropagation(); setIsFocused(false); }}
+        >
+          <X className="w-6 h-6" />
+        </button>
+      )}
     </div>
+  );
+};
+
+const StickyNote = ({ text, top, left, rotate = 0, color = "bg-yellow-200" }: { text: string, top: string, left: string, rotate?: number, color?: string }) => (
+  <div
+    className={`absolute w-48 ${color} p-4 shadow-xl transform hover:scale-105 hover:rotate-0 transition-all duration-300 cursor-help z-20 font-['Permanent_Marker'] text-gray-900 text-sm leading-snug`}
+    style={{ top, left, transform: `rotate(${rotate}deg)` }}
+  >
+    <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-16 h-4 bg-white/30 backdrop-blur-sm" />
+    "{text}"
   </div>
 );
 
-const LoadingScreen = ({ onComplete }: { onComplete: () => void }) => {
-  const [progress, setProgress] = useState(0);
-  const [text, setText] = useState("Loading Case Files");
+const LoadingDarkroom = ({ onComplete }: { onComplete: () => void }) => {
+  const [phase, setPhase] = useState(0);
 
   useEffect(() => {
-    const timer = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(timer);
-          setTimeout(onComplete, 800);
-          return 100;
-        }
-        return prev + 1;
-      });
-    }, 40);
-
-    setTimeout(() => setText("Decrypting Evidence"), 1500);
-    setTimeout(() => setText("Accessing SDNY Database"), 3000);
-
-    return () => clearInterval(timer);
+    const sequence = [
+      setTimeout(() => setPhase(1), 1000), // Red light on
+      setTimeout(() => setPhase(2), 2500), // Developing
+      setTimeout(() => setPhase(3), 4500), // Done
+      setTimeout(onComplete, 5000)
+    ];
+    return () => sequence.forEach(clearTimeout);
   }, []);
 
   return (
-    <div className="fixed inset-0 z-[100] bg-[#050505] flex flex-col items-center justify-center">
-      <div className="w-64 h-[1px] bg-white/10 relative overflow-hidden mb-8">
-        <div
-          className="absolute inset-0 bg-amber-200"
-          style={{ width: `${progress}%`, transition: 'width 0.1s linear' }}
-        />
-      </div>
-      <div className="h-8 overflow-hidden relative">
-        <p className="font-cinzel text-xs tracking-[0.3em] text-white/40 animate-pulse text-center uppercase">
-          {text}
+    <div className="fixed inset-0 z-[100] bg-black flex flex-col items-center justify-center overflow-hidden">
+      {/* Red Safety Light */}
+      <div className={`absolute top-0 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-red-900/20 blur-[150px] rounded-full transition-opacity duration-[2000ms] ${phase >= 1 ? 'opacity-100' : 'opacity-0'}`} />
+
+      <div className="relative z-10 flex flex-col items-center">
+        {/* Developing Trays Animation */}
+        <div className="relative w-64 h-80 bg-stone-900 border-8 border-stone-800 shadow-2xl overflow-hidden mb-8 transform rotate-3">
+          <div className="absolute inset-0 bg-[#3a0d0d] opacity-50 backdrop-blur-sm z-20 animate-pulse-slow" /> {/* Liquid */}
+          <img
+            src="/images/donald.jpg"
+            className={`absolute inset-0 w-full h-full object-cover transition-all duration-[3000ms] ease-in-out ${phase >= 2 ? 'opacity-80 blur-0 grayscale-[0.5] contrast-125' : 'opacity-0 blur-xl grayscale'}`}
+          />
+        </div>
+
+        <p className="font-['Courier_Prime'] text-red-500/80 tracking-widest text-sm animate-pulse">
+          {phase === 0 && "DARKROOM INITIALIZED..."}
+          {phase === 1 && "DEVELOPING EVIDENCE..."}
+          {phase === 2 && "FIXING IMAGE..."}
+          {phase === 3 && "EVIDENCE READY"}
         </p>
       </div>
     </div>
   );
 };
 
-// --- Main Component ---
+// --- Main Layout ---
 
 const Corte = () => {
   const [loading, setLoading] = useState(true);
-  const [isPlaying, setIsPlaying] = useState(false);
-
-  const videoRef = useRef<HTMLVideoElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
 
-  // Initial Autoplay Setup
   useEffect(() => {
-    if (loading) return;
-
-    // Attempt autoplay muted video
-    if (videoRef.current) {
-      videoRef.current.muted = true;
-      videoRef.current.play().catch(e => console.log("Video autoplay blocked", e));
-    }
-
-    // Start audio muted then fade in
-    if (audioRef.current) {
+    if (!loading && audioRef.current) {
       audioRef.current.volume = 0;
-      audioRef.current.play().then(() => {
-        setIsPlaying(true);
-        // Fade in
-        let vol = 0;
-        const interval = setInterval(() => {
-          if (vol < 0.3) {
-            vol += 0.01;
-            if (audioRef.current) audioRef.current.volume = vol;
-          } else {
-            clearInterval(interval);
-          }
-        }, 100);
-      }).catch(e => {
-        console.log("Audio autoplay blocked", e);
-        setIsPlaying(false);
-      });
+      audioRef.current.play().catch(() => { });
+      // Slow fade in
+      let vol = 0;
+      const fade = setInterval(() => {
+        vol += 0.02;
+        if (vol >= 0.4) { vol = 0.4; clearInterval(fade); }
+        if (audioRef.current) audioRef.current.volume = vol;
+      }, 200);
+      return () => clearInterval(fade);
     }
   }, [loading]);
 
-  const togglePlayback = () => {
-    if (!audioRef.current) return;
-    if (isPlaying) {
-      audioRef.current.pause();
-    } else {
-      audioRef.current.play();
-    }
-    setIsPlaying(!isPlaying);
-  };
-
-  if (loading) return <LoadingScreen onComplete={() => setLoading(false)} />;
+  if (loading) return <LoadingDarkroom onComplete={() => setLoading(false)} />;
 
   return (
-    <div className="min-h-screen bg-[#050505] text-[#e0e0e0] font-sans selection:bg-amber-900/30 selection:text-amber-200 overflow-x-hidden">
+    <div
+      className="min-h-screen bg-[#1a1a1a] text-[#dcdcdc] font-['Courier_Prime'] overflow-x-hidden relative selection:bg-red-900/50 selection:text-white"
+      ref={containerRef}
+    >
+      {/* Background Texture (Wood Desk) */}
+      <div className="fixed inset-0 -z-20 bg-[url('https://img.freepik.com/free-photo/dark-wooden-texture-background_23-2148817657.jpg?w=1380&t=st=1676840000~exp=1676840600~hmac=123')] bg-cover bg-center brightness-[0.4] contrast-125 saturate-50" />
+      {/* Vignette */}
+      <div className="fixed inset-0 -z-10 bg-[radial-gradient(circle_at_50%_50%,transparent_10%,#000000_95%)] pointer-events-none" />
 
-      {/* Background Elements */}
-      <div className="fixed inset-0 -z-10 pointer-events-none">
-        <video
-          ref={videoRef}
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover opacity-20 contrast-125 saturate-0"
-        >
-          <source src="/videos/epstein.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050505] via-[#050505]/80 to-[#050505]" />
-        {/* Grain Overlay */}
-        <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'url("data:image/svg+xml,%3Csvg viewBox=\'0 0 200 200\' xmlns=\'http://www.w3.org/2000/svg\'%3E%3Cfilter id=\'noiseFilter\'%3E%3CfeTurbulence type=\'fractalNoise\' baseFrequency=\'0.65\' numOctaves=\'3\' stitchTiles=\'stitch\'/%3E%3C/filter%3E%3Crect width=\'100%25\' height=\'100%25\' filter=\'url(%23noiseFilter)\'/%3E%3C/svg%3E")' }} />
-      </div>
-
-      {/* Audio Element */}
+      {/* Ambient Audio */}
       <audio ref={audioRef} loop>
         <source src="/videos/epsteinsong.mp3" type="audio/mpeg" />
       </audio>
 
-      {/* Hero Section */}
-      <section className="min-h-screen relative flex flex-col items-center justify-center px-6">
-        <div className="absolute top-0 left-0 p-8 md:p-12 w-full flex justify-between items-start opacity-70">
-          <Scale className="w-6 h-6 text-amber-100/50" />
-          <span className="font-cinzel text-xs tracking-[0.3em] text-amber-100/50">CASE 19-CR-490</span>
-        </div>
+      {/* --- HERO: THE FILE FOLDER --- */}
+      <section className="min-h-[90vh] flex items-center justify-center relative py-20">
+        <div className="relative group perspective-1000">
+          {/* Folder Tab */}
+          <div className="absolute -top-8 left-0 w-40 h-10 bg-[#BC9E6C] rounded-t-lg z-0" />
 
-        <div className="text-center relative z-10 space-y-8 animate-fade-in-up">
-          <p className="font-cinzel text-amber-200/60 tracking-[0.5em] text-xs md:text-sm uppercase mb-4">
-            The United States District Court
-          </p>
+          {/* Manila Folder Body */}
+          <div className="relative w-[90vw] max-w-4xl bg-[#D6B67F] min-h-[60vh] rounded-r-lg rounded-bl-lg shadow-[0_20px_60px_rgba(0,0,0,0.8)] p-8 md:p-16 flex flex-col relative z-10 border-t border-[#ebd3aa]/30">
 
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-playfair font-black text-transparent bg-clip-text bg-gradient-to-b from-white to-white/40 tracking-tight leading-[0.9]">
-            EPSTEIN
-          </h1>
+            {/* Coffee Stain */}
+            <div className="absolute top-10 right-10 w-32 h-32 rounded-full border-[6px] border-[#3e2723]/20 opacity-60 blur-[1px] pointer-events-none" />
 
-          <div className="flex items-center justify-center gap-6 my-8">
-            <span className="h-[1px] w-12 bg-amber-500/40" />
-            <span className="font-playfair italic text-2xl text-amber-500/80">vs</span>
-            <span className="h-[1px] w-12 bg-amber-500/40" />
+            {/* Stamp */}
+            <div className="absolute top-20 right-20 border-[4px] border-red-800/60 p-2 transform rotate-[-15deg] opacity-70 mask-grunge">
+              <p className="text-red-900 font-black text-4xl tracking-widest uppercase opacity-80">CONFIDENTIAL</p>
+              <p className="text-red-900 text-xs text-center uppercase tracking-widest font-bold mt-1">Eyes Only</p>
+            </div>
+
+            {/* Content Typewriter */}
+            <div className="mt-12 max-w-2xl relative">
+              <div className="flex items-center gap-4 mb-8 opacity-60">
+                <Gavel className="w-8 h-8 text-[#3e2723]" />
+                <div className="h-[1px] flex-1 bg-[#3e2723]" />
+                <span className="text-[#3e2723] font-bold tracking-[0.2em] text-sm">CASE 19-CR-490</span>
+              </div>
+
+              <h1 className="text-6xl md:text-8xl font-black text-[#1a120b]/90 mb-6 tracking-tighter leading-[0.9]">
+                EPSTEIN <br />
+                <span className="text-4xl md:text-6xl text-[#3e2723]/80 font-normal italic">Network</span>
+              </h1>
+
+              <p className="text-[#3e2723] text-lg md:text-xl leading-relaxed font-bold bg-white/20 p-6 shadow-sm backdrop-blur-sm transform -rotate-1">
+                CASE STATUS: <span className="text-red-700 bg-red-100 px-2">UNSEALED</span> <br /><br />
+                The Judicial Committee of PAVIMUN is tasked with dissecting the architecture of a global sex trafficking ring.
+                Delegates will reconstruct the timeline, examine the financial trails, and prosecute the enablers.
+              </p>
+            </div>
+
+            {/* Floating Instructions */}
+            <div className="absolute bottom-6 right-8 flex items-center gap-2 text-[#3e2723]/60 animate-bounce">
+              <Search className="w-5 h-5" />
+              <span className="text-sm font-bold tracking-widest uppercase">Inspect Evidence Below</span>
+            </div>
           </div>
-
-          <h1 className="text-6xl md:text-8xl lg:text-9xl font-playfair font-black text-transparent bg-clip-text bg-gradient-to-b from-white/80 to-white/20 tracking-tight leading-[0.9]">
-            JUSTICE
-          </h1>
         </div>
-
-        <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce opacity-40">
-          <ChevronDown className="w-6 h-6 text-white" />
-        </div>
-
-        {/* Audio Control */}
-        <button
-          onClick={togglePlayback}
-          className="absolute bottom-12 right-12 text-xs font-cinzel tracking-[0.2em] text-white/30 hover:text-white transition-colors flex items-center gap-3 uppercase group"
-        >
-          <span>Soundtrack</span>
-          <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center group-hover:border-white/60 transition-colors">
-            {isPlaying ? <Pause className="w-3 h-3" /> : <Play className="w-3 h-3 ml-0.5" />}
-          </div>
-        </button>
       </section>
 
-      {/* The Evidence Gallery */}
-      <section className="py-32 px-6 md:px-12 bg-[#080808]">
-        <SectionTitle subtitle="Visual Evidence">
-          The Exhibits
-        </SectionTitle>
+      {/* --- THE EVIDENCE DESK (SCATTERED) --- */}
+      <section className="relative min-h-[120vh] py-32 overflow-hidden">
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-0 max-w-6xl mx-auto border border-white/5">
-          {/* Exhibit 001 - Donald 1 */}
-          <EvidenceItem
-            img="/images/donald.jpg"
-            title="Flight Logs: Palm Beach"
-            number="EXHIBIT 001"
+        {/* Title on the Desk */}
+        <div className="absolute top-10 left-10 md:left-32 text-white/10 text-9xl font-black select-none pointer-events-none z-0">
+          EVIDENCE
+        </div>
+
+        {/* Scattered Polaroids */}
+        <div className="relative w-full max-w-6xl mx-auto h-[800px]">
+
+          <Polaroid
+            src="/images/donald.jpg"
+            caption="Unknown Associate #1"
+            rotate={-6}
+            top="10%"
+            left="20%"
+            delay={200}
+            scale={1.1}
           />
 
-          {/* Text Content */}
-          <div className="p-12 md:p-20 flex flex-col justify-center border-l border-white/5 bg-[#0a0a0a]">
-            <h3 className="font-playfair text-3xl text-white mb-6">A Web of Influence</h3>
-            <p className="font-serif text-white/50 leading-relaxed text-lg">
-              "It was a network that transcended borders. They thought they were untouchable.
-              The evidence suggests a systemic pattern of exploitation hidden in plain sight,
-              protected by the very institutions meant to serve justice."
-            </p>
+          <Polaroid
+            src="/images/donald2.jpg"
+            caption="Social Gathering '02"
+            rotate={4}
+            top="40%"
+            left="70%"
+            delay={500}
+            scale={1.2}
+          />
+
+          {/* Sticky Notes */}
+          <StickyNote
+            text="Who took these photos? Format suggests hidden camera."
+            top="35%"
+            left="15%"
+            rotate={-2}
+            color="bg-pink-200"
+          />
+
+          <StickyNote
+            text="Cross-reference with flight logs. Dates match the Palm Beach trip."
+            top="65%"
+            left="75%"
+            rotate={3}
+          />
+
+          {/* Documents / Files */}
+          <div className="absolute top-[60%] left-[30%] w-64 h-80 bg-white shadow-xl transform rotate-[-3deg] p-6 text-xs text-gray-800 pointer-events-none brightness-90">
+            <div className="border-b-2 border-black mb-4 pb-2 font-bold flex justify-between">
+              <span>FLIGHT MANIFEST</span>
+              <span>CONFIDENTIAL</span>
+            </div>
+            <div className="space-y-2 font-mono opacity-70">
+              <p>DATE: 2002-05-14</p>
+              <p>PASSENGER LIST: [REDACTED]</p>
+              <p>DESTINATION: USVI</p>
+              <p className="blur-[1px]">Clinton, William J.</p>
+              <p className="bg-black text-black select-none">Trump, Donald J.</p>
+              <p>Spacey, Kevin</p>
+            </div>
+            <div className="absolute bottom-4 right-4 w-16 h-16 rounded-full border-4 border-red-700/50 flex items-center justify-center transform rotate-[-20deg]">
+              <span className="text-red-700 font-bold text-[8px] uppercase">Verified</span>
+            </div>
           </div>
 
-          {/* Text Content */}
-          <div className="p-12 md:p-20 flex flex-col justify-center border-t border-r border-white/5 bg-[#0a0a0a] md:order-3 order-4">
-            <h3 className="font-playfair text-3xl text-white mb-6">Sealed Documents</h3>
-            <p className="font-serif text-white/50 leading-relaxed text-lg">
-              "Names redacted. Lives destroyed. The unsealed documents reveal a horrifying truth about
-              power and complicity. What you are about to see constitutes the core of the prosecution's case."
-            </p>
-          </div>
-
-          {/* Exhibit 002 - Donald 2 */}
-          <div className="md:order-4 order-3">
-            <EvidenceItem
-              img="/images/donald2.jpg"
-              title="The Social Circle"
-              number="EXHIBIT 002"
-            />
+          <div className="absolute top-[10%] left-[60%] w-56 h-64 bg-gray-100 shadow-lg transform rotate-[5deg] z-0 p-4">
+            <h4 className="font-bold underline mb-2 text-black">Witness List</h4>
+            <ul className="list-disc pl-4 text-xs text-gray-700 leading-loose">
+              <li>Maria Farmer</li>
+              <li>Virginia Giuffre</li>
+              <li><span className="bg-black text-black">Annie Farmer</span></li>
+              <li>Sarah Ransome</li>
+            </ul>
           </div>
         </div>
       </section>
 
-      {/* The Case Description */}
-      <section className="py-32 px-6 relative">
-        <div className="max-w-4xl mx-auto text-center">
-          <Gavel className="w-12 h-12 text-amber-600/60 mx-auto mb-12" />
-          <h3 className="text-2xl md:text-4xl font-playfair leading-normal text-white/90 mb-12">
-            "The challenge of this committee is not just legal; it is moral.
-            You must decide if the system can prosecute its own architects."
-          </h3>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16 border-t border-b border-white/10 py-12">
-            {[
-              { label: "Charges", val: "Trafficking" },
-              { label: "Venue", val: "SDNY Court" },
-              { label: "Status", val: "Ongoing" },
-              { label: "Date", val: "2025-2026" }
-            ].map((stat, i) => (
-              <div key={i}>
-                <p className="font-cinzel text-xs text-amber-500/60 tracking-[0.2em] mb-2">{stat.label}</p>
-                <p className="font-playfair text-xl text-white">{stat.val}</p>
+      {/* --- FOOTER: ACCESS FILES --- */}
+      <section className="bg-black/80 py-24 border-t border-white/10">
+        <div className="max-w-4xl mx-auto text-center px-6">
+          <h2 className="text-3xl font-bold mb-12 flex items-center justify-center gap-4">
+            <FolderOpen className="w-8 h-8 text-amber-500" />
+            <span className="tracking-widest uppercase">Official Records</span>
+          </h2>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <a
+              href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"
+              target="_blank"
+              className="group flex items-center justify-between bg-[#2a2a2a] p-6 rounded border-l-4 border-amber-500 hover:bg-[#333] transition-colors"
+            >
+              <div className="text-left">
+                <p className="text-amber-500 text-xs tracking-widest uppercase font-bold mb-1">DOWNLOAD</p>
+                <h3 className="text-xl font-bold">Academic Guide</h3>
               </div>
-            ))}
+              <FileText className="w-6 h-6 text-gray-500 group-hover:text-white transition-colors" />
+            </a>
+
+            <a
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+              target="_blank"
+              className="group flex items-center justify-between bg-[#2a2a2a] p-6 rounded border-l-4 border-red-500 hover:bg-[#333] transition-colors"
+            >
+              <div className="text-left">
+                <p className="text-red-500 text-xs tracking-widest uppercase font-bold mb-1">ACCESS</p>
+                <h3 className="text-xl font-bold">Rules of Procedure</h3>
+              </div>
+              <Scale className="w-6 h-6 text-gray-500 group-hover:text-white transition-colors" />
+            </a>
           </div>
-        </div>
-      </section>
 
-      {/* Resources / Footer */}
-      <section className="bg-[#0a0a0a] py-32 border-t border-white/5">
-        <SectionTitle subtitle="Access Restricted">
-          Court Materials
-        </SectionTitle>
-
-        <div className="flex flex-col md:flex-row justify-center gap-6 px-6">
-          <a
-            href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"
-            target="_blank"
-            className="group relative px-12 py-6 bg-white/5 hover:bg-white/10 transition-colors border border-white/5 flex flex-col items-center gap-4 min-w-[300px]"
-          >
-            <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center text-amber-500 group-hover:scale-110 transition-transform">
-              <Download className="w-5 h-5" />
-            </div>
-            <div className="text-center">
-              <p className="font-cinzel text-xs text-amber-500/60 tracking-[0.2em] mb-2">OFFICIAL GUIDE</p>
-              <p className="font-playfair text-xl text-white">Academic Paper</p>
-            </div>
-          </a>
-
-          <a
-            href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
-            target="_blank"
-            className="group relative px-12 py-6 bg-white/5 hover:bg-white/10 transition-colors border border-white/5 flex flex-col items-center gap-4 min-w-[300px]"
-          >
-            <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center text-amber-500 group-hover:scale-110 transition-transform">
-              <Scale className="w-5 h-5" />
-            </div>
-            <div className="text-center">
-              <p className="font-cinzel text-xs text-amber-500/60 tracking-[0.2em] mb-2">SPECIAL RULES</p>
-              <p className="font-playfair text-xl text-white">Procedure</p>
-            </div>
-          </a>
+          <div className="mt-16 opacity-30 text-xs tracking-[0.3em]">
+            UNITED STATES DISTRICT COURT · SOUTHERN DISTRICT OF NEW YORK
+          </div>
         </div>
       </section>
 
