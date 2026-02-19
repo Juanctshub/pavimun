@@ -5,38 +5,44 @@ interface PageTransitionProps {
     children: React.ReactNode;
 }
 
+// Committee pages have their own loading screens — skip transitions for them
+const COMMITTEE_ROUTES = ['/corte', '/investigacion', '/crisis', '/cia', '/consejo-seguridad', '/oiea', '/prensa'];
+
 const PageTransition = ({ children }: PageTransitionProps) => {
     const location = useLocation();
     const [isAnimating, setIsAnimating] = useState(false);
     const prevPath = useRef(location.pathname);
-    const contentRef = useRef<HTMLDivElement>(null);
+    const isCommittee = COMMITTEE_ROUTES.includes(location.pathname);
 
     useEffect(() => {
         if (location.pathname !== prevPath.current) {
+            const wasCommittee = COMMITTEE_ROUTES.includes(prevPath.current);
             prevPath.current = location.pathname;
+
+            // Skip transition if going TO or FROM a committee page
+            if (isCommittee || wasCommittee) return;
+
             setIsAnimating(true);
-
-            // Reset animation after it completes
-            const timer = setTimeout(() => {
-                setIsAnimating(false);
-            }, 500);
-
+            const timer = setTimeout(() => setIsAnimating(false), 500);
             return () => clearTimeout(timer);
         }
-    }, [location.pathname]);
+    }, [location.pathname, isCommittee]);
+
+    // Committee pages: render without any animation wrapper
+    if (isCommittee) {
+        return <>{children}</>;
+    }
 
     return (
         <>
-            {/* Page content with fade-in animation */}
             <div
-                ref={contentRef}
                 key={location.pathname}
                 className="animate-pageEnter"
             >
                 {children}
             </div>
 
-            {/* Wipe overlay */}
+            {/* Wipe overlay — only for non-committee pages */}
             <div
                 className={`fixed inset-0 z-[100] pointer-events-none ${isAnimating ? 'animate-wipeThrough' : 'opacity-0'
                     }`}

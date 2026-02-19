@@ -6,10 +6,8 @@ const CIA = () => {
 
   const [bootSequence, setBootSequence] = useState<string[]>([]);
   const [accessGranted, setAccessGranted] = useState(false);
-  const [isMuted, setIsMuted] = useState(false);
+  const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
-
-  const [showStartBtn, setShowStartBtn] = useState(false);
 
   // Boot Sequence Logic
   useEffect(() => {
@@ -29,36 +27,41 @@ const CIA = () => {
       setTimeout(() => {
         setBootSequence(prev => [...prev, line]);
         if (index === lines.length - 1) {
-          // Only grant access if we aren't waiting for audio manual start
-          if (!showStartBtn) {
-            setTimeout(() => setAccessGranted(true), 800);
-          }
+          setTimeout(() => setAccessGranted(true), 800);
         }
       }, delay);
     });
-  }, [showStartBtn]);
+  }, []);
 
 
 
-  // Video Config
+  // Video Config - start muted so autoplay works, unmute after boot
   useEffect(() => {
     if (videoRef.current) {
-      videoRef.current.currentTime = 3; // Skip initial black transition
+      videoRef.current.muted = true;
+      videoRef.current.currentTime = 3;
       videoRef.current.playbackRate = 1.0;
-
-      const attemptPlay = async () => {
-        try {
-          videoRef.current!.volume = 1.0;
-          await videoRef.current!.play();
-          setIsMuted(false);
-        } catch (e) {
-          console.warn("Autoplay blocked", e);
-          setShowStartBtn(true);
-        }
-      };
-      attemptPlay();
+      videoRef.current.play().catch(() => { });
     }
   }, []);
+
+  // Unmute with volume ramp after access is granted
+  useEffect(() => {
+    if (accessGranted && videoRef.current) {
+      const v = videoRef.current;
+      v.muted = false;
+      v.volume = 0;
+      setIsMuted(false);
+      let vol = 0;
+      const ramp = setInterval(() => {
+        vol += 0.02;
+        if (vol >= 0.8) { vol = 0.8; clearInterval(ramp); }
+        if (videoRef.current) videoRef.current.volume = vol;
+        else clearInterval(ramp);
+      }, 40);
+      return () => clearInterval(ramp);
+    }
+  }, [accessGranted]);
 
   const toggleMute = () => {
     if (videoRef.current) {
@@ -91,7 +94,7 @@ const CIA = () => {
           src="/videos/mkultra_final.mp4"
           autoPlay
           loop
-          muted={isMuted}
+          muted
           playsInline
         />
         {/* Difuminado/Overlay requested */}
