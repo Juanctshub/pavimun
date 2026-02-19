@@ -211,7 +211,7 @@ const Home = () => {
 
       {/* ====== COUNTDOWN SECTION ====== */}
       <section className="relative py-20 md:py-28 overflow-hidden">
-        <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #0d1349 30%, #0d1349 70%, #ffffff 100%)' }} />
+        <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #0d1349 12%, #0d1349 88%, #ffffff 100%)' }} />
 
         <div className="pavi-container relative z-10">
           <div className="reveal flex flex-col items-center">
