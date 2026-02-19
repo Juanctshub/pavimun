@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Play, Pause, X, AlertTriangle, FileText, Download, Crown, Volume2, VolumeX } from 'lucide-react';
+import { X, AlertTriangle, FileText, Download, Crown, Volume2, VolumeX } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Investigacion = () => {

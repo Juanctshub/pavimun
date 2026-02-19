@@ -38,15 +38,7 @@ const CIA = () => {
     });
   }, [showStartBtn]);
 
-  const handleManualStart = () => {
-    if (videoRef.current) {
-      videoRef.current.play();
-      videoRef.current.muted = false;
-      setIsMuted(false);
-    }
-    setShowStartBtn(false);
-    setAccessGranted(true);
-  };
+
 
   // Video Config
   useEffect(() => {

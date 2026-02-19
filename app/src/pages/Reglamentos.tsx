@@ -1,4 +1,4 @@
-import { FileText, BookOpen, Shirt, ExternalLink, Download, Lock } from 'lucide-react';
+import { FileText, BookOpen, Shirt, ExternalLink } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface Reglamento {
