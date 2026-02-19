@@ -1,5 +1,5 @@
-import { useState, useEffect, useRef } from 'react';
-import { Calendar, ChevronDown } from 'lucide-react';
+import { useState, useEffect, useRef, useCallback } from 'react';
+import { Calendar, ChevronDown, Clock } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Home = () => {
@@ -9,6 +9,26 @@ const Home = () => {
   const [activeDay, setActiveDay] = useState(1);
   const [calendarRevealed, setCalendarRevealed] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
+
+  // Countdown timer to March 20, 2025
+  const getTimeLeft = useCallback(() => {
+    const target = new Date('2025-03-20T08:00:00').getTime();
+    const now = new Date().getTime();
+    const diff = Math.max(0, target - now);
+    return {
+      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
+      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
+      minutes: Math.floor((diff / (1000 * 60)) % 60),
+      seconds: Math.floor((diff / 1000) % 60),
+    };
+  }, []);
+
+  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
+
+  useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    return () => clearInterval(timer);
+  }, [getTimeLeft]);
 
   // Welcome splash sequence
   useEffect(() => {
@@ -187,6 +207,78 @@ const Home = () => {
             <ChevronDown className="w-5 h-5 animate-bounce" />
           </div>
         </div>
+      </section>
+
+      {/* ====== COUNTDOWN SECTION ====== */}
+      <section className="relative py-20 md:py-28 overflow-hidden">
+        <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #0d1349 30%, #0d1349 70%, #ffffff 100%)' }} />
+
+        <div className="pavi-container relative z-10">
+          <div className="reveal flex flex-col items-center">
+            <div className="flex items-center gap-2 mb-3">
+              <Clock className="w-4 h-4 text-[#4fc3f7]" />
+              <span className="text-[#4fc3f7] text-xs font-bold tracking-[0.3em] uppercase">Cuenta Regresiva</span>
+            </div>
+            <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4 tracking-tight">
+              Faltan
+            </h2>
+            <p className="text-white/40 text-sm mb-12 tracking-wide">para la I Edición de PAVIMUN</p>
+
+            <div className="flex items-center gap-3 md:gap-6">
+              {[
+                { value: timeLeft.days, label: 'Días' },
+                { value: timeLeft.hours, label: 'Horas' },
+                { value: timeLeft.minutes, label: 'Minutos' },
+                { value: timeLeft.seconds, label: 'Segundos' },
+              ].map((unit, i) => (
+                <div key={unit.label} className="flex flex-col items-center gap-3">
+                  <div
+                    className="relative w-16 h-20 md:w-24 md:h-28 rounded-xl overflow-hidden"
+                    style={{
+                      background: 'linear-gradient(145deg, rgba(26,35,126,0.95) 0%, rgba(13,22,66,0.98) 100%)',
+                      boxShadow: '0 8px 32px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.1)',
+                    }}
+                  >
+                    {/* Top half highlight */}
+                    <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/[0.04] rounded-t-xl" />
+                    {/* Center line */}
+                    <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-black/30 z-10" />
+                    {/* Number */}
+                    <div className="relative z-5 w-full h-full flex items-center justify-center">
+                      <span
+                        key={unit.value}
+                        className="text-3xl md:text-5xl font-extrabold text-white tabular-nums tracking-tight"
+                        style={{ animation: 'flip-in 0.3s ease-out' }}
+                      >
+                        {String(unit.value).padStart(2, '0')}
+                      </span>
+                    </div>
+                  </div>
+                  <span className="text-white/40 text-[10px] md:text-xs font-semibold tracking-[0.15em] uppercase">{unit.label}</span>
+                  {/* Separator colon */}
+                  {i < 3 && (
+                    <div className="absolute hidden md:flex" style={{ position: 'relative', marginTop: '-52px' }}>
+                    </div>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {/* Date reminder */}
+            <div className="mt-12 px-6 py-3 bg-white/5 border border-white/10 rounded-full">
+              <p className="text-white/60 text-sm font-medium tracking-wide">
+                📅 20 de Marzo, 2025 — <span className="text-[#81c784]">¡Prepárate!</span>
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <style>{`
+          @keyframes flip-in {
+            0% { transform: scaleY(0.7) translateY(-4px); opacity: 0.5; }
+            100% { transform: scaleY(1) translateY(0); opacity: 1; }
+          }
+        `}</style>
       </section>
 
       {/* ====== PHOTO GALLERY STRIP ====== */}

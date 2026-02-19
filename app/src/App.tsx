@@ -1,6 +1,9 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import Navigation from './components/Navigation';
+import GlobalMusicPlayer from './components/GlobalMusicPlayer';
+import SplashScreen from './components/SplashScreen';
+import PageTransition from './components/PageTransition';
 import Home from './pages/Home';
 import QueEsMUN from './pages/QueEsMUN';
 import StaffOrganizador from './pages/StaffOrganizador';
@@ -24,13 +27,14 @@ function ScrollToTop() {
   return null;
 }
 
-function App() {
+function AppContent() {
   return (
-    <Router>
+    <>
       <ScrollToTop />
-      <div className="min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white">
-        <Navigation />
-        <main className="pt-[72px]">
+      <Navigation />
+      <GlobalMusicPlayer />
+      <main className="pt-[72px]">
+        <PageTransition>
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/que-es-mun" element={<QueEsMUN />} />
@@ -47,7 +51,24 @@ function App() {
             <Route path="/oiea" element={<OIEA />} />
             <Route path="/prensa" element={<Prensa />} />
           </Routes>
-        </main>
+        </PageTransition>
+      </main>
+    </>
+  );
+}
+
+function App() {
+  const [showSplash, setShowSplash] = useState(true);
+
+  const handleSplashComplete = useCallback(() => {
+    setShowSplash(false);
+  }, []);
+
+  return (
+    <Router>
+      {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
+      <div className={`min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+        <AppContent />
       </div>
     </Router>
   );
