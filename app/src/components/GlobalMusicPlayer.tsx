@@ -8,10 +8,10 @@ const GlobalMusicPlayer = () => {
     const location = useLocation();
     const audioRef = useRef<HTMLAudioElement | null>(null);
     const [isPlaying, setIsPlaying] = useState(false);
-    const [hasInteracted, setHasInteracted] = useState(false);
     const prevWasCommittee = useRef(false);
     const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const isCommitteePage = COMMITTEE_ROUTES.includes(location.pathname);
+    const TARGET_VOL = 0.25; // Volume suave, no duro
 
     // Create audio element once
     useEffect(() => {
@@ -19,41 +19,70 @@ const GlobalMusicPlayer = () => {
         audio.loop = true;
         audio.volume = 0;
         audioRef.current = audio;
-        return () => { audio.pause(); audio.src = ''; };
+
+        // Start playing immediately with gentle fade-in (after splash screen)
+        // Small delay to let splash finish
+        const startTimer = setTimeout(() => {
+            if (COMMITTEE_ROUTES.includes(window.location.pathname)) return;
+            audio.play().then(() => {
+                setIsPlaying(true);
+                let vol = 0;
+                const fade = setInterval(() => {
+                    vol += 0.005; // Very gradual
+                    if (vol >= TARGET_VOL) { vol = TARGET_VOL; clearInterval(fade); }
+                    if (audioRef.current) audioRef.current.volume = vol;
+                }, 50);
+            }).catch(() => {
+                // Autoplay blocked — will start on first click
+                const clickStart = () => {
+                    if (!audioRef.current || COMMITTEE_ROUTES.includes(window.location.pathname)) return;
+                    audioRef.current.volume = 0;
+                    audioRef.current.play().then(() => {
+                        setIsPlaying(true);
+                        let vol = 0;
+                        const fade = setInterval(() => {
+                            vol += 0.005;
+                            if (vol >= TARGET_VOL) { vol = TARGET_VOL; clearInterval(fade); }
+                            if (audioRef.current) audioRef.current.volume = vol;
+                        }, 50);
+                    }).catch(() => { });
+                };
+                document.addEventListener('click', clickStart, { once: true });
+            });
+        }, 4500); // Wait for splash screen to finish
+
+        return () => {
+            clearTimeout(startTimer);
+            audio.pause();
+            audio.src = '';
+        };
     }, []);
 
-    // Clear any existing fade
     const clearFade = () => {
         if (fadeRef.current) { clearInterval(fadeRef.current); fadeRef.current = null; }
     };
 
-    // Handle route changes — ONLY react when switching between committee/non-committee
+    // Handle route changes — ONLY when switching committee <-> non-committee
     useEffect(() => {
         if (!audioRef.current) return;
 
         const wasCommittee = prevWasCommittee.current;
         prevWasCommittee.current = isCommitteePage;
 
-        // Non-committee → non-committee: do NOTHING (music keeps playing)
         if (!wasCommittee && !isCommitteePage) return;
 
         if (isCommitteePage && !wasCommittee) {
-            // Entering committee page: fade out
             clearFade();
             const audio = audioRef.current;
             let vol = audio.volume;
             fadeRef.current = setInterval(() => {
                 vol -= 0.02;
                 if (vol <= 0) {
-                    vol = 0;
-                    audio.pause();
-                    setIsPlaying(false);
-                    clearFade();
+                    vol = 0; audio.pause(); setIsPlaying(false); clearFade();
                 }
                 audio.volume = Math.max(0, vol);
             }, 30);
-        } else if (!isCommitteePage && wasCommittee && hasInteracted) {
-            // Leaving committee page: resume with fade in
+        } else if (!isCommitteePage && wasCommittee) {
             clearFade();
             const audio = audioRef.current;
             audio.volume = 0;
@@ -61,36 +90,15 @@ const GlobalMusicPlayer = () => {
                 setIsPlaying(true);
                 let vol = 0;
                 fadeRef.current = setInterval(() => {
-                    vol += 0.01;
-                    if (vol >= 0.4) { vol = 0.4; clearFade(); }
+                    vol += 0.005;
+                    if (vol >= TARGET_VOL) { vol = TARGET_VOL; clearFade(); }
                     if (audioRef.current) audioRef.current.volume = vol;
-                }, 40);
+                }, 50);
             }).catch(() => setIsPlaying(false));
         }
 
         return () => clearFade();
     }, [location.pathname]);
-
-    // First interaction to start music
-    useEffect(() => {
-        if (hasInteracted || isCommitteePage) return;
-        const start = () => {
-            if (!audioRef.current || COMMITTEE_ROUTES.includes(location.pathname)) return;
-            setHasInteracted(true);
-            audioRef.current.volume = 0;
-            audioRef.current.play().then(() => {
-                setIsPlaying(true);
-                let vol = 0;
-                const fade = setInterval(() => {
-                    vol += 0.01;
-                    if (vol >= 0.4) { vol = 0.4; clearInterval(fade); }
-                    if (audioRef.current) audioRef.current.volume = vol;
-                }, 40);
-            }).catch(() => setIsPlaying(false));
-        };
-        document.addEventListener('click', start, { once: true });
-        return () => document.removeEventListener('click', start);
-    }, [hasInteracted, isCommitteePage]);
 
     const toggleMusic = () => {
         if (!audioRef.current) return;
@@ -98,8 +106,7 @@ const GlobalMusicPlayer = () => {
             audioRef.current.pause();
             setIsPlaying(false);
         } else {
-            setHasInteracted(true);
-            audioRef.current.volume = 0.4;
+            audioRef.current.volume = TARGET_VOL;
             audioRef.current.play().then(() => setIsPlaying(true)).catch(() => { });
         }
     };
