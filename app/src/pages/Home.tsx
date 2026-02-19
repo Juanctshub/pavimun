@@ -10,9 +10,9 @@ const Home = () => {
   const [calendarRevealed, setCalendarRevealed] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
-  // Countdown timer to March 20, 2025
+  // Countdown timer to March 20, 2026
   const getTimeLeft = useCallback(() => {
-    const target = new Date('2025-03-20T08:00:00').getTime();
+    const target = new Date('2026-03-20T08:00:00').getTime();
     const now = new Date().getTime();
     const diff = Math.max(0, target - now);
     return {
