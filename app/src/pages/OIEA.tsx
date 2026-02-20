@@ -12,17 +12,39 @@ const OIEA = () => {
 
   // Easter Egg States
   const [isMeltdown, setIsMeltdown] = useState(false);
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
   // @ts-ignore
-  const pressTimer = useRef<NodeJS.Timeout | null>(null);
+  const pressTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     if (!isMeltdown) return;
-    const handlePop = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY });
+    let audioCtx: AudioContext;
+    // @ts-ignore
+    let interval: ReturnType<typeof setInterval>;
+    try {
+      audioCtx = new (window.AudioContext || (window as any).webkitAudioContext)();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sawtooth';
+
+      const playWail = () => {
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(600, audioCtx.currentTime + 0.8);
+        osc.frequency.setValueAtTime(200, audioCtx.currentTime + 1.2);
+      };
+
+      playWail();
+      interval = setInterval(playWail, 1500);
+
+      gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+    } catch (e) { }
+
+    return () => {
+      if (interval) clearInterval(interval);
+      if (audioCtx) audioCtx.close();
     };
-    window.addEventListener('mousemove', handlePop);
-    return () => window.removeEventListener('mousemove', handlePop);
   }, [isMeltdown]);
 
   const handlePressStart = () => {
@@ -202,7 +224,7 @@ const OIEA = () => {
   // RENDER — Audio element is ALWAYS mounted (never inside early return)
   // ============================================================
   return (
-    <div className="min-h-screen relative overflow-x-hidden bg-[#050505] text-gray-200 font-sans selection:bg-yellow-500/30 selection:text-yellow-200">
+    <div className={`min-h-screen relative overflow-x-hidden bg-[#050505] text-gray-200 font-sans selection:bg-yellow-500/30 selection:text-yellow-200 ${isMeltdown ? 'meltdown-active' : ''}`}>
 
       {/* === AUDIO ELEMENT: ALWAYS MOUNTED so ref is never null === */}
       <audio ref={audioRef} src="/audio/chernobyl.mp3" loop preload="auto" />
@@ -408,49 +430,49 @@ const OIEA = () => {
         </div>
       </section>
 
-      {/* EASTER EGG: Core Meltdown Overlay */}
+      {/* EASTER EGG: Core Meltdown Overlay (Redesigned) */}
       {isMeltdown && (
         <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden">
           <style>{`
-            @keyframes rad-rain {
-              0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
-              10% { opacity: 1; }
-              90% { opacity: 1; }
-              100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
-            }
-            .animate-rad-rain {
-              animation: rad-rain 3s linear infinite;
-            }
-          `}</style>
+          @keyframes extreme-shake {
+            0%, 100% { transform: translate(0, 0) rotate(0); }
+            10% { transform: translate(-5px, -5px) rotate(-1deg); }
+            20% { transform: translate(5px, -5px) rotate(1deg); }
+            30% { transform: translate(-5px, 5px) rotate(0); }
+            40% { transform: translate(5px, 5px) rotate(1deg); }
+            50% { transform: translate(-5px, -5px) rotate(-1deg); }
+            60% { transform: translate(5px, -5px) rotate(0); }
+            70% { transform: translate(-5px, 5px) rotate(1deg); }
+            80% { transform: translate(5px, 5px) rotate(-1deg); }
+            90% { transform: translate(-5px, -5px) rotate(0); }
+          }
+          @keyframes emergency-flash {
+            0%, 100% { opacity: 0.2; }
+            50% { opacity: 0.7; }
+          }
+          .meltdown-active {
+            animation: extreme-shake 0.3s infinite;
+            filter: saturate(1.5) contrast(1.2) hue-rotate(-10deg);
+          }
+        `}</style>
 
-          {/* Flashlight Mask */}
-          <div
-            className="absolute inset-0 bg-black z-10"
-            style={{
-              background: `radial-gradient(circle 200px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, rgba(0,0,0,0.98) 80%, black 100%)`
-            }}
-          />
+          {/* Blood Red Emergency Overlay */}
+          <div className="absolute inset-0 bg-red-900 mix-blend-color-burn animate-[emergency-flash_1.5s_infinite] z-10" />
 
-          {/* Radioactive Rain Particles */}
-          <div className="absolute inset-0 z-20">
-            {Array.from({ length: 50 }).map((_, i) => (
-              <div
-                key={i}
-                className="absolute w-1 h-3 bg-green-500/60 rounded-full animate-rad-rain blur-[1px]"
-                style={{
-                  left: `${Math.random() * 100}%`,
-                  animationDelay: `${Math.random() * 5}s`,
-                  animationDuration: `${2 + Math.random() * 3}s`
-                }}
-              />
-            ))}
-          </div>
+          {/* Scanlines / Noise */}
+          <div className="absolute inset-0 bg-[url('/images/noise.png')] opacity-30 mix-blend-overlay z-20" />
 
-          {/* Warning Text */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-4 mix-blend-screen opacity-20">
-            <Radiation className="w-32 h-32 text-green-500 animate-spin-slow" />
-            <h1 className="text-6xl font-black text-green-500 tracking-widest">CRITICAL SYSTEM FAILURE</h1>
-            <p className="text-2xl text-green-400 font-mono">REACTOR 4 MELTDOWN IMMINENT</p>
+          {/* Central Warning Display */}
+          <div className="absolute inset-0 z-30 flex flex-col items-center justify-center p-6 text-center">
+            <div className="mix-blend-difference flex flex-col items-center">
+              <Radiation className="w-32 h-32 md:w-56 md:h-56 text-white animate-spin-slow opacity-90 mb-6 drop-shadow-[0_0_30px_rgba(255,255,255,0.5)]" />
+              <h1 className="text-5xl md:text-8xl lg:text-9xl font-black text-white tracking-tighter uppercase mb-4 opacity-90">
+                CORE COLLAPSE
+              </h1>
+              <p className="text-lg md:text-3xl text-white font-mono tracking-widest max-w-4xl border-t-2 border-white/50 pt-4 opacity-80 mt-2">
+                CRITICAL SYSTEM FAILURE. IMMEDIATE EVACUATION ORDERED.
+              </p>
+            </div>
           </div>
         </div>
       )}
