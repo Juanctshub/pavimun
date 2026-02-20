@@ -67,7 +67,7 @@ function App() {
   return (
     <Router>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+      <div className={`w-full overflow-x-hidden min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <AppContent />
       </div>
     </Router>
