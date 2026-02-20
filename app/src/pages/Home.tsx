@@ -97,8 +97,8 @@ const Home = () => {
           <img src="/images/pedro.jpg" alt="" className="w-full h-full object-cover" />
         </div>
 
-        <div className="pavi-container w-full relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-center gap-12 lg:gap-20 xl:gap-28">
+        <div className="pavi-container w-full relative z-10 mt-12 md:mt-0">
+          <div className="flex flex-col lg:flex-row items-center justify-center gap-16 lg:gap-20 xl:gap-28">
 
             {/* LEFT — Logo */}
             <div className={`flex-shrink-0 flex flex-col items-center transition-all duration-1000 ease-[cubic-bezier(0.16,1,0.3,1)] ${welcomeDone ? 'opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
@@ -141,15 +141,15 @@ const Home = () => {
 
                 <div className="relative z-10">
                   {/* Header */}
-                  <div className="flex items-center justify-center gap-2 mb-7">
-                    <Calendar className="w-4 h-4 text-[#4fc3f7]" />
-                    <span className="text-[#4fc3f7] font-bold text-[11px] uppercase tracking-[0.25em]">
+                  <div className="flex items-center justify-center gap-3 mb-10">
+                    <Calendar className="w-5 h-5 text-[#4fc3f7]" />
+                    <span className="text-[#4fc3f7] font-bold text-xs md:text-[11px] uppercase tracking-[0.25em]">
                       I Edición · Marzo 2025
                     </span>
                   </div>
 
                   {/* Day Cards — Interactive */}
-                  <div className="flex items-stretch justify-center gap-3 mb-6">
+                  <div className="flex items-stretch justify-center gap-4 mb-8">
                     {days.map((day, i) => (
                       <button
                         key={day.num}

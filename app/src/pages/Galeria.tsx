@@ -16,11 +16,11 @@ const Galeria = () => {
       <div className="pavi-container max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="text-center mb-20 animate-fade-in-up">
-          <h1 className="text-6xl md:text-8xl font-black mb-6 tracking-tighter opacity-10">
+        <div className="text-center mb-16 md:mb-20 animate-fade-in-up mt-12 md:mt-0">
+          <h1 className="text-5xl md:text-8xl font-black mb-6 md:mb-6 tracking-tighter opacity-10">
             MEMORIES
           </h1>
-          <div className="-mt-16 relative z-10">
+          <div className="-mt-12 md:-mt-16 relative z-10">
             <h2 className="text-4xl md:text-6xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-pink-500 via-purple-500 to-indigo-500">
               Galería Oficial
             </h2>

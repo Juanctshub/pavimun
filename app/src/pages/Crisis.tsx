@@ -152,8 +152,8 @@ const Crisis = () => {
       </section>
 
       {/* ====== CONTENT SECTION ====== */}
-      <section className="relative z-10 py-32 bg-[#0c0a09] border-t border-[#c9a980]/20">
-        <div className="pavi-container">
+      <section className="relative z-10 py-24 md:py-32 bg-black/90 backdrop-blur-sm border-t border-red-900/40">
+        <div className="container mx-auto px-6 max-w-5xl">
           <div className="flex flex-col md:flex-row gap-20 items-center">
 
             {/* Image Block */}

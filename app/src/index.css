@@ -82,11 +82,11 @@
 
   /* ========== LAYOUT ========== */
   .pavi-container {
-    @apply max-w-6xl mx-auto px-5 sm:px-8 lg:px-10;
+    @apply max-w-6xl mx-auto px-6 sm:px-8 lg:px-10;
   }
 
   .pavi-section {
-    @apply py-16 md:py-24;
+    @apply py-20 md:py-28;
   }
 
   /* ========== TYPOGRAPHY ========== */
@@ -127,7 +127,7 @@
 
   /* ========== CARDS ========== */
   .pavi-card {
-    @apply bg-white/80 rounded-2xl p-7 transition-all duration-500 ease-out;
+    @apply bg-white/80 rounded-3xl p-8 md:p-10 transition-all duration-500 ease-out;
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     border: 1px solid rgba(0, 0, 0, 0.06);

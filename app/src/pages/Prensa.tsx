@@ -233,14 +233,14 @@ const Prensa = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_130%)] opacity-70" />
       </div>
 
-      <section className={`relative z-10 min-h-screen flex items-center justify-center p-8 pt-24 perspective-1000 transition-all duration-1000 ease-out ${loading ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+      <section className={`relative z-10 min-h-screen flex items-center justify-center px-4 md:px-8 pt-32 md:pt-24 perspective-1000 transition-all duration-1000 ease-out ${loading ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
 
         <div
           className="w-full max-w-6xl transition-transform duration-100 ease-out preserve-3d"
           style={{ transform: `rotateX(${mousePos.y * -4}deg) rotateY(${mousePos.x * 4}deg)` }}
         >
           <div className="text-center mb-16 translate-z-20">
-            <div className="inline-flex items-center gap-3 px-6 py-2 bg-black/60 border border-blue-500/50 rounded-full mb-8 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)]">
+            <div className="inline-flex items-center gap-3 px-6 py-2 bg-black/60 border border-blue-500/50 rounded-full mb-10 md:mb-8 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)]">
               <span className="w-2 h-2 bg-red-600 rounded-full animate-ping" />
               <span className="w-2 h-2 bg-red-600 rounded-full absolute" />
               <span className="text-xs font-bold tracking-[0.2em] text-white uppercase">Live Broadcast</span>
@@ -248,7 +248,7 @@ const Prensa = () => {
             <h1 className="text-7xl md:text-[10rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 drop-shadow-2xl leading-none select-none relative">
               PRENSA
             </h1>
-            <div className="h-px w-32 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mt-6 mb-6" />
+            <div className="h-px w-32 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mt-8 md:mt-6 mb-8 md:mb-6" />
             <h2 className="text-xl md:text-3xl font-light tracking-[0.4em] text-blue-100 uppercase opacity-90 select-none font-mono">
               CONOCIENDO LA REALIDAD
             </h2>

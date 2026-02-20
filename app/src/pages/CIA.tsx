@@ -298,6 +298,52 @@ const CIA = () => {
         </div>
       </section>
 
+      {/* ====== CONTENT SECTION ====== */}
+      <div className="relative z-10 px-6 py-24 md:py-32 bg-black/80 backdrop-blur-md border-t border-blue-900/30">
+        <div className="container mx-auto max-w-5xl">
+          {/* Main content grid */}
+          <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+            {/* History Section */}
+            <div className="space-y-6">
+              <div className="inline-flex items-center gap-2 px-4 py-1.5 border border-white/20 rounded-full bg-white/[0.03]">
+                <Shield className="w-4 h-4 text-white/60" />
+                <span className="text-[10px] uppercase tracking-[0.2em] text-white/80 font-mono">Confidential Briefing</span>
+              </div>
+
+              <h3 className="text-3xl font-bold tracking-tight text-white/90">
+                Operaciones<br />y Consecuencias
+              </h3>
+
+              <div className="space-y-4 text-justify text-white/60 leading-relaxed font-light font-mono text-sm md:text-base">
+                <p>
+                  Establecida tras la Segunda Guerra Mundial, la CIA nació con el mandato de prevenir futuros ataques sorpresivos contra los Estados Unidos y coordinar las actividades de inteligencia a nivel global.
+                </p>
+                <p>
+                  Tanto en la historia como en este modelo, el comité se centra en crisis de alto riesgo. Se evaluará la influencia de la CIA en la Guerra Fría y se re-analizarán incidentes críticos desde una perspectiva estratégica.
+                </p>
+              </div>
+            </div>
+
+            {/* Directive Section */}
+            <div className="space-y-6 bg-white/[0.02] border border-white/10 rounded-2xl p-8 backdrop-blur-sm relative overflow-hidden group">
+              <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              <div className="w-12 h-12 bg-white/10 rounded-xl flex items-center justify-center border border-white/20 mb-6 relative z-10">
+                <FileText className="w-6 h-6 text-white/80" />
+              </div>
+
+              <h3 className="text-xl font-bold tracking-tight text-white/90 relative z-10">
+                Directiva Operacional
+              </h3>
+
+              <p className="text-sm font-mono text-white/50 leading-relaxed text-justify relative z-10">
+                Cada delegado tendrá la oportunidad de proponer estrategias operativas, reescribir protocolos de contingencia y abordar situaciones históricas con el beneficio del conocimiento moderno. El éxito dependerá de la discreción y el cálculo táctico de cada país miembro representado.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* ====== FOOTER ====== */}
       <footer className="relative z-10 py-12 bg-black text-center border-t border-white/5">
         <div className="flex flex-col items-center gap-2">

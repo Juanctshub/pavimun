@@ -6,10 +6,10 @@ const Matrices = () => {
 
   return (
     <div className="min-h-screen bg-[#F5F5F7] text-[#1d1d1f] font-sans selection:bg-blue-100 selection:text-blue-900">
-      <div className="pavi-container max-w-5xl mx-auto py-24">
+      <div className="pavi-container max-w-5xl mx-auto py-28 md:py-32">
 
         {/* Header - Apple Style Typography */}
-        <div className="text-center mb-20 animate-fade-in-up">
+        <div className="text-center mb-16 md:mb-20 animate-fade-in-up">
           <h1 className="text-6xl md:text-7xl font-semibold tracking-tighter mb-6 text-[#1d1d1f]">
             Matrices.
           </h1>
@@ -19,7 +19,7 @@ const Matrices = () => {
         </div>
 
         {/* Hero Card - Glassmorphism & Depth */}
-        <div className="reveal relative bg-white rounded-[40px] p-10 md:p-16 shadow-[0_20px_40px_rgba(0,0,0,0.04)] overflow-hidden border border-white/50 transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.08)] group">
+        <div className="reveal relative bg-white rounded-[40px] p-8 md:p-16 shadow-[0_20px_40px_rgba(0,0,0,0.04)] overflow-hidden border border-white/50 transition-all duration-700 hover:shadow-[0_30px_60px_rgba(0,0,0,0.08)] group">
 
           {/* Background Blurs */}
           <div className="absolute -top-20 -right-20 w-96 h-96 bg-blue-100/50 rounded-full blur-[80px] opacity-70 group-hover:scale-110 transition-transform duration-1000"></div>

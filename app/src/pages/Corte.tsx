@@ -298,7 +298,7 @@ const Corte = () => {
       </button>
 
       {/* ── Main Content Container ── */}
-      <main className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
+      <main className="max-w-[1200px] mx-auto px-5 md:px-8 py-14 md:py-20 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 relative z-10">
 
         {/* Left Column (Content) */}
         <section className="lg:col-span-8">
@@ -307,11 +307,11 @@ const Corte = () => {
             U.S. Attorney's Office, Southern District of New York
           </p>
 
-          <h2 className="reveal text-3xl md:text-5xl text-[#1a1a1a] mb-6 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+          <h2 className="reveal text-3xl md:text-5xl text-[#1a1a1a] mb-8 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
             Financier Jeffrey Epstein Indicted For Sex Trafficking Of Minors
           </h2>
 
-          <div className="reveal text-base text-gray-700 mb-8 border-y border-gray-200 py-3 font-semibold flex items-center">
+          <div className="reveal text-sm md:text-base text-gray-700 mb-10 border-y border-gray-200 py-4 font-semibold flex flex-wrap items-center gap-3">
             FOR IMMEDIATE RELEASE <span className="mx-3 font-normal text-gray-300">|</span> Monday, July 8, 2019
             <span className="ml-auto bg-red-100 text-[#cf102d] text-xs px-2 py-1 rounded font-bold tracking-wider animate-pulse flex items-center gap-2">
               <span className="w-2 h-2 rounded-full bg-[#cf102d] block"></span>
@@ -319,9 +319,9 @@ const Corte = () => {
             </span>
           </div>
 
-          <article className="prose prose-lg max-w-none prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:mb-6" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
+          <article className="prose prose-lg max-w-none prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:mb-8" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
 
-            <p className="reveal font-bold bg-yellow-50/50 p-2 border-l-4 border-yellow-400 hover:bg-yellow-100/50 transition-colors">
+            <p className="reveal font-bold bg-yellow-50/50 p-4 border-l-4 border-yellow-400 hover:bg-yellow-100/50 transition-colors">
               NUEVA YORK – Geoffrey S. Berman, Fiscal Federal para el Distrito Sur de Nueva York,
               anunció hoy la apertura de una carpeta de investigación y el desvelamiento de una
               acusación formal (<em className="font-normal italic">Indictment</em>) contra JEFFREY EPSTEIN.
@@ -366,7 +366,7 @@ const Corte = () => {
               </p>
             </div>
 
-            <h3 className="reveal text-2xl font-bold text-[#002244] mt-10 mb-4 border-b border-gray-200 pb-2 flex items-center gap-3" style={{ fontFamily: 'Georgia, serif' }}>
+            <h3 className="reveal text-2xl font-bold text-[#002244] mt-14 mb-6 border-b border-gray-200 pb-3 flex items-center gap-3" style={{ fontFamily: 'Georgia, serif' }}>
               Summary of Investigations (Líneas de Investigación Abiertas)
             </h3>
 

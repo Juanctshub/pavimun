@@ -47,7 +47,7 @@ const Reglamentos = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white pavi-section">
+    <div className="min-h-screen bg-white pavi-section pt-28 md:pt-32">
       <div className="pavi-container max-w-6xl mx-auto">
 
         <div className="flex flex-col md:flex-row items-end justify-between mb-16 gap-8 animate-fade-in-up">

@@ -25,7 +25,7 @@ const StaffOrganizador = () => {
   useScrollReveal();
 
   return (
-    <div className="min-h-screen bg-neutral-50 pavi-container pavi-section selection:bg-[#2e7d32]/20 selection:text-[#1b5e20]">
+    <div className="min-h-screen bg-neutral-50 pavi-container pavi-section pt-28 md:pt-32 selection:bg-[#2e7d32]/20 selection:text-[#1b5e20]">
       {/* Background Pattern */}
       <div className="fixed inset-0 pointer-events-none opacity-[0.02]"
         style={{ backgroundImage: 'radial-gradient(#2e7d32 1px, transparent 1px)', backgroundSize: '40px 40px' }} />
