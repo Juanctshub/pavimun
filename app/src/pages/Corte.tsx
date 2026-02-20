@@ -13,6 +13,34 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
   const [typedText, setTypedText] = useState('');
   const targetText = 'jeffrey epstein';
 
+  // Audio Context for typing sound
+  const audioCtxRef = useRef<AudioContext | null>(null);
+
+  const playKeystroke = useCallback(() => {
+    if (!audioCtxRef.current) {
+      audioCtxRef.current = new (window.AudioContext || (window as any).webkitAudioContext)();
+    }
+    const ctx = audioCtxRef.current;
+    if (ctx.state === 'suspended') ctx.resume();
+
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+
+    // Mechanical click synthesis
+    osc.type = 'square';
+    osc.frequency.setValueAtTime(150 + Math.random() * 50, ctx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(40, ctx.currentTime + 0.05);
+
+    gain.gain.setValueAtTime(0.05, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.05);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+
+    osc.start();
+    osc.stop(ctx.currentTime + 0.05);
+  }, []);
+
   // 0: Initial empty search bar
   // 1: Typing
   // 2: Done typing, wait
@@ -27,13 +55,14 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
       if (typedText.length < targetText.length) {
         const timeout = setTimeout(() => {
           setTypedText(targetText.slice(0, typedText.length + 1));
-        }, Math.random() * 80 + 70); // random typing speed
+          playKeystroke();
+        }, Math.random() * 100 + 50); // random typing speed
         return () => clearTimeout(timeout);
       } else {
         setTimeout(() => setPhase(2), 600);
       }
     }
-  }, [phase, typedText]);
+  }, [phase, typedText, playKeystroke]);
 
   useEffect(() => {
     // Initial start
@@ -52,81 +81,91 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
       return () => clearTimeout(t);
     }
     if (phase === 4) {
-      const t = setTimeout(() => setPhase(5), 300);
+      const t = setTimeout(() => {
+        // Play harsh click for TV turn off
+        if (audioCtxRef.current) {
+          const ctx = audioCtxRef.current;
+          const osc = ctx.createOscillator();
+          const gain = ctx.createGain();
+          osc.type = 'sawtooth';
+          osc.frequency.setValueAtTime(100, ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(10, ctx.currentTime + 0.2);
+          gain.gain.setValueAtTime(0.3, ctx.currentTime);
+          gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
+          osc.connect(gain); gain.connect(ctx.destination);
+          osc.start(); osc.stop(ctx.currentTime + 0.2);
+        }
+        setPhase(5);
+      }, 300);
       return () => clearTimeout(t);
     }
     if (phase === 5) {
-      const t = setTimeout(() => setPhase(6), 500);
+      const t = setTimeout(() => setPhase(6), 550);
       return () => clearTimeout(t);
     }
     if (phase === 6) {
-      const t = setTimeout(onDone, 600);
+      const t = setTimeout(onDone, 500);
       return () => clearTimeout(t);
     }
   }, [phase, onDone]);
 
   return (
-    <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center overflow-hidden">
+    <div className="fixed inset-0 z-[200] bg-black flex items-center justify-center overflow-hidden">
 
-      {/* CRT Frame (invisible until phase 4, then wraps everything) */}
-      <div className={`relative w-full h-full flex flex-col items-center pt-[20vh] transition-all bg-white`}
+      {/* CRT Wrapper */}
+      <div className={`relative w-full h-full flex flex-col items-center pt-[20vh] bg-white transition-all`}
         style={{
-          width: phase >= 5 ? '80vw' : '100%',
-          height: phase >= 5 ? (phase >= 6 ? '0px' : '3px') : '100%',
-          maxHeight: phase >= 5 ? '600px' : 'none',
-          backgroundColor: phase >= 5 ? '#000' : '#fff',
-          boxShadow: phase >= 5 ? '0 0 100px rgba(255,255,255,0.8)' : 'none',
-          transition: phase >= 5 ? 'height 0.4s cubic-bezier(0.8,0,1,1), width 0.3s' : 'none',
+          // The TV fix: It starts full size, then scales down radically
+          transform: phase >= 5 ? 'scaleY(0.005) scaleX(0.8)' : 'scale(1)',
           opacity: phase >= 6 ? 0 : 1,
-          overflow: 'hidden'
+          filter: phase >= 5 ? 'brightness(10)' : 'none',
+          transition: phase >= 5 ? 'transform 0.3s cubic-bezier(0.8,0,1,1), filter 0.3s, opacity 0.2s 0.3s' : 'none'
         }}
       >
 
-        {/* Only show Google stuff before TV dies */}
-        {phase < 4 && (
-          <div className="w-full max-w-[584px] px-5 flex flex-col items-center animate-fade-in">
-            {/* Fake Google Logo */}
-            <div className="text-7xl font-sans font-medium mb-8 tracking-tighter select-none">
-              <span className="text-[#4285F4]">G</span>
-              <span className="text-[#EA4335]">o</span>
-              <span className="text-[#FBBC05]">o</span>
-              <span className="text-[#4285F4]">g</span>
-              <span className="text-[#34A853]">l</span>
-              <span className="text-[#EA4335]">e</span>
-            </div>
-
-            {/* Search Bar */}
-            <div className={`w-full h-12 rounded-full border border-gray-200 hover:shadow-md focus-within:shadow-md flex items-center px-4 transition-shadow ${phase === 3 ? 'shadow-md shadow-blue-100 border-blue-200' : ''}`}>
-              <Search className="w-5 h-5 text-gray-400 mr-3" />
-              <div className="flex-1 text-base text-gray-800 outline-none font-sans relative flex items-center">
-                <span>{typedText}</span>
-                {phase <= 2 && (
-                  <span className="w-[1px] h-5 bg-black animate-pulse opacity-70 ml-[1px]" />
-                )}
-              </div>
-              {typedText.length > 0 && phase < 3 && <X className="w-5 h-5 text-gray-400 cursor-pointer" />}
-            </div>
-
-            {/* Buttons */}
-            <div className="mt-8 flex gap-3">
-              <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
-                Buscar con Google
-              </div>
-              <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
-                Voy a tener suerte
-              </div>
-            </div>
-
-            {/* Loading state bar below search */}
-            {phase === 3 && (
-              <div className="w-full mt-4 h-1 bg-blue-50 overflow-hidden rounded relative">
-                <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-blue-500 rounded animate-[slide_1s_infinite_ease-in-out]" />
-              </div>
-            )}
+        {/* Google stuff */}
+        <div className="w-full max-w-[584px] px-5 flex flex-col items-center animate-fade-in">
+          {/* Fake Google Logo */}
+          <div className="text-7xl font-sans font-medium mb-8 tracking-tighter select-none">
+            <span className="text-[#4285F4]">G</span>
+            <span className="text-[#EA4335]">o</span>
+            <span className="text-[#FBBC05]">o</span>
+            <span className="text-[#4285F4]">g</span>
+            <span className="text-[#34A853]">l</span>
+            <span className="text-[#EA4335]">e</span>
           </div>
-        )}
 
-        {/* Phase 4: Static Flash */}
+          {/* Search Bar */}
+          <div className={`w-full h-12 rounded-full border border-gray-200 hover:shadow-md focus-within:shadow-md flex items-center px-4 transition-shadow ${phase === 3 ? 'shadow-md shadow-blue-100 border-blue-200' : ''}`}>
+            <Search className="w-5 h-5 text-gray-400 mr-3" />
+            <div className="flex-1 text-base text-gray-800 outline-none font-sans relative flex items-center">
+              <span>{typedText}</span>
+              {phase <= 2 && (
+                <span className="w-[1px] h-5 bg-black animate-pulse opacity-70 ml-[1px]" />
+              )}
+            </div>
+            {typedText.length > 0 && phase < 3 && <X className="w-5 h-5 text-gray-400 cursor-pointer" />}
+          </div>
+
+          {/* Buttons */}
+          <div className="mt-8 flex gap-3">
+            <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
+              Buscar con Google
+            </div>
+            <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
+              Voy a tener suerte
+            </div>
+          </div>
+
+          {/* Loading state bar below search */}
+          {phase === 3 && (
+            <div className="w-full mt-4 h-1 bg-blue-50 overflow-hidden rounded relative">
+              <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-blue-500 rounded animate-[slide_1s_infinite_ease-in-out]" />
+            </div>
+          )}
+        </div>
+
+        {/* Phase 4: Static Flash overlay before shrink */}
         {phase === 4 && (
           <div className="absolute inset-0 z-50 bg-white">
             <div className="w-full h-full opacity-60"
@@ -287,12 +326,22 @@ const Corte = () => {
               acusación formal (<em className="font-normal italic">Indictment</em>) contra JEFFREY EPSTEIN.
             </p>
 
-            {/* Decorative Background Video (Muted, floating snippet) */}
-            <div className="my-8 rounded border-4 border-[#1b1b1b] shadow-xl overflow-hidden relative">
-              <div className="absolute top-0 right-0 bg-[#cf102d] text-white text-[10px] font-bold px-2 py-1 z-10 uppercase tracking-widest">Surveillance Archive</div>
-              <video autoPlay loop muted playsInline className="w-full h-auto object-cover opacity-80 mix-blend-multiply filter grayscale contrast-125">
-                <source src="/videos/epstein.mp4" type="video/mp4" />
+            {/* Click-to-play Video Preview for ua.mp4 */}
+            <div className="my-8 border border-gray-300 shadow-md p-1 bg-gray-50 max-w-2xl mx-auto">
+              <div className="bg-[#002244] text-white text-[11px] font-bold px-3 py-1.5 uppercase flex justify-between tracking-wide">
+                <span>Evidence File: UA_Surveillance.mp4</span>
+                <span>DOJ Eyes Only</span>
+              </div>
+              <video
+                controls
+                preload="metadata"
+                className="w-full h-auto max-h-[400px] object-contain bg-black"
+                poster="/images/f2.jpeg"
+              >
+                <source src="/videos/ua.mp4" type="video/mp4" />
+                Your browser does not support the video tag.
               </video>
+              <p className="text-sm text-gray-500 italic mt-2 text-center">Video Evidence Preview. Click to review footage.</p>
             </div>
 
             <p>
@@ -303,20 +352,25 @@ const Corte = () => {
             </p>
 
             <h3 className="text-2xl font-bold text-[#002244] mt-10 mb-4 border-b border-gray-200 pb-2" style={{ fontFamily: 'Georgia, serif' }}>
-              Summary of Allegations (Resumen de Presuntos Cargos)
+              Summary of Investigations (Líneas de Investigación Abiertas)
             </h3>
 
             <p>
-              El proceso se centra en determinar la veracidad de múltiples acusaciones recopiladas por las agencias federales.
-              Hasta el momento, <strong>no se ha emitido veredicto alguno</strong> y aplica la presunción de inocencia.
-              Los cargos bajo investigación (Case No. 19-CR-490) incluyen:
+              La fiscalía ha abierto formalmente una carpeta de investigación basada en información preliminar y testimonios
+              recopilados por las agencias federales. En esta etapa procesal temprana del año 2019, nos encontramos exclusivamente
+              frente a presunciones e indicios. <strong>El Sr. Jeffrey Epstein no ha sido juzgado ni condenado</strong> por
+              estos hechos, gozando de plena presunción de inocencia ante la ley.
+            </p>
+
+            <p>
+              Las líneas de investigación activas (Dossier Preliminar No. 19-CR-490) buscan esclarecer las siguientes hipótesis:
             </p>
 
             <ul className="list-disc pl-6 space-y-4 my-6 text-[#1a1a1a]">
-              <li><strong>Tráfico Sexual:</strong> Se investiga el presunto reclutamiento y transporte de menores para explotación.</li>
-              <li><strong>Conspiración:</strong> Presunta coordinación de una empresa criminal organizada y red de facilitadores.</li>
-              <li><strong>Lavado de Activos:</strong> Supuesta ocultación de fondos mediante estructuras y entidades offshore.</li>
-              <li><strong>Obstrucción a la Justicia:</strong> Presunta manipulación de testigos y destrucción potencial de evidencia.</li>
+              <li><strong>Posible Tráfico Sexual:</strong> Se indaga si existió un patrón de reclutamiento o transporte no consentido de menores para explotación.</li>
+              <li><strong>Presunta Conspiración:</strong> Las agencias evalúan la posible existencia de una red de facilitadores y cómplices.</li>
+              <li><strong>Manejo de Activos:</strong> Se auditan los movimientos financieros para descartar el uso de corporaciones offshore para ocultar fondos ilícitos.</li>
+              <li><strong>Testimonios:</strong> Se monitorea que los testigos protegidos no enfrenten presiones indebidas ni alteraciones de evidencia.</li>
             </ul>
 
             <h3 className="text-2xl font-bold text-[#002244] mt-10 mb-4 border-b border-gray-200 pb-2" style={{ fontFamily: 'Georgia, serif' }}>
@@ -388,31 +442,31 @@ const Corte = () => {
             </h3>
 
             <div className="space-y-6">
-              {/* Image 1 */}
+              {/* Image 1 (f3 - Pope) */}
               <div>
-                <a href="/images/donald.jpg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
-                  <img src="/images/donald.jpg" alt="Exhibit A" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                <a href="/images/f3.jpeg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/f3.jpeg" alt="Exhibit A" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
                 </a>
-                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit A - Photographic Log 78-B</p>
-                <p className="text-[11px] text-gray-500">Documented associations under review.</p>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit A - High Profile Associations</p>
+                <p className="text-[11px] text-gray-500">Photographic logs currently under review.</p>
               </div>
 
-              {/* Image 2 (Winni Poh) */}
+              {/* Image 2 (f2) */}
               <div>
-                <a href="/images/winni-poh.webp" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
-                  <img src="/images/winni-poh.webp" alt="Exhibit B" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                <a href="/images/f2.jpeg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/f2.jpeg" alt="Exhibit B" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
                 </a>
-                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit B - Seized Evidence</p>
-                <p className="text-[11px] text-gray-500">Material found executing a search warrant.</p>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit B - Financial Audits</p>
+                <p className="text-[11px] text-gray-500">Documentary evidence pending verification.</p>
               </div>
 
-              {/* Image 3 */}
+              {/* Image 3 (f1) */}
               <div>
-                <a href="/images/donald2.jpg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
-                  <img src="/images/donald2.jpg" alt="Exhibit C" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                <a href="/images/f1.jpeg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/f1.jpeg" alt="Exhibit C" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
                 </a>
-                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit C - Social Roster</p>
-                <p className="text-[11px] text-gray-500">Photographic evidence of inner circle.</p>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit C - Property Records</p>
+                <p className="text-[11px] text-gray-500">Details from search warrants executed.</p>
               </div>
             </div>
           </div>
