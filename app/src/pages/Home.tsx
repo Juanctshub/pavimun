@@ -155,8 +155,8 @@ const Home = () => {
               <div className="mt-8 relative group cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
                 <div className="relative px-6 py-2 bg-gradient-to-r from-[#1a237e] to-[#2e7d32] rounded-full text-center border border-white/20 shadow-lg hover:scale-105 transition-transform">
-                  <p className="text-white font-bold text-xs md:text-sm tracking-[0.2em] uppercase">
-                    Dios te bendiga!
+                  <p className="text-white font-bold text-xs md:text-sm tracking-[0.1em] uppercase">
+                    Los hombres del mañana serán lo que se haga con los jóvenes de hoy
                   </p>
                 </div>
               </div>

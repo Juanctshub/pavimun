@@ -16,6 +16,7 @@ const staffMembers: StaffMember[] = [
   { cargo: 'Sub-Secretaria de Logística', nombre: 'Marcela Vargas', icon: Users },
   { cargo: 'Secretaria de Publicidad', nombre: 'Diana Grateron', icon: Award },
   { cargo: 'Sub-Secretaria de Publicidad', nombre: 'Oriana Bernal', icon: Award },
+  { cargo: 'Jefe Protocolar', nombre: 'Pedro Velasco', icon: Briefcase },
   { cargo: 'Faculty Advisor', nombre: 'Luis "Chicho" Castillo', icon: Brain },
 ];
 

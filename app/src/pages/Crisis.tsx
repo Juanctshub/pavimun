@@ -108,7 +108,7 @@ const Crisis = () => {
           {/* Logo */}
           <div className="mb-12 relative animate-float">
             <img
-              src="/images/congreso_logo_v2.png"
+              src="/images/foto.png"
               alt="Congreso de la República"
               className="relative h-48 md:h-64 w-auto object-contain drop-shadow-[0_5px_15px_rgba(0,0,0,0.5)]"
             />

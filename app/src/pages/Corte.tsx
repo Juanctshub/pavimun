@@ -354,7 +354,7 @@ const Corte = () => {
                   className="w-full max-h-[500px] h-auto object-contain transition-transform duration-700 group-hover:scale-[1.01]"
                   poster="/images/f2.jpeg"
                 >
-                  <source src="/videos/ua.mp4" type="video/mp4" />
+                  <source src="/videos/uaa.mp4" type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
                 {/* Play Button Overlay */}
@@ -429,6 +429,22 @@ const Corte = () => {
               sugieren supuestas conexiones entre el imputado y figuras de alto nivel de influencia, incluyendo políticos
               y funcionarios de estado. Las imágenes documentadas ilustran niveles de acceso inusuales.
             </p>
+
+            {/* Evidence Image Grid */}
+            <div className="reveal grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 my-10">
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/f1.jpeg" alt="Evidence 1" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/fotico.jpeg" alt="Evidence 2" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/f3.jpeg" alt="Evidence 3" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+            </div>
 
             <div className="reveal bg-[#f1f1f1] border-l-4 border-[#002244] p-6 my-8 relative overflow-hidden group">
               <div className="absolute -right-8 -top-8 w-32 h-32 bg-[url('/images/noise.png')] opacity-10 rounded-full mix-blend-multiply group-hover:scale-150 transition-transform duration-700"></div>
