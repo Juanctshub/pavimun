@@ -240,11 +240,7 @@ const Navigation = () => {
                 alt="Colegio Pablo VI"
                 className="h-12 w-auto mx-auto object-contain mb-3 opacity-40"
               />
-              <p className="text-[#1a237e]/50 font-semibold text-xs tracking-[0.05em] transition-colors hover:text-[#1a237e]">
-                <a href="https://maps.app.goo.gl/3tWigGfbmtbGNmFk7" target="_blank" rel="noopener noreferrer" title="Ubicación Secreta">
-                  10°01'42.1"N 69°20'43.0"W
-                </a>
-              </p>
+              <p className="text-[#1a237e]/50 font-semibold text-xs tracking-[0.05em]">Colegio Pablo VI</p>
               <p className="text-gray-300 text-[10px] mt-1 tracking-[0.15em] uppercase">
                 PAVIMUN · I Edición
               </p>

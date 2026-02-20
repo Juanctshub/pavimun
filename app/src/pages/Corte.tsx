@@ -196,6 +196,10 @@ const Corte = () => {
   const [muted, setMuted] = useState(true);
   const audioRef = useRef<HTMLAudioElement>(null);
 
+  // Easter Egg States
+  const [showDossier, setShowDossier] = useState(false);
+  const [folderOpen, setFolderOpen] = useState(false);
+
   // Enable scroll reveals
   useScrollReveal([loading]);
 
@@ -462,6 +466,12 @@ const Corte = () => {
 
             <div className="space-y-4">
               <a href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" target="_blank" rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (e.shiftKey) {
+                    e.preventDefault();
+                    setShowDossier(true);
+                  }
+                }}
                 className="flex items-start gap-4 group bg-white p-4 border border-gray-300 shadow-sm hover:shadow-lg hover:border-[#002244] transition-all rounded">
                 <div className="bg-red-50 p-2 rounded group-hover:bg-red-100 transition-colors">
                   <FileText className="w-8 h-8 text-[#cf102d] flex-shrink-0" />
@@ -474,6 +484,12 @@ const Corte = () => {
               </a>
 
               <a href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo" target="_blank" rel="noopener noreferrer"
+                onClick={(e) => {
+                  if (e.shiftKey) {
+                    e.preventDefault();
+                    setShowDossier(true);
+                  }
+                }}
                 className="flex items-start gap-4 group bg-white p-4 border border-gray-300 shadow-sm hover:shadow-lg hover:border-[#002244] transition-all rounded">
                 <div className="bg-red-50 p-2 rounded group-hover:bg-red-100 transition-colors">
                   <FileText className="w-8 h-8 text-[#cf102d] flex-shrink-0" />
@@ -589,6 +605,80 @@ const Corte = () => {
         </div>
       </footer>
 
+      {/* EASTER EGG: Detective Desk / Secret Dossier */}
+      {showDossier && (
+        <div className="fixed inset-0 z-[9999] pointer-events-auto bg-[#1a1410] overflow-hidden flex flex-col items-center justify-center animate-fade-in-up">
+          {/* Wood Desk Texture */}
+          <div className="absolute inset-0 bg-[#3e2723] opacity-50 mix-blend-multiply bg-[url('/images/noise.png')]"></div>
+
+          {/* Flickering Lamp Effect */}
+          <div className="absolute top-0 inset-x-0 h-1/2 bg-[radial-gradient(circle_at_top,rgba(255,245,210,0.6)_0%,transparent_80%)] opacity-80 animate-pulse pointer-events-none z-10"></div>
+
+          {/* Close Button */}
+          <button
+            onClick={() => { setShowDossier(false); setFolderOpen(false); }}
+            className="absolute top-6 right-6 z-50 text-[#d7ccc8] hover:text-white font-mono text-xl md:text-2xl px-4 py-2 bg-black/40 rounded border border-[#d7ccc8]/30"
+          >
+            Volver a la Corte
+          </button>
+
+          {/* The Dossier Folder */}
+          <div
+            className={`relative z-20 transition-all duration-1000 ease-out cursor-pointer ${folderOpen ? 'scale-110 -translate-y-4' : 'scale-100 hover:scale-105'}`}
+            style={{ perspective: '1000px' }}
+            onClick={() => setFolderOpen(true)}
+          >
+            {/* Folder Front Cover */}
+            <div
+              className={`w-[90vw] max-w-[500px] h-[60vh] max-h-[700px] bg-[#e6c280] rounded shadow-[0_20px_50px_rgba(0,0,0,0.8)] border-2 border-[#d4a054] p-8 flex flex-col justify-center items-center relative transition-transform duration-1000 z-30 ${folderOpen ? 'opacity-0 pointer-events-none' : ''}`}
+              style={{ transformOrigin: 'left', transform: folderOpen ? 'rotateY(-180deg)' : 'rotateY(0)' }}
+            >
+              <div className="absolute top-6 border-[4px] border-red-800 text-red-800 font-black text-4xl md:text-5xl tracking-widest px-4 py-2 rotate-[-15deg] opacity-80 mix-blend-multiply">
+                TOP SECRET
+              </div>
+              <div className="mt-20 border-b-2 border-black/40 w-3/4 pb-2 text-center text-black/70 font-mono text-xl tracking-widest uppercase">
+                Flight Logs - 2018
+              </div>
+              <div className="absolute bottom-8 right-8 w-16 h-16 rounded-full border border-black/20 flex items-center justify-center">
+                <span className="text-black/30 font-bold rotate-45 text-sm">DOJ</span>
+              </div>
+            </div>
+
+            {/* Folder Inside Contents (Revealed when open) */}
+            <div className={`absolute inset-0 w-[90vw] max-w-[500px] h-[60vh] max-h-[700px] bg-[#fdfaf6] rounded shadow-inner border border-[#d7ccc8] p-6 md:p-10 flex flex-col gap-6 overflow-y-auto transition-opacity duration-1000 delay-300 ${folderOpen ? 'opacity-100 z-40' : 'opacity-0 z-0 pointer-events-none'}`}>
+              <div className="flex justify-between items-start border-b-2 border-black pb-4 mb-2">
+                <h2 className="font-serif text-2xl md:text-3xl font-bold uppercase tracking-tight">Passenger Manifest</h2>
+                <div className="border-[3px] border-red-800 text-red-800 font-bold text-lg px-2 py-1 rotate-6 opacity-70">
+                  CLASSIFIED
+                </div>
+              </div>
+
+              <div className="font-mono text-xs md:text-sm text-black space-y-4 leading-relaxed">
+                <p><strong>FLIGHT:</strong> #EP-774 <br /><strong>DESTINATION:</strong> LITTLE ST. JAMES, USVI</p>
+
+                <div className="space-y-2 mt-6">
+                  <div className="flex items-center gap-2"><span className="w-4">01.</span> <span className="bg-black text-black select-none">XXXXXXXXXXXXXXXXXX (Politician)</span></div>
+                  <div className="flex items-center gap-2"><span className="w-4">02.</span> <span className="bg-black text-black select-none">XXXXXXXXX (CEO, Tech Sector)</span></div>
+                  <div className="flex items-center gap-2"><span className="w-4">03.</span> <span className="bg-black text-black select-none">XXXXXX XXXXXXXXXX (Royalty)</span></div>
+                  <div className="flex items-center gap-2"><span className="w-4">04.</span> <span className="underline decoration-black decoration-wavy">Ghislaine Maxwell</span></div>
+                  <div className="flex items-center gap-2"><span className="w-4">05.</span> <span className="bg-black text-black select-none">XXXXXXXXX XXXXXXX</span></div>
+                </div>
+
+                <div className="mt-8 border-t border-black/20 pt-4">
+                  <p className="italic text-gray-600">Note: Surveillance cameras around the cell block malfunctioned between 03:00 - 05:30 EST. No guards were present.</p>
+                </div>
+              </div>
+
+              {/* B&W Photo Pinned */}
+              <div className="absolute bottom-6 right-6 w-32 md:w-48 rotate-[-5deg] bg-white p-2 shadow-lg border border-gray-200">
+                <div className="aspect-video bg-gray-300 relative overflow-hidden flex items-center justify-center filter grayscale contrast-125 sepia-[0.3]">
+                  <img src="/images/f2.jpeg" alt="Island" className="w-full h-full object-cover" />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

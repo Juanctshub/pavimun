@@ -11,6 +11,17 @@ const ConsejoSeguridad = () => {
 
   const [showStartBtn, setShowStartBtn] = useState(false);
 
+  // Easter Egg states
+  const [showTicker, setShowTicker] = useState(false);
+  const [isShaking, setIsShaking] = useState(false);
+
+  const triggerTicker = () => {
+    if (showTicker) return;
+    setIsShaking(true);
+    setTimeout(() => setIsShaking(false), 500); // Shake for 0.5s
+    setShowTicker(true);
+  };
+
   useEffect(() => {
     const attemptPlay = async () => {
       if (audioRef.current) {
@@ -123,7 +134,7 @@ const ConsejoSeguridad = () => {
       )}
 
       {/* Main Content Render (Only show if not loading or exiting) */}
-      <div className={`min-h-screen relative overflow-x-hidden bg-[#0a0505] text-gray-200 font-sans selection:bg-red-900/50 selection:text-white transition-opacity duration-1000 ${loading && !exiting ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'}`}>
+      <div className={`min-h-screen relative overflow-x-hidden bg-[#0a0505] text-gray-200 font-sans selection:bg-red-900/50 selection:text-white transition-opacity duration-1000 ${loading && !exiting ? 'opacity-0 h-screen overflow-hidden' : 'opacity-100'} ${isShaking ? 'shake-effect' : ''}`}>
 
         {/* ====== BACKGROUND ASSETS ====== */}
         {/* Video Background (Muted) */}
@@ -230,7 +241,7 @@ const ConsejoSeguridad = () => {
                   </div>
                   <p className="text-gray-400 text-sm leading-relaxed mb-4">
                     Tras el magnicidio de Jovenel Moïse, el tejido institucional se ha desintegrado.
-                    La situación humanitaria es catastrófica (Fase 4 de la CIP). El bloqueo de terminales de combustible, el resurgimiento del cólera y la violencia sexual sistemática definen la "vida" diaria.
+                    La situación humanitaria es catastrófica (Fase <span onClick={triggerTicker} className="cursor-pointer hover:text-red-500 transition-colors inline-block">4</span> de la CIP). El bloqueo de terminales de combustible, el resurgimiento del cólera y la violencia sexual sistemática definen la "vida" diaria.
                   </p>
                   <div className="w-full bg-red-900/10 h-1 rounded overflow-hidden">
                     <div className="h-full bg-red-600 w-[95%] animate-pulse"></div>
@@ -330,6 +341,36 @@ const ConsejoSeguridad = () => {
         </section>
 
       </div>
+
+      {/* EASTER EGG: Breaking News Ticker */}
+      {showTicker && (
+        <div className="fixed bottom-0 left-0 right-0 z-[1000] bg-red-700 text-white font-bold flex items-center overflow-hidden h-10 md:h-12 shadow-[0_-5px_20px_rgba(220,38,38,0.5)] border-t-2 border-red-500">
+          <style>{`
+            @keyframes ticker {
+              0% { transform: translateX(100vw); }
+              100% { transform: translateX(-150%); }
+            }
+            @keyframes shake {
+              0%, 100% { transform: translateX(0); }
+              10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+              20%, 40%, 60%, 80% { transform: translateX(5px); }
+            }
+            .animate-ticker-ee { animation: ticker 25s linear infinite; }
+            .shake-effect { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+          `}</style>
+          <div className="bg-black text-red-500 font-extrabold px-3 md:px-4 h-full flex items-center shrink-0 z-10 border-r-2 border-red-500 tracking-widest uppercase text-[10px] md:text-sm">
+            [ÚLTIMA HORA]
+          </div>
+          <div className="flex-1 overflow-hidden relative h-full">
+            <div className="absolute whitespace-nowrap h-full flex items-center animate-ticker-ee text-xs md:text-xl tracking-wide">
+              SE HAN ROTO LAS NEGOCIACIONES EN PUERTO PRÍNCIPE &nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp; GANGS TOMAN EL AEROPUERTO INTERNACIONAL &nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp; LA O.N.U EVALÚA EXTRACCIÓN INMEDIATA DEL PERSONAL &nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp; SE DECRETA TOQUE DE QUEDA NACIONAL &nbsp;&nbsp;&nbsp;&nbsp;///&nbsp;&nbsp;&nbsp;&nbsp;
+            </div>
+          </div>
+          <button onClick={() => setShowTicker(false)} className="bg-black text-white/50 hover:text-white px-4 h-full z-10 font-bold text-lg md:text-2xl transition-colors">
+            ×
+          </button>
+        </div>
+      )}
     </>
   );
 };

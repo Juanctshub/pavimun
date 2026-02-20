@@ -9,6 +9,44 @@ const CIA = () => {
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);
 
+  // Easter Egg State
+  const [isInterrogating, setIsInterrogating] = useState(false);
+  const [interrogationLines, setInterrogationLines] = useState<string[]>([]);
+
+  const triggerInterrogation = () => {
+    if (isInterrogating) return;
+    setIsInterrogating(true);
+    setInterrogationLines([]);
+
+    if (videoRef.current) {
+      videoRef.current.pause();
+    }
+
+    const lines = [
+      "IDENTIFICANDO SUJETO...",
+      "IP RASTREADA: [ENCRIPTADO]",
+      "SISTEMA PRINCIPAL COMPROMETIDO.",
+      "MODO DE EMERGENCIA ACTIVADO."
+    ];
+
+    let delay = 500;
+    lines.forEach((line) => {
+      setTimeout(() => {
+        setInterrogationLines(prev => [...prev, line]);
+      }, delay);
+      delay += 1000;
+    });
+
+    // Reset after 6 seconds
+    setTimeout(() => {
+      setIsInterrogating(false);
+      setInterrogationLines([]);
+      if (videoRef.current) {
+        videoRef.current.play().catch(() => { });
+      }
+    }, 6000);
+  };
+
   // Boot Sequence Logic
   useEffect(() => {
     const lines = [
@@ -121,6 +159,14 @@ const CIA = () => {
         <div className="animate-float mb-8 relative">
           <div className="absolute inset-0 bg-blue-500/20 blur-xl rounded-full" />
           <img src="/images/cia-logo.png" alt="CIA" className="relative w-32 h-32 md:w-40 md:h-40 drop-shadow-2xl" />
+
+          {/* Hidden Scanner for Easter Egg */}
+          <div
+            className="absolute -top-4 -right-4 w-8 h-8 rounded-full flex items-center justify-center cursor-pointer group z-50 transition-all duration-300"
+            onClick={triggerInterrogation}
+          >
+            <Fingerprint className="w-5 h-5 text-white/5 group-hover:text-green-500/50 transition-colors" />
+          </div>
         </div>
 
         <div className="space-y-6 max-w-4xl mx-auto w-full mb-12">
@@ -344,7 +390,7 @@ const CIA = () => {
         </div>
       </div>
 
-      {/* ====== FOOTER ====== */}
+      {/* FOOTER */}
       <footer className="relative z-10 py-12 bg-black text-center border-t border-white/5">
         <div className="flex flex-col items-center gap-2">
           <Eye className="w-6 h-6 text-white/20" />
@@ -353,6 +399,46 @@ const CIA = () => {
           </p>
         </div>
       </footer>
+
+      {/* EASTER EGG: Interrogation Overlay */}
+      {isInterrogating && (
+        <div className="fixed inset-0 z-[9999] bg-green-950/20 backdrop-blur-sm pointer-events-auto flex items-center justify-center p-4">
+          {/* VCR / Camera Grid Effect */}
+          <div className="absolute inset-0 border-[4px] border-green-500/30 m-4 sm:m-8 pointer-events-none" />
+          <div className="absolute top-10 left-10 sm:top-14 sm:left-14 flex items-center gap-2">
+            <div className="w-3 h-3 bg-red-600 rounded-full animate-ping" />
+            <span className="text-red-500 font-mono text-sm tracking-widest uppercase">Rec</span>
+          </div>
+          <div className="absolute top-10 right-10 sm:top-14 sm:right-14 text-green-500/50 font-mono text-sm">
+            CAM_04 // SECTOR 7G
+          </div>
+          <div className="absolute bottom-10 right-10 sm:bottom-14 sm:right-14 text-green-500/50 font-mono text-sm uppercase">
+            {new Date().toISOString().split('T')[1].slice(0, 8)}
+          </div>
+          <div className="absolute bottom-10 left-10 sm:bottom-14 sm:left-14 flex flex-col gap-1">
+            <div className="w-8 h-[2px] bg-green-500/30" />
+            <div className="w-12 h-[2px] bg-green-500/30" />
+            <div className="w-6 h-[2px] bg-green-500/30" />
+          </div>
+
+          {/* Typewriter content */}
+          <div className="bg-black/90 border border-green-500/50 p-6 md:p-10 rounded shadow-[0_0_50px_rgba(34,197,94,0.15)] max-w-2xl w-full">
+            <div className="flex items-center gap-3 mb-6 border-b border-green-500/30 pb-4">
+              <Shield className="w-6 h-6 text-green-500 animate-pulse" />
+              <h2 className="text-green-500 font-mono text-xl tracking-[0.2em] uppercase">Security Alert</h2>
+            </div>
+            <div className="space-y-3 font-mono text-green-400 text-sm md:text-base">
+              {interrogationLines.map((line, i) => (
+                <p key={i} className="animate-pulse typing-effect">{`> ${line}`}</p>
+              ))}
+              <span className="animate-blink">_</span>
+            </div>
+          </div>
+
+          {/* Scan Line */}
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-green-500/10 to-transparent h-10 w-full animate-scan pointer-events-none" />
+        </div>
+      )}
 
     </div>
   );

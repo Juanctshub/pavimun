@@ -443,10 +443,8 @@ const Home = () => {
             alt="Colegio Pablo VI"
             className="h-16 w-auto object-contain opacity-40 transition-all duration-500 hover:opacity-70 hover:scale-105"
           />
-          <p className="text-[#1a237e]/50 font-semibold text-center text-sm tracking-[0.05em] transition-colors hover:text-[#1a237e]">
-            <a href="https://maps.app.goo.gl/3tWigGfbmtbGNmFk7" target="_blank" rel="noopener noreferrer" title="Ubicación Secreta">
-              10°01'42.1"N 69°20'43.0"W
-            </a>
+          <p className="text-[#1a237e]/50 font-semibold text-center text-sm tracking-[0.05em]">
+            U.E. Colegio Pablo VI
           </p>
           <p className="text-gray-300 text-xs text-center tracking-[0.15em] uppercase">
             Bondad · Ciencia · Paz

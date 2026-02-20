@@ -10,6 +10,31 @@ const OIEA = () => {
   const loadingVideoRef = useRef<HTMLVideoElement>(null);
   const audioContextRef = useRef<AudioContext | null>(null);
 
+  // Easter Egg States
+  const [isMeltdown, setIsMeltdown] = useState(false);
+  const [mousePos, setMousePos] = useState({ x: 0, y: 0 });
+  // @ts-ignore
+  const pressTimer = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    if (!isMeltdown) return;
+    const handlePop = (e: MouseEvent) => {
+      setMousePos({ x: e.clientX, y: e.clientY });
+    };
+    window.addEventListener('mousemove', handlePop);
+    return () => window.removeEventListener('mousemove', handlePop);
+  }, [isMeltdown]);
+
+  const handlePressStart = () => {
+    pressTimer.current = setTimeout(() => {
+      setIsMeltdown(true);
+    }, 3000);
+  };
+
+  const handlePressEnd = () => {
+    if (pressTimer.current) clearTimeout(pressTimer.current);
+  };
+
   // ============================================================
   // WEB AUDIO API: Cinematic Sound Effects for Loading Screen
   // ============================================================
@@ -310,8 +335,15 @@ const OIEA = () => {
                     <div className="text-3xl font-bold text-yellow-500 mb-1">200K+</div>
                     <div className="text-[10px] uppercase tracking-widest text-gray-500">Evacuados</div>
                   </div>
-                  <div className="bg-black/40 p-4 rounded border border-white/5 text-center hover:border-red-500/30 transition-colors">
-                    <div className="text-3xl font-bold text-red-500 mb-1">400x</div>
+                  <div
+                    className="bg-black/40 p-4 rounded border border-white/5 text-center hover:border-red-500/30 transition-colors cursor-pointer select-none"
+                    onMouseDown={handlePressStart}
+                    onMouseUp={handlePressEnd}
+                    onMouseLeave={handlePressEnd}
+                    onTouchStart={handlePressStart}
+                    onTouchEnd={handlePressEnd}
+                  >
+                    <div className={`text-3xl font-bold mb-1 transition-colors duration-1000 ${isMeltdown ? 'text-green-500 animate-pulse' : 'text-red-500'}`}>400x</div>
                     <div className="text-[10px] uppercase tracking-widest text-gray-500">Hiroshima Output</div>
                   </div>
                 </div>
@@ -375,6 +407,53 @@ const OIEA = () => {
           </div>
         </div>
       </section>
+
+      {/* EASTER EGG: Core Meltdown Overlay */}
+      {isMeltdown && (
+        <div className="fixed inset-0 z-[9999] pointer-events-none overflow-hidden">
+          <style>{`
+            @keyframes rad-rain {
+              0% { transform: translateY(-10vh) translateX(0); opacity: 0; }
+              10% { opacity: 1; }
+              90% { opacity: 1; }
+              100% { transform: translateY(110vh) translateX(20px); opacity: 0; }
+            }
+            .animate-rad-rain {
+              animation: rad-rain 3s linear infinite;
+            }
+          `}</style>
+
+          {/* Flashlight Mask */}
+          <div
+            className="absolute inset-0 bg-black z-10"
+            style={{
+              background: `radial-gradient(circle 200px at ${mousePos.x}px ${mousePos.y}px, transparent 0%, rgba(0,0,0,0.98) 80%, black 100%)`
+            }}
+          />
+
+          {/* Radioactive Rain Particles */}
+          <div className="absolute inset-0 z-20">
+            {Array.from({ length: 50 }).map((_, i) => (
+              <div
+                key={i}
+                className="absolute w-1 h-3 bg-green-500/60 rounded-full animate-rad-rain blur-[1px]"
+                style={{
+                  left: `${Math.random() * 100}%`,
+                  animationDelay: `${Math.random() * 5}s`,
+                  animationDuration: `${2 + Math.random() * 3}s`
+                }}
+              />
+            ))}
+          </div>
+
+          {/* Warning Text */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-30 flex flex-col items-center gap-4 mix-blend-screen opacity-20">
+            <Radiation className="w-32 h-32 text-green-500 animate-spin-slow" />
+            <h1 className="text-6xl font-black text-green-500 tracking-widest">CRITICAL SYSTEM FAILURE</h1>
+            <p className="text-2xl text-green-400 font-mono">REACTOR 4 MELTDOWN IMMINENT</p>
+          </div>
+        </div>
+      )}
 
     </div>
   );
