@@ -394,7 +394,7 @@ const Home = () => {
                   <div className="p-7 md:p-9 rounded-3xl bg-white/70 backdrop-blur-sm border border-black/[0.04] shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
                     <p className="text-base md:text-lg text-gray-600 leading-[1.85]">
                       El Modelo de Naciones Unidas (MUN) en el Colegio Pablo VI, denominado PAVIMUN,
-                      surgió como una iniciativa de la Directora Nancy Viscido y la Sub-Directora Liuha Ching
+                      surgió como una iniciativa de la Directora Profesora Nancy Viscido y la Sub-Directora Licenciada Hermana Liuha Ching
                       en el año escolar 2023/2024.
                     </p>
                   </div>
