@@ -197,7 +197,7 @@ const Corte = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Enable scroll reveals
-  useScrollReveal();
+  useScrollReveal([loading]);
 
   const handleDone = useCallback(() => {
     setLoading(false);
