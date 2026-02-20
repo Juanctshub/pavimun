@@ -233,7 +233,7 @@ const Corte = () => {
     <div className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-[#002244] selection:text-white">
 
       {/* ── Official US Gov Banner ── */}
-      <div className="bg-[#1b1b1b] text-white py-1.5 px-4 md:px-8 text-[11px] flex items-center gap-3 z-50 relative">
+      <div className="bg-[#1b1b1b] text-white py-1.5 px-4 md:px-8 text-[11px] flex items-center gap-3 relative z-20">
         <span className="text-xl">🇺🇸</span>
         <span className="opacity-90">An official website of the United States government</span>
         <span className="opacity-70 flex items-center gap-1 cursor-pointer hover:underline ml-2">
@@ -242,7 +242,7 @@ const Corte = () => {
       </div>
 
       {/* ── DOJ Header ── */}
-      <header className="bg-[#002244] text-white border-b-4 border-[#cf102d] relative z-40">
+      <header className="bg-[#002244] text-white border-b-4 border-[#cf102d] relative z-20">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 flex items-center justify-between">
           <div className="flex items-center gap-6">
             <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border-2 border-amber-500/80 shadow-[0_0_15px_rgba(0,0,0,0.5)] transition-transform hover:scale-105">
@@ -276,7 +276,7 @@ const Corte = () => {
       </header>
 
       {/* ── Breadcrumbs ── */}
-      <div className="bg-white border-b border-gray-200 relative z-30">
+      <div className="bg-white border-b border-gray-200 relative z-10">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-3 text-sm text-[#005ea2]">
           <span className="hover:underline cursor-pointer">Home</span>
           <span className="mx-2 text-gray-500">»</span>

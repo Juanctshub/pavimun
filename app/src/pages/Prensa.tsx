@@ -38,6 +38,7 @@ const Prensa = () => {
 
   // Mouse Parallax
   useEffect(() => {
+    if (window.innerWidth < 768) return;
     const handleMouseMove = (e: MouseEvent) => {
       setMousePos({
         x: (e.clientX / window.innerWidth) * 2 - 1,
@@ -334,12 +335,14 @@ const Prensa = () => {
       </div>
 
       <style>{`
-        .perspective-1000 { perspective: 1000px; }
-        .preserve-3d { transform-style: preserve-3d; }
-        .translate-z-0 { transform: translateZ(0px); }
-        .translate-z-10 { transform: translateZ(30px); }
-        .translate-z-20 { transform: translateZ(60px); }
-        .translate-z-30 { transform: translateZ(90px); }
+        @media (min-width: 768px) {
+          .perspective-1000 { perspective: 1000px; }
+          .preserve-3d { transform-style: preserve-3d; }
+          .translate-z-0 { transform: translateZ(0px); }
+          .translate-z-10 { transform: translateZ(30px); }
+          .translate-z-20 { transform: translateZ(60px); }
+          .translate-z-30 { transform: translateZ(90px); }
+        }
         .animate-loading-bar { animation: loading-bar 1.5s ease-in-out infinite; }
 
         /* CRT Phase Animations */
