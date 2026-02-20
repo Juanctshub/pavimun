@@ -296,10 +296,10 @@ const Home = () => {
 
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-5xl mx-auto">
             {[
-              { src: '/images/foto1.jpg', label: '' },
-              { src: '/images/foto2.jpg', label: '' },
-              { src: '/images/foto3.jpg', label: '' },
-              { src: '/images/pedro.jpg', label: '' },
+              { src: '/images/g1.jpeg', label: '' },
+              { src: '/images/g2.jpeg', label: '' },
+              { src: '/images/g3.jpeg', label: '' },
+              { src: '/images/g4.jpeg', label: '' },
             ].map((photo, i) => (
               <div
                 key={i}
@@ -309,7 +309,7 @@ const Home = () => {
                 <img
                   src={photo.src}
                   alt={`PAVIMUN momento ${i + 1}`}
-                  className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="w-full h-full object-cover object-[center_top] transition-transform duration-700 group-hover:scale-110"
                 />
                 {/* Overlay on hover */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#1a237e]/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
