@@ -1,601 +1,430 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
-import { Scale, ChevronDown, ExternalLink, Volume2, VolumeX, Gavel, Users, FileText, Eye, ShieldAlert } from 'lucide-react';
+import { useState, useEffect, useCallback } from 'react';
+import { Search, ChevronRight, FileText, Scale, X } from 'lucide-react';
 
 /* ═══════════════════════════════════════════════════════════
-   CORTE PENAL INTERNACIONAL — Caso Epstein (2019)
-   Carpeta de investigación abierta · Sin veredicto
-   PAVIMUN · Comité Judicial
+   CORTE — Jeffrey Epstein Case (2019)
+   PAVIMUN Judicial Committee
+   Exact U.S. Department of Justice (DOJ) Aesthetic
    ═══════════════════════════════════════════════════════════ */
 
-// ═══ TV INTRO ═══
-const TVIntro = ({ onDone }: { onDone: () => void }) => {
+// ═══ LOADING: GOOGLE SEARCH → CRT OFF ═══
+const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
   const [phase, setPhase] = useState(0);
-  const tvVideoRef = useRef<HTMLVideoElement>(null);
+  const [typedText, setTypedText] = useState('');
+  const targetText = 'jeffrey epstein';
+
+  // 0: Initial empty search bar
+  // 1: Typing
+  // 2: Done typing, wait
+  // 3: Search button clicked / loading state
+  // 4: TV static flash
+  // 5: CRT shrink to line
+  // 6: Done
 
   useEffect(() => {
-    const t = [
-      setTimeout(() => setPhase(1), 700),
-      setTimeout(() => { setPhase(2); tvVideoRef.current?.play().catch(() => { }); }, 1800),
-      setTimeout(() => setPhase(3), 3600),
-      setTimeout(() => setPhase(4), 5200),
-      setTimeout(() => setPhase(5), 5600),
-      setTimeout(() => setPhase(6), 6100),
-      setTimeout(onDone, 6500),
-    ];
-    return () => t.forEach(clearTimeout);
-  }, [onDone]);
+    // Typing effect
+    if (phase === 1) {
+      if (typedText.length < targetText.length) {
+        const timeout = setTimeout(() => {
+          setTypedText(targetText.slice(0, typedText.length + 1));
+        }, Math.random() * 80 + 70); // random typing speed
+        return () => clearTimeout(timeout);
+      } else {
+        setTimeout(() => setPhase(2), 600);
+      }
+    }
+  }, [phase, typedText]);
+
+  useEffect(() => {
+    // Initial start
+    const t0 = setTimeout(() => setPhase(1), 1000);
+    return () => clearTimeout(t0);
+  }, []);
+
+  useEffect(() => {
+    // Phases after typing
+    if (phase === 2) {
+      const t = setTimeout(() => setPhase(3), 500);
+      return () => clearTimeout(t);
+    }
+    if (phase === 3) {
+      const t = setTimeout(() => setPhase(4), 1200);
+      return () => clearTimeout(t);
+    }
+    if (phase === 4) {
+      const t = setTimeout(() => setPhase(5), 300);
+      return () => clearTimeout(t);
+    }
+    if (phase === 5) {
+      const t = setTimeout(() => setPhase(6), 500);
+      return () => clearTimeout(t);
+    }
+    if (phase === 6) {
+      const t = setTimeout(onDone, 600);
+      return () => clearTimeout(t);
+    }
+  }, [phase, onDone]);
 
   return (
-    <div className="fixed inset-0 z-[200] bg-[#020204] flex items-center justify-center overflow-hidden">
-      {/* Ambient light from TV */}
-      {phase >= 2 && phase < 5 && (
-        <div className="absolute inset-0 pointer-events-none">
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120vw] h-[120vh] bg-blue-500/[0.015] rounded-full blur-[100px] animate-pulse" />
-        </div>
-      )}
+    <div className="fixed inset-0 z-[200] bg-white flex items-center justify-center overflow-hidden">
 
-      <div className="relative z-10 flex flex-col items-center">
-        {/* TV FRAME */}
-        <div
-          className="relative overflow-hidden bg-black"
-          style={{
-            width: phase >= 5 ? '70vw' : '85vw',
-            maxWidth: phase >= 5 ? '550px' : '680px',
-            aspectRatio: phase >= 5 ? undefined : '16/10',
-            height: phase >= 5 ? (phase >= 6 ? '0px' : '3px') : undefined,
-            borderRadius: phase >= 5 ? '0' : '6px',
-            boxShadow: phase >= 2 && phase < 5 ? '0 0 120px rgba(80,120,200,0.06), 0 20px 60px rgba(0,0,0,0.8)' : '0 20px 60px rgba(0,0,0,0.8)',
-            transition: phase >= 5 ? 'height 0.35s cubic-bezier(0.8,0,1,1), width 0.3s, border-radius 0.2s, opacity 0.15s ease 0.3s' : 'all 0.6s ease',
-            opacity: phase >= 6 ? 0 : 1,
-          }}
-        >
-          {/* Bezel */}
-          <div className="absolute inset-0 border-[3px] border-neutral-800/60 rounded-[6px] z-40 pointer-events-none" />
-          <div className="absolute inset-[3px] border border-neutral-700/20 rounded-[4px] z-40 pointer-events-none" />
+      {/* CRT Frame (invisible until phase 4, then wraps everything) */}
+      <div className={`relative w-full h-full flex flex-col items-center pt-[20vh] transition-all bg-white`}
+        style={{
+          width: phase >= 5 ? '80vw' : '100%',
+          height: phase >= 5 ? (phase >= 6 ? '0px' : '3px') : '100%',
+          maxHeight: phase >= 5 ? '600px' : 'none',
+          backgroundColor: phase >= 5 ? '#000' : '#fff',
+          boxShadow: phase >= 5 ? '0 0 100px rgba(255,255,255,0.8)' : 'none',
+          transition: phase >= 5 ? 'height 0.4s cubic-bezier(0.8,0,1,1), width 0.3s' : 'none',
+          opacity: phase >= 6 ? 0 : 1,
+          overflow: 'hidden'
+        }}
+      >
 
-          {/* P0: OFF */}
-          {phase === 0 && (
-            <div className="absolute inset-0 bg-[#0a0a0c]">
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-2 h-2 rounded-full bg-red-900/30" />
+        {/* Only show Google stuff before TV dies */}
+        {phase < 4 && (
+          <div className="w-full max-w-[584px] px-5 flex flex-col items-center animate-fade-in">
+            {/* Fake Google Logo */}
+            <div className="text-7xl font-sans font-medium mb-8 tracking-tighter select-none">
+              <span className="text-[#4285F4]">G</span>
+              <span className="text-[#EA4335]">o</span>
+              <span className="text-[#FBBC05]">o</span>
+              <span className="text-[#4285F4]">g</span>
+              <span className="text-[#34A853]">l</span>
+              <span className="text-[#EA4335]">e</span>
             </div>
-          )}
 
-          {/* P1: Static */}
-          {phase === 1 && (
-            <div className="absolute inset-0 z-20 overflow-hidden">
-              <div className="w-[200%] h-[200%] -translate-x-1/4 -translate-y-1/4 opacity-30 animate-[grain_0.3s_steps(6)_infinite]"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: '256px' }}
-              />
-              <div className="absolute inset-0 opacity-30" style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, rgba(0,0,0,0.4) 1px, rgba(0,0,0,0.4) 3px)' }} />
-              {/* Channel number flicker */}
-              <div className="absolute top-4 right-6 text-green-400/40 font-mono text-xs animate-pulse">CH-19</div>
-            </div>
-          )}
-
-          {/* P2+: Video */}
-          <video ref={tvVideoRef} muted playsInline
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[2000ms] ${phase >= 2 && phase < 5 ? 'opacity-60' : 'opacity-0'}`}
-          >
-            <source src="/videos/epstein.mp4" type="video/mp4" />
-          </video>
-
-          {/* Scanlines on video */}
-          {phase >= 2 && phase < 5 && (
-            <div className="absolute inset-0 z-20 pointer-events-none mix-blend-overlay opacity-[0.07]"
-              style={{ backgroundImage: 'repeating-linear-gradient(0deg, transparent, transparent 1px, #000 1px, #000 2px)' }}
-            />
-          )}
-
-          {/* P2: Silhouette in doorway */}
-          {phase === 2 && (
-            <div className="absolute inset-0 z-10 flex items-end justify-center overflow-hidden">
-              <div className="absolute top-[8%] left-1/2 -translate-x-1/2 w-[120px] h-[84%]">
-                <div className="absolute inset-0 bg-gradient-to-t from-amber-100/8 via-white/15 to-amber-50/5 blur-[6px]" />
-                <div className="absolute inset-x-4 top-0 bottom-0 bg-white/[0.08] blur-[3px]" />
+            {/* Search Bar */}
+            <div className={`w-full h-12 rounded-full border border-gray-200 hover:shadow-md focus-within:shadow-md flex items-center px-4 transition-shadow ${phase === 3 ? 'shadow-md shadow-blue-100 border-blue-200' : ''}`}>
+              <Search className="w-5 h-5 text-gray-400 mr-3" />
+              <div className="flex-1 text-base text-gray-800 outline-none font-sans relative flex items-center">
+                <span>{typedText}</span>
+                {phase <= 2 && (
+                  <span className="w-[1px] h-5 bg-black animate-pulse opacity-70 ml-[1px]" />
+                )}
               </div>
-              <div className="relative mb-0 z-20">
-                <div className="absolute -top-[150px] left-1/2 -translate-x-1/2 w-[44px] h-[44px] rounded-full bg-[#0a0a0c] shadow-[0_0_40px_rgba(0,0,0,0.9)]" />
-                <div className="absolute -top-[110px] left-1/2 -translate-x-1/2 w-[80px] h-[80px] bg-[#0a0a0c] rounded-t-2xl" />
-                <div className="absolute -top-[35px] left-1/2 -translate-x-1/2 w-[60px] h-[100px] bg-[#0a0a0c]" />
-                <div className="w-[60px] h-[30px]" />
+              {typedText.length > 0 && phase < 3 && <X className="w-5 h-5 text-gray-400 cursor-pointer" />}
+            </div>
+
+            {/* Buttons */}
+            <div className="mt-8 flex gap-3">
+              <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
+                Buscar con Google
+              </div>
+              <div className="bg-[#f8f9fa] border border-[#f8f9fa] hover:border-[#dadce0] hover:shadow-sm px-4 py-2 text-sm text-[#3c4043] rounded cursor-default select-none">
+                Voy a tener suerte
               </div>
             </div>
-          )}
 
-          {/* P3: Text reveal */}
-          {phase === 3 && (
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-black/40 backdrop-blur-[1px]">
-              <p className="text-[9px] md:text-[11px] tracking-[0.7em] text-white/30 uppercase mb-4 font-light">
-                Carpeta de Investigación
-              </p>
-              <h2 className="text-5xl md:text-8xl font-[200] tracking-wider text-white/95" style={{ fontFamily: 'system-ui' }}>
-                Jeffrey Epstein
-              </h2>
-              <div className="w-24 h-[1px] bg-amber-400/40 mt-5" />
-              <p className="text-[9px] tracking-[0.5em] text-amber-400/30 uppercase mt-4">2019</p>
-            </div>
-          )}
-
-          {/* P4: Static burst */}
-          {phase === 4 && (
-            <div className="absolute inset-0 z-30 bg-white/10">
-              <div className="w-full h-full opacity-70"
-                style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.2' numOctaves='5' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, backgroundSize: '128px' }}
-              />
-            </div>
-          )}
-
-          {/* P5: White line */}
-          {phase === 5 && (
-            <div className="absolute inset-0 z-30 flex items-center bg-black">
-              <div className="w-full h-[3px] bg-white shadow-[0_0_40px_#fff,0_0_80px_rgba(255,255,255,0.3)]" />
-            </div>
-          )}
-        </div>
-
-        {/* Subtext */}
-        {phase >= 1 && phase < 5 && (
-          <p className="mt-6 text-[8px] tracking-[0.5em] text-white/15 uppercase transition-opacity duration-500">
-            {phase === 1 ? 'Sintonizando...' : phase === 2 ? 'Sujeto identificado' : 'Expediente cargado'}
-          </p>
+            {/* Loading state bar below search */}
+            {phase === 3 && (
+              <div className="w-full mt-4 h-1 bg-blue-50 overflow-hidden rounded relative">
+                <div className="absolute top-0 bottom-0 left-0 w-1/3 bg-blue-500 rounded animate-[slide_1s_infinite_ease-in-out]" />
+              </div>
+            )}
+          </div>
         )}
+
+        {/* Phase 4: Static Flash */}
+        {phase === 4 && (
+          <div className="absolute inset-0 z-50 bg-white">
+            <div className="w-full h-full opacity-60"
+              style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }}
+            />
+          </div>
+        )}
+
       </div>
 
-      {/* CSS anim for grain movement */}
-      <style>{`@keyframes grain { 0%,100%{transform:translate(0,0)} 10%{transform:translate(-5%,-10%)} 30%{transform:translate(3%,5%)} 50%{transform:translate(-3%,8%)} 70%{transform:translate(8%,-3%)} 90%{transform:translate(-8%,3%)} }`}</style>
+      <style>{`
+        @keyframes slide {
+          0% { left: -30%; width: 30%; }
+          50% { width: 50%; }
+          100% { left: 100%; width: 30%; }
+        }
+        @keyframes fade-in {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+      `}</style>
     </div>
   );
 };
 
-// ═══ ANIMATED COUNTER ═══
-const Counter = ({ end, duration = 2000, suffix = '' }: { end: number; duration?: number; suffix?: string }) => {
-  const [val, setVal] = useState(0);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const obs = new IntersectionObserver(([e]) => {
-      if (e.isIntersecting) {
-        let start = 0;
-        const step = end / (duration / 16);
-        const iv = setInterval(() => {
-          start += step;
-          if (start >= end) { start = end; clearInterval(iv); }
-          setVal(Math.floor(start));
-        }, 16);
-        obs.disconnect();
-      }
-    }, { threshold: 0.5 });
-    if (ref.current) obs.observe(ref.current);
-    return () => obs.disconnect();
-  }, [end, duration]);
-
-  return <span ref={ref}>{val}{suffix}</span>;
-};
-
-// ═══ MAIN ═══
+// ═══ MAIN PAGE (DOJ AESTHETIC) ═══
 const Corte = () => {
   const [loading, setLoading] = useState(true);
-  const [muted, setMuted] = useState(true);
-  const [scrollY, setScrollY] = useState(0);
-  const [revealed, setRevealed] = useState<Set<string>>(new Set());
-  const audioRef = useRef<HTMLAudioElement>(null);
 
-  const handleDone = useCallback(() => setLoading(false), []);
+  // DOJ Official Font: Public Sans or Arial for body, Merriweather/Georgia for headers.
+  // We'll use system UI for sans, and Georgia for serif.
 
-  useEffect(() => {
-    const fn = () => setScrollY(window.scrollY);
-    window.addEventListener('scroll', fn, { passive: true });
-    return () => window.removeEventListener('scroll', fn);
+  const handleDone = useCallback(() => {
+    setLoading(false);
+    window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (loading) return;
-    const obs = new IntersectionObserver(
-      (entries) => entries.forEach(e => { if (e.isIntersecting) setRevealed(p => new Set(p).add(e.target.id)); }),
-      { threshold: 0.08 }
-    );
-    document.querySelectorAll('[data-reveal]').forEach(el => obs.observe(el));
-    return () => obs.disconnect();
-  }, [loading]);
-
-  useEffect(() => {
-    if (loading) return;
-    const a = audioRef.current;
-    if (!a) return;
-    a.volume = 0;
-    a.play().then(() => {
-      let v = 0;
-      const i = setInterval(() => { v += 0.004; if (v >= 0.12) { clearInterval(i); } a.volume = Math.min(v, 0.12); }, 80);
-    }).catch(() => { });
-  }, [loading]);
-
-  const toggleMute = () => { if (audioRef.current) { audioRef.current.muted = !muted; setMuted(!muted); } };
-  const vis = (id: string) => revealed.has(id);
-
-  if (loading) return <TVIntro onDone={handleDone} />;
+  if (loading) return <GoogleIntro onDone={handleDone} />;
 
   return (
-    <div className="min-h-screen bg-[#050507] text-white overflow-x-hidden selection:bg-amber-500/20">
-      <audio ref={audioRef} loop><source src="/videos/epsteinsong.mp3" type="audio/mpeg" /></audio>
+    <div className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-[#002244] selection:text-white">
 
-      {/* ── VIDEO BG ── */}
-      <div className="fixed inset-0 z-0">
-        <video autoPlay loop muted playsInline className="w-full h-full object-cover" style={{ transform: `scale(${1 + scrollY * 0.00008})` }}>
-          <source src="/videos/epstein.mp4" type="video/mp4" />
-        </video>
-        <div className="absolute inset-0 bg-[#050507]/25" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#050507]/50 via-transparent to-[#050507]" />
+      {/* ── Official US Gov Banner ── */}
+      <div className="bg-[#1b1b1b] text-white py-1.5 px-4 md:px-8 text-[11px] flex items-center gap-3">
+        <span className="text-xl">🇺🇸</span>
+        <span className="opacity-90">An official website of the United States government</span>
+        <span className="opacity-70 flex items-center gap-1 cursor-pointer hover:underline ml-2">
+          Here's how you know <ChevronRight className="w-3 h-3" />
+        </span>
       </div>
 
-      {/* ── MUTE ── */}
-      <button onClick={toggleMute}
-        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-white/[0.04] backdrop-blur-2xl border border-white/[0.08] flex items-center justify-center text-white/30 hover:text-white hover:bg-white/[0.08] transition-all duration-300 hover:scale-110 group"
-      >
-        {muted ? <VolumeX className="w-4 h-4" /> : <Volume2 className="w-4 h-4" />}
-      </button>
-
-      {/* ═══════════════════════════
-          HERO — Massive typography
-          ═══════════════════════════ */}
-      <section className="relative z-10 min-h-screen flex flex-col justify-between px-6 md:px-16 py-12">
-        {/* Top */}
-        <div className="flex justify-between items-start pt-4">
-          <div>
-            <p className="text-[9px] tracking-[0.5em] text-white/20 uppercase">Comité Judicial</p>
-            <p className="text-[8px] tracking-[0.3em] text-amber-400/25 uppercase mt-1">PAVIMUN 2025</p>
+      {/* ── DOJ Header ── */}
+      <header className="bg-[#002244] text-white border-b-4 border-[#cf102d]">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-6 flex items-center justify-between">
+          <div className="flex items-center gap-6">
+            {/* Fake DOJ Seal using an icon since we don't have the explicit seal image */}
+            <div className="w-16 h-16 rounded-full bg-white/10 flex items-center justify-center border-2 border-amber-500/80 shadow-[0_0_15px_rgba(0,0,0,0.5)]">
+              <Scale className="w-8 h-8 text-amber-500" />
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-[28px] font-bold tracking-wide" style={{ fontFamily: 'Georgia, serif' }}>
+                THE UNITED STATES DEPARTMENT OF JUSTICE
+              </h1>
+            </div>
           </div>
-          <div className="text-right">
-            <p className="text-[9px] tracking-[0.5em] text-white/20 uppercase">Expediente</p>
-            <p className="text-[8px] tracking-[0.3em] text-amber-400/25 uppercase mt-1">No. 19-CR-490</p>
+
+          <div className="hidden md:flex items-center gap-4 text-sm font-semibold tracking-wider">
+            <span className="hover:underline cursor-pointer">AGENCIES</span>
+            <span className="hover:underline cursor-pointer">RESOURCES</span>
+            <span className="hover:underline cursor-pointer">NEWS</span>
+            <span className="hover:underline cursor-pointer">CAREERS</span>
+            <div className="h-6 w-[1px] bg-white/30 mx-2" />
+            <Search className="w-5 h-5 cursor-pointer hover:text-amber-400 transition-colors" />
           </div>
         </div>
 
-        {/* Center */}
-        <div className="flex-1 flex flex-col items-center justify-center -mt-12">
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent mb-16" />
+        {/* Sub-nav banner */}
+        <div className="bg-[#f0f0f0] border-t border-gray-300">
+          <div className="max-w-[1200px] mx-auto px-4 lg:px-8 flex">
+            <div className="bg-white px-6 py-3 border-r border-gray-300 border-l border-t-2 border-t-[#002244] text-[#002244] font-bold text-sm tracking-wide">
+              JUSTICE.GOV
+            </div>
+          </div>
+        </div>
+      </header>
 
-          <p className="text-amber-400/40 text-[10px] tracking-[0.8em] uppercase mb-8 font-light">
-            Carpeta de Investigación Abierta
+      {/* ── Breadcrumbs ── */}
+      <div className="bg-white border-b border-gray-200">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-3 text-sm text-[#005ea2]">
+          <span className="hover:underline cursor-pointer">Home</span>
+          <span className="mx-2 text-gray-500">»</span>
+          <span className="hover:underline cursor-pointer">Office of Public Affairs</span>
+          <span className="mx-2 text-gray-500">»</span>
+          <span className="hover:underline cursor-pointer">News</span>
+          <span className="mx-2 text-gray-500">»</span>
+          <span className="text-gray-600">Press Releases</span>
+        </div>
+      </div>
+
+      {/* ── Main Content Container ── */}
+      <main className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12">
+
+        {/* Left Column (Content) */}
+        <section className="lg:col-span-8">
+
+          <p className="text-[#002244] font-bold text-lg mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+            U.S. Attorney's Office, Southern District of New York
           </p>
 
-          <h1 className="text-center leading-[0.8]">
-            <span className="block text-[clamp(4rem,15vw,14rem)] font-[100] tracking-[-0.04em] text-white/90"
-              style={{ fontFamily: 'system-ui, -apple-system, sans-serif' }}>
-              Epstein
-            </span>
-          </h1>
+          <h2 className="text-3xl md:text-5xl text-[#1a1a1a] mb-6 leading-tight" style={{ fontFamily: 'Georgia, serif' }}>
+            Financier Jeffrey Epstein Indicted For Sex Trafficking Of Minors
+          </h2>
 
-          <div className="flex items-center gap-8 my-8">
-            <div className="w-20 h-[1px] bg-gradient-to-r from-transparent to-white/10" />
-            <Scale className="w-5 h-5 text-amber-400/30" />
-            <div className="w-20 h-[1px] bg-gradient-to-l from-transparent to-white/10" />
+          <div className="text-base text-gray-700 mb-8 border-y border-gray-200 py-3 font-semibold">
+            FOR IMMEDIATE RELEASE <span className="mx-3 font-normal text-gray-300">|</span> Monday, July 8, 2019
           </div>
 
-          <p className="text-white/25 text-[10px] tracking-[0.6em] uppercase font-light">
-            United States District Court · Southern District of New York · 2019
-          </p>
+          {/* DOJ Preserves the Spanish text from previous versions as requested */}
+          <article className="prose prose-lg max-w-none prose-p:text-[#1a1a1a] prose-p:leading-[1.8] prose-p:mb-6" style={{ fontFamily: '"Helvetica Neue", Helvetica, Arial, sans-serif' }}>
 
-          <div className="w-24 h-[1px] bg-gradient-to-r from-transparent via-amber-400/50 to-transparent mt-16" />
-        </div>
-
-        {/* Bottom */}
-        <div className="flex flex-col items-center gap-2 opacity-20 pb-4">
-          <span className="text-[8px] tracking-[0.5em] uppercase">Desclasificado</span>
-          <ChevronDown className="w-4 h-4 animate-bounce" />
-        </div>
-      </section>
-
-      {/* ═══════════════════════════
-          STATS BAR — Animated counters
-          ═══════════════════════════ */}
-      <section id="stats" data-reveal className={`relative z-10 py-16 border-y border-white/[0.04] bg-black/40 backdrop-blur-xl transition-all duration-[1.5s] ${vis('stats') ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="max-w-6xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-          {[
-            { n: 36, s: '', label: 'Víctimas identificadas', sub: 'Hasta julio 2019' },
-            { n: 80, s: '+', label: 'Testimonios recopilados', sub: 'Declaraciones juradas' },
-            { n: 15, s: '', label: 'Años de investigación', sub: 'Desde 2005' },
-            { n: 3, s: '', label: 'Jurisdicciones', sub: 'NY · FL · USVI' },
-          ].map((d, i) => (
-            <div key={i} className="group cursor-default">
-              <p className="text-4xl md:text-5xl font-[100] text-white/80 mb-2 tabular-nums">
-                <Counter end={d.n} />{d.s}
-              </p>
-              <p className="text-[10px] tracking-[0.3em] uppercase text-white/40 mb-1">{d.label}</p>
-              <p className="text-[8px] text-white/15">{d.sub}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* ═══════════════════════════
-          CASE OVERVIEW — Glass card
-          ═══════════════════════════ */}
-      <section id="overview" data-reveal className={`relative z-10 py-28 transition-all duration-[1.5s] ${vis('overview') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="relative bg-white/[0.025] backdrop-blur-2xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-20 overflow-hidden">
-            <div className="absolute -top-20 -right-20 w-80 h-80 bg-amber-400/[0.02] rounded-full blur-[100px]" />
-            <div className="absolute -bottom-20 -left-20 w-60 h-60 bg-blue-400/[0.02] rounded-full blur-[80px]" />
-
-            <div className="flex items-center gap-4 mb-14">
-              <div className="w-12 h-12 rounded-2xl bg-gradient-to-br from-amber-400/10 to-amber-600/5 flex items-center justify-center border border-amber-400/10">
-                <Eye className="w-5 h-5 text-amber-400/70" />
-              </div>
-              <div>
-                <p className="text-amber-400/40 text-[9px] tracking-[0.5em] uppercase">Expediente</p>
-                <p className="text-white/50 text-sm font-light">Resumen de la investigación</p>
-              </div>
-            </div>
-
-            <p className="text-xl md:text-[1.7rem] font-[200] leading-[2] text-white/50 relative z-10">
-              En julio de 2019, el Distrito Sur de Nueva York abrió una
-              <span className="text-white/90 font-normal"> carpeta de investigación</span> contra
-              <span className="text-white/90 font-normal"> Jeffrey Epstein</span>, financista estadounidense,
-              por presuntas actividades de <span className="text-amber-300/70">tráfico sexual de menores</span> y
-              <span className="text-amber-300/70"> conspiración</span>. La investigación busca determinar
-              el alcance de una supuesta red que involucra a figuras de
-              <span className="text-white/90 font-normal"> las más altas esferas del poder</span>.
-              Hasta el momento, <span className="text-amber-300/70 border-b border-amber-400/20 pb-0.5">no se ha emitido veredicto alguno</span>.
-              Los delegados asumen el rol de la corte encargada de evaluar la evidencia.
+            <p className="font-bold">
+              NUEVA YORK – Geoffrey S. Berman, Fiscal Federal para el Distrito Sur de Nueva York,
+              anunció hoy la apertura de una carpeta de investigación y el desvelamiento de una
+              acusación formal (<em className="font-normal italic">Indictment</em>) contra JEFFREY EPSTEIN.
             </p>
 
-            <div className="mt-16 pt-8 border-t border-white/[0.05] flex flex-wrap gap-4">
-              {['Investigación Abierta', 'Sin Veredicto', 'Evidencia Bajo Revisión', 'Testimonios Pendientes'].map((tag, i) => (
-                <span key={i} className="text-[9px] tracking-[0.3em] uppercase text-amber-400/30 border border-amber-400/10 px-4 py-2 rounded-full hover:bg-amber-400/5 hover:text-amber-400/50 transition-all cursor-default">
-                  {tag}
-                </span>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
+            <p>
+              En julio de 2019, el Distrito Sur de Nueva York abrió una investigación formal contra
+              Jeffrey Epstein, financista estadounidense, relacionada con presuntas actividades
+              de tráfico sexual de menores y conspiración. La investigación busca determinar el alcance
+              de una supuesta red que involucra a miembros prominentes de la sociedad.
+            </p>
 
-      {/* ═══════════════════════════
-          EVIDENCE — Split narrative rows
-          ═══════════════════════════ */}
-      <section id="evidence" data-reveal className={`relative z-10 py-20 transition-all duration-[1.5s] ${vis('evidence') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="max-w-7xl mx-auto px-6">
+            <h3 className="text-2xl font-bold text-[#002244] mt-10 mb-4 border-b border-gray-200 pb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Summary of Allegations (Resumen de Presuntos Cargos)
+            </h3>
 
-          <div className="text-center mb-24">
-            <p className="text-[10px] tracking-[0.5em] uppercase text-amber-400/30 mb-4">Material de Investigación</p>
-            <h3 className="text-4xl md:text-6xl font-[100] text-white/80">La Evidencia</h3>
-            <div className="w-10 h-[1px] bg-amber-400/25 mx-auto mt-8" />
-          </div>
+            <p>
+              El proceso se centra en determinar la veracidad de múltiples acusaciones recopiladas por las agencias federales.
+              Hasta el momento, <strong>no se ha emitido veredicto alguno</strong> y aplica la presunción de inocencia.
+              Los cargos bajo investigación (Case No. 19-CR-490) incluyen:
+            </p>
 
-          {/* ROW 1 */}
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-20 items-center mb-32">
-            <div className="relative group order-2 md:order-1">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-amber-400/[0.06] to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-2xl" />
-              <div className="relative rounded-2xl overflow-hidden border border-white/[0.05] shadow-2xl">
-                <img src="/images/donald.jpg" alt="Evidencia fotográfica" className="w-full aspect-[4/3] object-cover opacity-75 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <p className="text-[8px] tracking-[0.4em] text-amber-400/40 uppercase mb-2">Exhibit A · Fotografía</p>
-                  <p className="text-sm text-white/60 font-light">Registro fotográfico bajo análisis</p>
-                </div>
-              </div>
-            </div>
+            <ul className="list-disc pl-6 space-y-4 my-6 text-[#1a1a1a]">
+              <li><strong>Tráfico Sexual:</strong> Se investiga el presunto reclutamiento y transporte de menores para explotación.</li>
+              <li><strong>Conspiración:</strong> Presunta coordinación de una empresa criminal organizada y red de facilitadores.</li>
+              <li><strong>Lavado de Activos:</strong> Supuesta ocultación de fondos mediante estructuras y entidades offshore.</li>
+              <li><strong>Obstrucción a la Justicia:</strong> Presunta manipulación de testigos y destrucción potencial de evidencia.</li>
+            </ul>
 
-            <div className="space-y-6 order-1 md:order-2">
-              <div className="flex items-center gap-3 text-amber-400/50">
-                <Users className="w-5 h-5" />
-                <span className="text-[10px] tracking-[0.3em] uppercase font-medium">Presuntas Conexiones</span>
-              </div>
-              <h4 className="text-3xl md:text-5xl font-[100] text-white/85 leading-[1.15]">
-                ¿Quién sabía<br /><span className="text-amber-300/60">y calló?</span>
-              </h4>
-              <p className="text-white/35 leading-[1.9] text-lg font-light bg-white/[0.02] rounded-xl p-6 border border-white/[0.04]">
-                La investigación <strong className="text-white/70 font-normal">no ha determinado culpabilidad</strong>.
-                Sin embargo, las fotografías sugieren vínculos sociales con figuras de poder.
-                El comité deberá evaluar si estas conexiones constituyen evidencia relevante
-                o mera coincidencia circunstancial.
+            <h3 className="text-2xl font-bold text-[#002244] mt-10 mb-4 border-b border-gray-200 pb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              The Network and Compromising Material
+            </h3>
+
+            <p>
+              Los memorandos desclasificados y las fotografías adjuntas (ver barra lateral de Componentes y Evidencia)
+              sugieren supuestas conexiones entre el imputado y figuras de poder, incluyendo políticos y ejecutivos corporativos.
+              Las imágenes documentadas, marcadas como "Exhibits", ilustran la vida social que Epstein mantenía
+              mientras presuntamente operaba dicha red.
+            </p>
+
+            <div className="bg-[#f1f1f1] border-l-4 border-[#002244] p-6 my-8">
+              <p className="mb-0 font-bold text-[#002244] uppercase tracking-wide text-sm">Nota del Comité (PAVIMUN)</p>
+              <p className="mb-0 mt-2 text-sm italic">
+                "Este comité simula los procedimientos de una corte federal. Los delegados asumirán roles de fiscalía,
+                defensa, jueces y miembros del jurado. El desafío principal es determinar si se puede investigar a individuos
+                amparados por altos niveles de influencia y poder. Ustedes definirán el rumbo del caso."
               </p>
             </div>
+
+            <p>
+              Las leyes establecen penas máximas severas para estos presuntos crímenes; sin embargo,
+              la condena final recaerá sobre las pruebas presentadas ante el Gran Jurado y este tribunal.
+            </p>
+
+            <p className="text-sm mt-12 mb-2">
+              The charges contained in the indictment are merely allegations, and the defendant is presumed
+              innocent unless and until proven guilty.
+            </p>
+          </article>
+        </section>
+
+        {/* Right Column (Sidebar / Components) */}
+        <aside className="lg:col-span-4 space-y-8">
+
+          {/* Component: Downloads / Topic */}
+          <div className="bg-[#f1f1f1] p-6 border-t-4 border-[#002244]">
+            <h3 className="text-lg font-bold text-[#002244] mb-4" style={{ fontFamily: 'Georgia, serif' }}>
+              Attachment(s):
+            </h3>
+
+            <div className="space-y-4">
+              <a href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" target="_blank" rel="noopener noreferrer"
+                className="flex items-start gap-3 group">
+                <FileText className="w-5 h-5 text-red-600 mt-1 flex-shrink-0 group-hover:underline" />
+                <div>
+                  <p className="text-[#005ea2] font-semibold text-sm group-hover:underline leading-tight">Guía Académica.pdf</p>
+                  <p className="text-xs text-gray-500 mt-1">Download (PAVIMUN Dossier)</p>
+                </div>
+              </a>
+
+              <a href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo" target="_blank" rel="noopener noreferrer"
+                className="flex items-start gap-3 group">
+                <FileText className="w-5 h-5 text-red-600 mt-1 flex-shrink-0 group-hover:underline" />
+                <div>
+                  <p className="text-[#005ea2] font-semibold text-sm group-hover:underline leading-tight">Reglamento.pdf</p>
+                  <p className="text-xs text-gray-500 mt-1">Download (Procedural Rules)</p>
+                </div>
+              </a>
+            </div>
           </div>
 
-          {/* ROW 2 — Winni Poh (wide) */}
-          <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-center mb-32">
+          {/* Component: Exhibits */}
+          <div className="border border-gray-200 p-6">
+            <h3 className="text-lg font-bold text-[#1a1a1a] mb-5 border-b border-gray-200 pb-2" style={{ fontFamily: 'Georgia, serif' }}>
+              Court Exhibits (2019 Archive)
+            </h3>
+
             <div className="space-y-6">
-              <div className="flex items-center gap-3 text-amber-400/50">
-                <ShieldAlert className="w-5 h-5" />
-                <span className="text-[10px] tracking-[0.3em] uppercase font-medium">Material Bajo Revisión</span>
-              </div>
-              <h4 className="text-3xl md:text-5xl font-[100] text-white/85 leading-[1.15]">
-                Lo que las imágenes<br /><span className="text-amber-300/60">sugieren</span>
-              </h4>
-              <p className="text-white/35 leading-[1.9] text-lg font-light bg-white/[0.02] rounded-xl p-6 border border-white/[0.04]">
-                Cada pieza de evidencia presentada requiere <strong className="text-white/70 font-normal">verificación independiente</strong>.
-                Los delegados tienen la responsabilidad de separar hechos de especulaciones
-                y construir un caso que se sostenga bajo escrutinio legal riguroso.
-                <span className="text-amber-300/50"> Presunción de inocencia</span> hasta que se demuestre lo contrario.
-              </p>
-            </div>
-
-            <div className="relative group">
-              <div className="absolute -inset-4 bg-gradient-to-bl from-amber-400/[0.06] to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-2xl" />
-              <div className="relative rounded-2xl overflow-hidden border border-white/[0.05] shadow-2xl">
-                <img src="/images/winni-poh.webp" alt="Evidencia" className="w-full aspect-[4/3] object-cover opacity-75 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <p className="text-[8px] tracking-[0.4em] text-amber-400/40 uppercase mb-2">Exhibit B · Documento</p>
-                  <p className="text-sm text-white/60 font-light">Material comprometedor bajo análisis</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* ROW 3 */}
-          <div className="grid md:grid-cols-[1fr_1.2fr] gap-12 md:gap-20 items-center">
-            <div className="relative group order-2 md:order-1">
-              <div className="absolute -inset-4 bg-gradient-to-tr from-red-400/[0.05] to-transparent rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-1000 blur-2xl" />
-              <div className="relative rounded-2xl overflow-hidden border border-white/[0.05] shadow-2xl">
-                <img src="/images/donald2.jpg" alt="Círculo social" className="w-full aspect-[4/3] object-cover opacity-75 group-hover:opacity-95 group-hover:scale-[1.03] transition-all duration-1000" />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent" />
-                <div className="absolute bottom-0 left-0 right-0 p-6 md:p-8">
-                  <p className="text-[8px] tracking-[0.4em] text-amber-400/40 uppercase mb-2">Exhibit C · Registro</p>
-                  <p className="text-sm text-white/60 font-light">Actividades sociales documentadas</p>
-                </div>
-              </div>
-            </div>
-
-            <div className="space-y-6 order-1 md:order-2">
-              <div className="flex items-center gap-3 text-red-400/50">
-                <Gavel className="w-5 h-5" />
-                <span className="text-[10px] tracking-[0.3em] uppercase font-medium">Punto de Inflexión</span>
-              </div>
-              <h4 className="text-3xl md:text-5xl font-[100] text-white/85 leading-[1.15]">
-                El proceso<br /><span className="text-red-300/50">apenas comienza</span>
-              </h4>
-              <p className="text-white/35 leading-[1.9] text-lg font-light bg-white/[0.02] rounded-xl p-6 border border-white/[0.04]">
-                Con la apertura del expediente, se inicia un proceso que podría
-                <strong className="text-white/70 font-normal"> redefinir los límites del poder</strong>.
-                ¿Puede el sistema judicial estadounidense procesar a quienes supuestamente
-                operaron bajo su protección? Los delegados decidirán el rumbo de esta investigación.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════
-          ALLEGATIONS (not charges)
-          ═══════════════════════════ */}
-      <section id="allegations" data-reveal className={`relative z-10 py-28 transition-all duration-[1.5s] ${vis('allegations') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="text-center mb-20">
-            <p className="text-[10px] tracking-[0.5em] uppercase text-amber-400/30 mb-4">Presuntos Cargos</p>
-            <h3 className="text-4xl md:text-6xl font-[100] text-white/80">Acusaciones Bajo Investigación</h3>
-            <p className="text-sm text-white/20 mt-4 font-light">Ninguno de estos cargos ha sido probado en corte</p>
-            <div className="w-10 h-[1px] bg-amber-400/25 mx-auto mt-8" />
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              { num: '01', title: 'Tráfico Sexual', desc: 'Se investiga el presunto reclutamiento de menores para explotación', color: 'red' },
-              { num: '02', title: 'Conspiración', desc: 'Presunta coordinación de una empresa criminal organizada', color: 'amber' },
-              { num: '03', title: 'Lavado de Activos', desc: 'Supuesta ocultación de fondos mediante estructuras offshore', color: 'blue' },
-              { num: '04', title: 'Obstrucción', desc: 'Presunta manipulación de testigos y destrucción de evidencia', color: 'purple' },
-              { num: '05', title: 'Abuso de Menores', desc: 'Se investigan acusaciones de abuso sexual agravado', color: 'red' },
-              { num: '06', title: 'Intimidación', desc: 'Presuntas amenazas a víctimas para evitar denuncias', color: 'emerald' },
-            ].map((c, i) => (
-              <div key={i} className="group bg-white/[0.02] backdrop-blur-xl border border-white/[0.04] rounded-2xl p-7 hover:border-white/[0.08] transition-all duration-500 relative overflow-hidden">
-                <div className="relative z-10">
-                  <span className="text-4xl font-[100] text-white/[0.04] group-hover:text-white/[0.1] transition-colors block mb-4">{c.num}</span>
-                  <h4 className="text-lg font-light text-white/75 group-hover:text-white/95 transition-colors mb-2">{c.title}</h4>
-                  <p className="text-xs text-white/20 group-hover:text-white/35 transition-colors leading-relaxed">{c.desc}</p>
-                  <div className="w-0 group-hover:w-8 h-[1px] bg-amber-400/40 mt-5 transition-all duration-500" />
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════
-          CENTRAL QUESTION
-          ═══════════════════════════ */}
-      <section id="question" data-reveal className={`relative z-10 py-32 transition-all duration-[2s] ${vis('question') ? 'opacity-100 scale-100' : 'opacity-0 scale-[0.97]'}`}>
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <div className="text-7xl text-amber-400/10 leading-none mb-4">"</div>
-          <blockquote className="text-2xl md:text-3xl font-[200] leading-[1.7] text-white/40 italic">
-            ¿Puede el sistema realmente investigar a quienes lo sostienen?
-            ¿O la justicia es un privilegio que se compra con el poder suficiente?
-          </blockquote>
-          <div className="w-12 h-[1px] bg-amber-400/20 mx-auto mt-10" />
-          <p className="text-[9px] tracking-[0.5em] text-white/15 uppercase mt-6">La pregunta que este comité debe resolver</p>
-        </div>
-      </section>
-
-      {/* ═══════════════════════════
-          COMMITTEE INFO
-          ═══════════════════════════ */}
-      <section id="committee" data-reveal className={`relative z-10 py-24 transition-all duration-[1.5s] ${vis('committee') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="max-w-5xl mx-auto px-6">
-          <div className="relative bg-white/[0.025] backdrop-blur-2xl border border-white/[0.05] rounded-[2.5rem] p-10 md:p-16 overflow-hidden">
-            <div className="absolute -top-16 -left-16 w-64 h-64 bg-amber-400/[0.015] rounded-full blur-[80px]" />
-
-            <div className="flex flex-col md:flex-row items-start gap-10 mb-14">
-              <div className="w-16 h-16 rounded-2xl bg-gradient-to-br from-amber-400/10 to-amber-600/5 flex items-center justify-center border border-amber-400/10 flex-shrink-0">
-                <Gavel className="w-7 h-7 text-amber-400/70" />
-              </div>
+              {/* Image 1 */}
               <div>
-                <p className="text-amber-400/30 text-[9px] tracking-[0.5em] uppercase mb-2">Formato</p>
-                <h3 className="text-3xl md:text-4xl font-[100] text-white/90 mb-5">Comité Judicial</h3>
-                <p className="text-lg font-[200] leading-[1.9] text-white/35">
-                  Este comité simula los procedimientos de una corte federal estadounidense.
-                  Los delegados asumirán roles legales y deberán construir argumentos basados
-                  en la evidencia presentada. Se requiere
-                  <strong className="text-white/60 font-normal">preparación previa</strong> en derecho procesal.
-                  La investigación está abierta — <strong className="text-amber-300/50 font-normal">ustedes definirán su curso</strong>.
-                </p>
+                <a href="/images/donald.jpg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/donald.jpg" alt="Exhibit A" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                </a>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit A - Photographic Log 78-B</p>
+                <p className="text-[11px] text-gray-500">Documented associations under review.</p>
+              </div>
+
+              {/* Image 2 (Winni Poh) */}
+              <div>
+                <a href="/images/winni-poh.webp" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/winni-poh.webp" alt="Exhibit B" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                </a>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit B - Seized Evidence</p>
+                <p className="text-[11px] text-gray-500">Material found executing a search warrant.</p>
+              </div>
+
+              {/* Image 3 */}
+              <div>
+                <a href="/images/donald2.jpg" target="_blank" className="block border border-gray-300 hover:shadow-md transition-shadow">
+                  <img src="/images/donald2.jpg" alt="Exhibit C" className="w-full h-auto object-cover grayscale opacity-90 hover:grayscale-0 hover:opacity-100 transition-all" />
+                </a>
+                <p className="text-xs text-gray-600 mt-2 font-semibold">Exhibit C - Social Roster</p>
+                <p className="text-[11px] text-gray-500">Photographic evidence of inner circle.</p>
               </div>
             </div>
+          </div>
 
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-              {[
-                { role: 'Fiscalía', emoji: '⚖️', desc: 'Construye el caso' },
-                { role: 'Defensa', emoji: '🛡️', desc: 'Protege al acusado' },
-                { role: 'Juez', emoji: '👨‍⚖️', desc: 'Dirige el proceso' },
-                { role: 'Jurado', emoji: '📋', desc: 'Emite veredicto' },
-              ].map((r, i) => (
-                <div key={i} className="text-center py-6 px-3 rounded-2xl bg-white/[0.02] border border-white/[0.04] hover:border-amber-400/15 hover:bg-white/[0.04] transition-all duration-300 cursor-default group">
-                  <span className="text-2xl block mb-2">{r.emoji}</span>
-                  <span className="text-sm font-light text-white/50 group-hover:text-amber-400/70 transition-colors block">{r.role}</span>
-                  <span className="text-[9px] text-white/15 mt-1 block">{r.desc}</span>
-                </div>
-              ))}
+          <div className="bg-[#002244] text-white p-6 mt-8">
+            <h4 className="font-bold text-sm mb-2" style={{ fontFamily: 'Georgia, serif' }}>Topic</h4>
+            <div className="flex flex-wrap gap-2">
+              <span className="bg-white/10 px-3 py-1 rounded-sm text-xs border border-white/20">Human Trafficking</span>
+              <span className="bg-white/10 px-3 py-1 rounded-sm text-xs border border-white/20">Corruption</span>
+            </div>
+
+            <h4 className="font-bold text-sm mb-2 mt-6" style={{ fontFamily: 'Georgia, serif' }}>Component</h4>
+            <div className="flex flex-wrap gap-2">
+              <span className="bg-white/10 px-3 py-1 rounded-sm text-xs border border-white/20">USAO - New York, Southern</span>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ═══════════════════════════
-          RESOURCES
-          ═══════════════════════════ */}
-      <section id="resources" data-reveal className={`relative z-10 py-24 mb-8 transition-all duration-[1.5s] ${vis('resources') ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-20'}`}>
-        <div className="max-w-4xl mx-auto px-6">
-          <div className="flex items-center justify-center gap-4 mb-14">
-            <div className="h-[1px] w-12 bg-white/[0.06]" />
-            <span className="text-[9px] tracking-[0.5em] text-white/20 uppercase">Documentos</span>
-            <div className="h-[1px] w-12 bg-white/[0.06]" />
+        </aside>
+
+      </main>
+
+      {/* ── DOJ Footer Area ── */}
+      <footer className="bg-[#1b1b1b] text-white mt-12 py-16">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8">
+          <div className="md:col-span-1">
+            <Scale className="w-12 h-12 text-gray-400 mb-4" />
+            <p className="font-bold mb-2">U.S. Department of Justice</p>
+            <p className="text-sm text-gray-400">950 Pennsylvania Avenue, NW</p>
+            <p className="text-sm text-gray-400">Washington, DC 20530-0001</p>
           </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
-            <a href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" target="_blank"
-              className="group flex items-center gap-5 bg-white/[0.02] backdrop-blur-xl border border-white/[0.04] rounded-2xl p-7 hover:border-amber-400/15 hover:bg-white/[0.04] transition-all duration-300"
-            >
-              <div className="w-12 h-12 rounded-xl bg-amber-400/[0.06] flex items-center justify-center flex-shrink-0 group-hover:bg-amber-400/15 transition-colors">
-                <FileText className="w-5 h-5 text-amber-400/50 group-hover:text-amber-400/80 transition-colors" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-base font-light text-white/70 group-hover:text-white/90 transition-colors">Guía Académica</h4>
-                <p className="text-[10px] text-white/15 mt-0.5">Documentación del caso</p>
-              </div>
-              <ExternalLink className="w-4 h-4 text-white/10 group-hover:text-amber-400/40 transition-colors flex-shrink-0" />
-            </a>
-
-            <a href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo" target="_blank"
-              className="group flex items-center gap-5 bg-white/[0.02] backdrop-blur-xl border border-white/[0.04] rounded-2xl p-7 hover:border-amber-400/15 hover:bg-white/[0.04] transition-all duration-300"
-            >
-              <div className="w-12 h-12 rounded-xl bg-white/[0.04] flex items-center justify-center flex-shrink-0 group-hover:bg-white/[0.08] transition-colors">
-                <Scale className="w-5 h-5 text-white/30 group-hover:text-white/60 transition-colors" />
-              </div>
-              <div className="flex-1 min-w-0">
-                <h4 className="text-base font-light text-white/70 group-hover:text-white/90 transition-colors">Reglamento</h4>
-                <p className="text-[10px] text-white/15 mt-0.5">Reglas de procedimiento</p>
-              </div>
-              <ExternalLink className="w-4 h-4 text-white/10 group-hover:text-white/40 transition-colors flex-shrink-0" />
-            </a>
+          <div className="space-y-2 text-sm">
+            <p className="font-bold mb-4">About</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">The Attorney General</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">DOJ Agencies</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Budget & Performance</p>
+          </div>
+          <div className="space-y-2 text-sm">
+            <p className="font-bold mb-4">Resources</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Forms</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Publications</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Information Quality</p>
+          </div>
+          <div className="space-y-2 text-sm">
+            <p className="font-bold mb-4">Policies</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Privacy Policy</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Legal Policies & Disclaimers</p>
+            <p className="text-gray-400 hover:text-white cursor-pointer">Accessibility</p>
           </div>
         </div>
-      </section>
-
-      {/* ── Footer ── */}
-      <footer className="relative z-10 py-14 text-center border-t border-white/[0.03]">
-        <Scale className="w-4 h-4 text-white/[0.06] mx-auto mb-3" />
-        <p className="text-[7px] tracking-[0.6em] uppercase text-white/[0.08]">
-          Southern District of New York · 2019 · PAVIMUN
-        </p>
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 mt-12 pt-8 border-t border-gray-700 text-xs text-gray-500 text-center">
+          <p>PAVIMUN Educational Simulation. Not an official government record.</p>
+        </div>
       </footer>
+
     </div>
   );
 };
