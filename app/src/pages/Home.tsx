@@ -10,6 +10,11 @@ const Home = () => {
   const [calendarRevealed, setCalendarRevealed] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
 
+  // Easter Egg States
+  const [isReversing, setIsReversing] = useState(false);
+  const [fakeYear, setFakeYear] = useState(2025);
+  const [easterEggMsg, setEasterEggMsg] = useState('');
+
   // Countdown timer to March 20, 2026
   const getTimeLeft = useCallback(() => {
     const target = new Date('2026-03-20T08:00:00').getTime();
@@ -26,9 +31,41 @@ const Home = () => {
   const [timeLeft, setTimeLeft] = useState(getTimeLeft);
 
   useEffect(() => {
-    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    // @ts-ignore
+    let timer: NodeJS.Timeout;
+
+    if (isReversing) {
+      // Easter egg crazy countdown
+      timer = setInterval(() => {
+        setTimeLeft({
+          days: Math.floor(Math.random() * 999),
+          hours: Math.floor(Math.random() * 24),
+          minutes: Math.floor(Math.random() * 60),
+          seconds: Math.floor(Math.random() * 60),
+        });
+        setFakeYear(prev => {
+          if (prev <= 1986) return 1986;
+          return prev - Math.floor(Math.random() * 5);
+        });
+      }, 50);
+
+      // Stop after 3 seconds
+      setTimeout(() => {
+        setIsReversing(false);
+        setFakeYear(2025);
+        setEasterEggMsg('El tiempo es relativo. La diplomacia es absoluta.');
+
+        // Clear the message after a while
+        setTimeout(() => setEasterEggMsg(''), 4000);
+      }, 3000);
+
+    } else {
+      // Normal countdown
+      timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
+    }
+
     return () => clearInterval(timer);
-  }, [getTimeLeft]);
+  }, [getTimeLeft, isReversing]);
 
   // Welcome splash sequence
   useEffect(() => {
@@ -220,11 +257,18 @@ const Home = () => {
               <span className="text-[#4fc3f7] text-xs font-bold tracking-[0.3em] uppercase">Cuenta Regresiva</span>
             </div>
             <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4 tracking-tight">
-              Faltan
+              {isReversing ? `Año ${fakeYear}` : 'Faltan'}
             </h2>
-            <p className="text-white/40 text-sm mb-12 tracking-wide">para la I Edición de PAVIMUN</p>
+            <p className="text-white/40 text-sm mb-12 tracking-wide">
+              {easterEggMsg || 'para la I Edición de PAVIMUN'}
+            </p>
 
-            <div className="flex items-center gap-3 md:gap-6">
+            <div
+              className={`flex items-center gap-3 md:gap-6 transition-transform duration-100 ${isReversing ? 'blur-[1px] scale-95 opacity-50' : ''}`}
+              onDoubleClick={() => {
+                if (!isReversing) setIsReversing(true);
+              }}
+            >
               {[
                 { value: timeLeft.days, label: 'Días' },
                 { value: timeLeft.hours, label: 'Horas' },
@@ -399,8 +443,10 @@ const Home = () => {
             alt="Colegio Pablo VI"
             className="h-16 w-auto object-contain opacity-40 transition-all duration-500 hover:opacity-70 hover:scale-105"
           />
-          <p className="text-[#1a237e]/50 font-semibold text-center text-sm tracking-[0.05em]">
-            U.E. Colegio Pablo VI
+          <p className="text-[#1a237e]/50 font-semibold text-center text-sm tracking-[0.05em] transition-colors hover:text-[#1a237e]">
+            <a href="https://maps.app.goo.gl/3tWigGfbmtbGNmFk7" target="_blank" rel="noopener noreferrer" title="Ubicación Secreta">
+              10°01'42.1"N 69°20'43.0"W
+            </a>
           </p>
           <p className="text-gray-300 text-xs text-center tracking-[0.15em] uppercase">
             Bondad · Ciencia · Paz

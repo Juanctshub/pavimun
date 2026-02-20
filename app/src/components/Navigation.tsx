@@ -4,6 +4,7 @@ import { Link, useLocation } from 'react-router-dom';
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isBlackout, setIsBlackout] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -83,9 +84,12 @@ const Navigation = () => {
         <div className="pavi-container">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
-            <Link
-              to="/"
-              className="flex items-center gap-3 transition-all duration-300 hover:opacity-80 active:scale-[0.97]"
+            <div
+              className="flex items-center gap-3 transition-all duration-300 hover:opacity-80 active:scale-[0.97] cursor-pointer"
+              onClick={() => {
+                setIsBlackout(true);
+                setTimeout(() => setIsBlackout(false), 5000);
+              }}
             >
               <img
                 src="/images/pavimun-logo.jpg"
@@ -95,7 +99,7 @@ const Navigation = () => {
               <span className={`hidden sm:block text-sm font-bold tracking-tight transition-colors duration-500 ${textColorClass}`}>
                 PAVIMUN
               </span>
-            </Link>
+            </div>
 
             {/* Right side — Instagram + Menu */}
             <div className="flex items-center gap-1.5">
@@ -236,13 +240,27 @@ const Navigation = () => {
                 alt="Colegio Pablo VI"
                 className="h-12 w-auto mx-auto object-contain mb-3 opacity-40"
               />
-              <p className="text-[#1a237e]/50 font-semibold text-xs tracking-[0.05em]">Colegio Pablo VI</p>
+              <p className="text-[#1a237e]/50 font-semibold text-xs tracking-[0.05em] transition-colors hover:text-[#1a237e]">
+                <a href="https://maps.app.goo.gl/3tWigGfbmtbGNmFk7" target="_blank" rel="noopener noreferrer" title="Ubicación Secreta">
+                  10°01'42.1"N 69°20'43.0"W
+                </a>
+              </p>
               <p className="text-gray-300 text-[10px] mt-1 tracking-[0.15em] uppercase">
                 PAVIMUN · I Edición
               </p>
             </div>
           </div>
         </div>
+      </div>
+
+      {/* EASTER EGG: Extreme Blackout */}
+      <div
+        className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ${isBlackout ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
+      >
+        <p className="text-white text-sm md:text-base font-mono tracking-widest text-center px-6">
+          Apagaste la luz. Acabas de provocar un apagón internacional.<br />
+          <span className="text-gray-500 text-xs mt-4 block animate-pulse">Reconectando sistemas en 5 segundos...</span>
+        </p>
       </div>
     </>
   );
