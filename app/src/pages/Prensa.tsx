@@ -239,13 +239,13 @@ const Prensa = () => {
           className="w-full max-w-6xl transition-transform duration-100 ease-out preserve-3d"
           style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { transform: `rotateX(${mousePos.y * -4}deg) rotateY(${mousePos.x * 4}deg)` } : {}}
         >
-          <div className="flex flex-col items-center justify-center text-center mb-16 translate-z-20 w-full relative z-20">
+          <div className="flex flex-col items-center justify-center text-center mb-16 translate-z-20 w-full relative z-20 mt-24 md:mt-0">
             <div className="inline-flex items-center gap-3 px-6 py-2 bg-black/60 border border-blue-500/50 rounded-full mb-8 md:mb-8 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)]">
               <span className="w-2 h-2 bg-red-600 rounded-full animate-ping" />
               <span className="w-2 h-2 bg-red-600 rounded-full absolute" />
-              <span className="text-sm md:text-xs font-bold tracking-[0.2em] text-white uppercase">Live Broadcast</span>
+              <span className="text-[10px] md:text-xs font-bold tracking-[0.2em] text-white uppercase">Live Broadcast</span>
             </div>
-            <h1 className="text-[5.5rem] leading-[0.9] sm:text-8xl md:text-[10rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 drop-shadow-2xl select-none w-full relative z-10 py-2">
+            <h1 className="text-[6.5rem] leading-[0.9] sm:text-8xl md:text-[10rem] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-gray-400 drop-shadow-2xl select-none w-full relative z-10 py-2">
               PRENSA
             </h1>
             <div className="h-px w-32 bg-gradient-to-r from-transparent via-blue-500 to-transparent mx-auto mt-6 md:mt-6 mb-6 md:mb-6" />
