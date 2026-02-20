@@ -84,9 +84,9 @@ const Home = () => {
   }, [calendarRevealed]);
 
   const days = [
-    { num: '20', label: 'Jueves', desc: 'Ceremonia de Apertura' },
-    { num: '21', label: 'Viernes', desc: 'Sesiones de Debate' },
-    { num: '22', label: 'Sábado', desc: 'Clausura y Premiación' },
+    { num: '20', label: 'Viernes', desc: 'Ceremonia de Apertura' },
+    { num: '21', label: 'Sábado', desc: 'Sesiones de Debate' },
+    { num: '22', label: 'Domingo', desc: 'Clausura y Premiación' },
   ];
 
   return (
@@ -154,8 +154,8 @@ const Home = () => {
               {/* === SECTOR BADGE === */}
               <div className="mt-8 relative group cursor-default">
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 rounded-full blur opacity-40 group-hover:opacity-60 transition-opacity"></div>
-                <div className="relative px-6 py-2 bg-gradient-to-r from-[#1a237e] to-[#2e7d32] rounded-full text-center border border-white/20 shadow-lg hover:scale-105 transition-transform">
-                  <p className="text-white font-bold text-xs md:text-sm tracking-[0.1em] uppercase">
+                <div className="relative px-4 py-1.5 md:px-5 md:py-2 bg-gradient-to-r from-[#1a237e] to-[#2e7d32] rounded-full text-center border border-white/20 shadow-lg hover:scale-105 transition-transform max-w-[280px] md:max-w-[340px] mx-auto">
+                  <p className="text-white font-bold text-[10px] md:text-[11px] tracking-wider uppercase leading-snug">
                     Los hombres del mañana serán lo que se haga con los jóvenes de hoy
                   </p>
                 </div>
@@ -394,7 +394,7 @@ const Home = () => {
                   <div className="p-7 md:p-9 rounded-3xl bg-white/70 backdrop-blur-sm border border-black/[0.04] shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
                     <p className="text-base md:text-lg text-gray-600 leading-[1.85]">
                       El Modelo de Naciones Unidas (MUN) en el Colegio Pablo VI, denominado PAVIMUN,
-                      surgió como una iniciativa de la Hna. Liuha Ching y de la Prof. Nancy Viscido
+                      surgió como una iniciativa de la Directora Nancy Viscido y la Sub-Directora Liuha Ching
                       en el año escolar 2023/2024.
                     </p>
                   </div>
@@ -403,9 +403,7 @@ const Home = () => {
                 <div className="reveal" style={{ transitionDelay: '0.3s' }}>
                   <div className="p-7 md:p-9 rounded-3xl bg-white/70 backdrop-blur-sm border border-black/[0.04] shadow-[0_2px_20px_rgba(0,0,0,0.04)]">
                     <p className="text-base md:text-lg text-gray-600 leading-[1.85]">
-                      Inicialmente se seleccionaron a 6 estudiantes para dar inicio al proyecto,
-                      con la intención de incorporar a más representantes posteriormente,
-                      incluyendo representantes del género femenino.
+                      Inicialmente se seleccionaron a 6 estudiantes para dar inicio al proyecto. Desde entonces, se han incorporado más representantes, con ahora PAVIMUN formando parte recurrente del circuito larense.
                     </p>
                   </div>
                 </div>

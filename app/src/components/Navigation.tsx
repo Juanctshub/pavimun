@@ -4,7 +4,6 @@ import { Link, useLocation } from 'react-router-dom';
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [isBlackout, setIsBlackout] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -84,12 +83,9 @@ const Navigation = () => {
         <div className="pavi-container">
           <div className="flex items-center justify-between h-[72px]">
             {/* Logo */}
-            <div
+            <Link
+              to="/"
               className="flex items-center gap-3 transition-all duration-300 hover:opacity-80 active:scale-[0.97] cursor-pointer"
-              onClick={() => {
-                setIsBlackout(true);
-                setTimeout(() => setIsBlackout(false), 5000);
-              }}
             >
               <img
                 src="/images/pavimun-logo.jpg"
@@ -99,7 +95,7 @@ const Navigation = () => {
               <span className={`hidden sm:block text-sm font-bold tracking-tight transition-colors duration-500 ${textColorClass}`}>
                 PAVIMUN
               </span>
-            </div>
+            </Link>
 
             {/* Right side — Instagram + Menu */}
             <div className="flex items-center gap-1.5">
@@ -249,15 +245,6 @@ const Navigation = () => {
         </div>
       </div>
 
-      {/* EASTER EGG: Extreme Blackout */}
-      <div
-        className={`fixed inset-0 z-[9999] bg-black flex items-center justify-center transition-opacity duration-1000 ${isBlackout ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}
-      >
-        <p className="text-white text-sm md:text-base font-mono tracking-widest text-center px-6">
-          Apagaste la luz. Acabas de provocar un apagón internacional.<br />
-          <span className="text-gray-500 text-xs mt-4 block animate-pulse">Reconectando sistemas en 5 segundos...</span>
-        </p>
-      </div>
     </>
   );
 };

@@ -194,6 +194,7 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
 const Corte = () => {
   const [loading, setLoading] = useState(true);
   const [muted, setMuted] = useState(true);
+  const [uaPlaying, setUaPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   // Easter Egg States
@@ -351,6 +352,8 @@ const Corte = () => {
                 <video
                   controls
                   preload="metadata"
+                  onPlay={() => setUaPlaying(true)}
+                  onPause={() => setUaPlaying(false)}
                   className="w-full max-h-[500px] h-auto object-contain transition-transform duration-700 group-hover:scale-[1.01]"
                   poster="/images/f2.jpeg"
                 >
@@ -358,12 +361,14 @@ const Corte = () => {
                   Your browser does not support the video tag.
                 </video>
                 {/* Play Button Overlay */}
-                <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 hover:!opacity-0 transition-opacity bg-black/40 pointer-events-none">
-                  <div className="w-16 h-16 bg-[#cf102d]/90 rounded-full flex items-center justify-center backdrop-blur-sm">
-                    <span className="ml-1 w-0 h-0 border-t-8 border-t-transparent border-l-[14px] border-l-white border-b-8 border-b-transparent"></span>
+                {!uaPlaying && (
+                  <div className="absolute inset-0 flex flex-col items-center justify-center opacity-0 group-hover:opacity-100 hover:!opacity-0 transition-opacity bg-black/40 pointer-events-none">
+                    <div className="w-16 h-16 bg-[#cf102d]/90 rounded-full flex items-center justify-center backdrop-blur-sm">
+                      <span className="ml-1 w-0 h-0 border-t-8 border-t-transparent border-l-[14px] border-l-white border-b-8 border-b-transparent"></span>
+                    </div>
+                    <span className="text-white text-xs mt-3 uppercase tracking-widest font-bold">Review Material</span>
                   </div>
-                  <span className="text-white text-xs mt-3 uppercase tracking-widest font-bold">Review Material</span>
-                </div>
+                )}
               </div>
               <p className="text-sm text-gray-500 italic py-3 text-center w-full bg-gray-100 border-t border-gray-300">
                 Video Evidence Preview. Click video window to review footage directly.
@@ -437,11 +442,23 @@ const Corte = () => {
                 <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
               </div>
               <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
-                <img src="/images/fotico.jpeg" alt="Evidence 2" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <img src="/images/f2.jpeg" alt="Evidence 2" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
                 <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
               </div>
               <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
                 <img src="/images/f3.jpeg" alt="Evidence 3" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/donald.jpg" alt="Evidence 4" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/donald2.jpg" alt="Evidence 5" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
+                <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
+              </div>
+              <div className="relative group overflow-hidden border border-gray-300 shadow-sm bg-white p-2">
+                <img src="/images/winni-poh.webp" alt="Evidence 6" className="w-full h-48 sm:h-64 object-cover filter grayscale sepia-[0.3] contrast-125 group-hover:filter-none transition-all duration-700 group-hover:scale-105" />
                 <div className="absolute top-4 left-4 bg-[#cf102d] text-white text-[9px] px-2 py-0.5 font-bold tracking-widest uppercase shadow-md">Classified</div>
               </div>
             </div>
