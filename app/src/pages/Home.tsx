@@ -84,17 +84,17 @@ const Home = () => {
         <div className="absolute bottom-[15%] right-[5%] w-96 h-96 bg-[#2e7d32]/[0.03] rounded-full blur-3xl animate-float" style={{ animationDelay: '2s' }} />
 
         {/* Floating decoration photos on the sides */}
-        <div className={`absolute top-[12%] left-[3%] w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-700 ${welcomeDone ? 'opacity-40 translate-y-0 rotate-[-6deg]' : 'translate-y-8 rotate-0'}`}>
-          <img src="/images/foto1.jpg" alt="" className="w-full h-full object-cover" />
+        <div className={`absolute top-[12%] left-[3%] w-32 h-40 md:w-40 md:h-48 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-700 ${welcomeDone ? 'opacity-40 translate-y-0 rotate-[-6deg]' : 'translate-y-8 rotate-0'}`}>
+          <img src="/images/g1.jpeg" alt="" className="w-full h-full object-cover object-[center_top]" />
         </div>
-        <div className={`absolute bottom-[18%] left-[6%] w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-900 ${welcomeDone ? 'opacity-35 translate-y-0 rotate-[4deg]' : 'translate-y-8 rotate-0'}`}>
-          <img src="/images/foto2.jpg" alt="" className="w-full h-full object-cover" />
+        <div className={`absolute bottom-[18%] left-[6%] w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-900 ${welcomeDone ? 'opacity-35 translate-y-0 rotate-[4deg]' : 'translate-y-8 rotate-0'}`}>
+          <img src="/images/g2.jpeg" alt="" className="w-full h-full object-cover object-[center_top]" />
         </div>
-        <div className={`absolute top-[15%] right-[4%] w-24 h-24 md:w-32 md:h-32 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-1100 ${welcomeDone ? 'opacity-35 translate-y-0 rotate-[8deg]' : 'translate-y-8 rotate-0'}`}>
-          <img src="/images/foto3.jpg" alt="" className="w-full h-full object-cover" />
+        <div className={`absolute top-[15%] right-[4%] w-28 h-36 md:w-36 md:h-44 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-1100 ${welcomeDone ? 'opacity-35 translate-y-0 rotate-[8deg]' : 'translate-y-8 rotate-0'}`}>
+          <img src="/images/g3.jpeg" alt="" className="w-full h-full object-cover object-[center_top]" />
         </div>
-        <div className={`absolute bottom-[22%] right-[5%] w-28 h-28 md:w-36 md:h-36 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-1300 ${welcomeDone ? 'opacity-40 translate-y-0 rotate-[-5deg]' : 'translate-y-8 rotate-0'}`}>
-          <img src="/images/pedro.jpg" alt="" className="w-full h-full object-cover" />
+        <div className={`absolute bottom-[22%] right-[5%] w-32 h-40 md:w-40 md:h-48 rounded-2xl overflow-hidden shadow-xl opacity-0 transition-all duration-1000 delay-1300 ${welcomeDone ? 'opacity-40 translate-y-0 rotate-[-5deg]' : 'translate-y-8 rotate-0'}`}>
+          <img src="/images/g4.jpeg" alt="" className="w-full h-full object-cover object-[center_top]" />
         </div>
 
         <div className="pavi-container w-full relative z-10 mt-12 md:mt-0">

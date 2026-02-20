@@ -233,11 +233,11 @@ const Prensa = () => {
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,#000000_130%)] opacity-70" />
       </div>
 
-      <section className={`relative z-10 min-h-screen flex items-center justify-center px-4 md:px-8 pt-32 md:pt-24 perspective-1000 transition-all duration-1000 ease-out ${loading ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
+      <section className={`relative z-10 min-h-screen flex items-center justify-center px-4 md:px-8 pt-48 md:pt-24 perspective-1000 transition-all duration-1000 ease-out ${loading ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
 
         <div
           className="w-full max-w-6xl transition-transform duration-100 ease-out preserve-3d"
-          style={{ transform: `rotateX(${mousePos.y * -4}deg) rotateY(${mousePos.x * 4}deg)` }}
+          style={typeof window !== 'undefined' && window.innerWidth >= 768 ? { transform: `rotateX(${mousePos.y * -4}deg) rotateY(${mousePos.x * 4}deg)` } : {}}
         >
           <div className="text-center mb-16 translate-z-20">
             <div className="inline-flex items-center gap-3 px-6 py-2 bg-black/60 border border-blue-500/50 rounded-full mb-10 md:mb-8 backdrop-blur-xl shadow-[0_0_30px_rgba(59,130,246,0.3)]">
