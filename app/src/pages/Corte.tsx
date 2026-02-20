@@ -1,5 +1,5 @@
-import { useState, useEffect, useCallback } from 'react';
-import { Search, ChevronRight, FileText, Scale, X } from 'lucide-react';
+import { useState, useEffect, useCallback, useRef } from 'react';
+import { Search, ChevronRight, FileText, Scale, X, Volume2, VolumeX } from 'lucide-react';
 
 /* ═══════════════════════════════════════════════════════════
    CORTE — Jeffrey Epstein Case (2019)
@@ -155,6 +155,8 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
 // ═══ MAIN PAGE (DOJ AESTHETIC) ═══
 const Corte = () => {
   const [loading, setLoading] = useState(true);
+  const [muted, setMuted] = useState(true);
+  const audioRef = useRef<HTMLAudioElement>(null);
 
   // DOJ Official Font: Public Sans or Arial for body, Merriweather/Georgia for headers.
   // We'll use system UI for sans, and Georgia for serif.
@@ -163,6 +165,29 @@ const Corte = () => {
     setLoading(false);
     window.scrollTo(0, 0);
   }, []);
+
+  // Audio fade-in logic
+  useEffect(() => {
+    if (loading) return;
+    const a = audioRef.current;
+    if (!a) return;
+    a.volume = 0;
+    a.play().then(() => {
+      let v = 0;
+      const i = setInterval(() => {
+        v += 0.005;
+        if (v >= 0.15) { v = 0.15; clearInterval(i); }
+        a.volume = v;
+      }, 80);
+    }).catch(() => { });
+  }, [loading]);
+
+  const toggleMute = () => {
+    if (audioRef.current) {
+      audioRef.current.muted = !muted;
+      setMuted(!muted);
+    }
+  };
 
   if (loading) return <GoogleIntro onDone={handleDone} />;
 
@@ -214,7 +239,7 @@ const Corte = () => {
       </header>
 
       {/* ── Breadcrumbs ── */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white border-b border-gray-200 relative z-10">
         <div className="max-w-[1200px] mx-auto px-4 lg:px-8 py-3 text-sm text-[#005ea2]">
           <span className="hover:underline cursor-pointer">Home</span>
           <span className="mx-2 text-gray-500">»</span>
@@ -226,8 +251,17 @@ const Corte = () => {
         </div>
       </div>
 
+      {/* ── Audio Element & Mute Button ── */}
+      <audio ref={audioRef} loop><source src="/videos/epsteinsong.mp3" type="audio/mpeg" /></audio>
+
+      <button onClick={toggleMute}
+        className="fixed bottom-6 right-6 z-50 w-12 h-12 rounded-full bg-[#002244] text-white flex items-center justify-center shadow-lg hover:bg-[#cf102d] transition-colors group"
+      >
+        {muted ? <VolumeX className="w-5 h-5" /> : <Volume2 className="w-5 h-5" />}
+      </button>
+
       {/* ── Main Content Container ── */}
-      <main className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12">
+      <main className="max-w-[1200px] mx-auto px-4 lg:px-8 py-10 md:py-14 grid grid-cols-1 lg:grid-cols-12 gap-12 relative z-10">
 
         {/* Left Column (Content) */}
         <section className="lg:col-span-8">
@@ -252,6 +286,14 @@ const Corte = () => {
               anunció hoy la apertura de una carpeta de investigación y el desvelamiento de una
               acusación formal (<em className="font-normal italic">Indictment</em>) contra JEFFREY EPSTEIN.
             </p>
+
+            {/* Decorative Background Video (Muted, floating snippet) */}
+            <div className="my-8 rounded border-4 border-[#1b1b1b] shadow-xl overflow-hidden relative">
+              <div className="absolute top-0 right-0 bg-[#cf102d] text-white text-[10px] font-bold px-2 py-1 z-10 uppercase tracking-widest">Surveillance Archive</div>
+              <video autoPlay loop muted playsInline className="w-full h-auto object-cover opacity-80 mix-blend-multiply filter grayscale contrast-125">
+                <source src="/videos/epstein.mp4" type="video/mp4" />
+              </video>
+            </div>
 
             <p>
               En julio de 2019, el Distrito Sur de Nueva York abrió una investigación formal contra
@@ -420,8 +462,9 @@ const Corte = () => {
             <p className="text-gray-400 hover:text-white cursor-pointer">Accessibility</p>
           </div>
         </div>
-        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 mt-12 pt-8 border-t border-gray-700 text-xs text-gray-500 text-center">
+        <div className="max-w-[1200px] mx-auto px-4 lg:px-8 mt-12 pt-8 border-t border-gray-700 text-xs text-gray-500 text-center flex flex-col gap-2">
           <p>PAVIMUN Educational Simulation. Not an official government record.</p>
+          <p className="opacity-70 text-[10px]">Uso Exclusivo con fines academicos para el evento del Modelo de las Naciones Unidas del Colegio Pablo VI, informacion vigente y disponible unicamente durante el periodo de sesiones.</p>
         </div>
       </footer>
 
