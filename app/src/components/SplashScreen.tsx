@@ -85,9 +85,9 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
 
                     {/* Logo image */}
                     <div
-                        className={`relative transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] ${phase >= 1
-                                ? 'opacity-100 scale-100 translate-y-0 blur-0'
-                                : 'opacity-0 scale-[0.6] translate-y-8 blur-sm'
+                        className={`relative transition-all duration-[1000ms] ease-out ${phase >= 1
+                            ? 'opacity-100 scale-100 translate-y-0 blur-0'
+                            : 'opacity-0 scale-[0.6] translate-y-8 blur-sm'
                             }`}
                     >
                         <img

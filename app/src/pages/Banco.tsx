@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Shield, TrendingUp, Handshake, ShoppingBag, Music, Gift, MessageSquare, AlertTriangle, ArrowRight } from 'lucide-react';
+import { Shield, TrendingUp, Handshake, ShoppingBag, Music, Gift, AlertTriangle, ArrowRight } from 'lucide-react';
 
 const Banco = () => {
   const [isAuthorized, setIsAuthorized] = useState(false);
@@ -42,22 +42,22 @@ const Banco = () => {
   // Loading Sequence moved to handlePinSubmit
 
   const banknotes = [
-    { denom: 1, front: '/images/pavi/f.png', back: '/images/pavi/ff.png' },
-    { denom: 2, front: '/images/pavi/j.png', back: '/images/pavi/jj.png' },
-    { denom: 5, front: '/images/pavi/k.png', back: '/images/pavi/kk.png' },
-    { denom: 10, front: '/images/pavi/n.png', back: '/images/pavi/nn.png' },
-    { denom: 20, front: '/images/pavi/c.png', back: '/images/pavi/cc.png', character: 'Raulito' },
-    { denom: 50, front: '/images/pavi/d.png', back: '/images/pavi/dd.png', character: 'Aura' },
-    { denom: 100, front: '/images/pavi/s.png', back: '/images/pavi/ss.png' },
-    { denom: 200, front: '/images/pavi/x.png', back: '/images/pavi/xx.png' },
+    { denom: 1, front: '/images/pavi/f.webp', back: '/images/pavi/ff.webp', description: 'El inicio de la economía PAVIMUN. Perfecto para pequeños recargos en La Tiendita.' },
+    { denom: 2, front: '/images/pavi/j.webp', back: '/images/pavi/jj.webp', description: 'Útil para transacciones menores y dar vuelto exacto en las ferias.' },
+    { denom: 5, front: '/images/pavi/k.webp', back: '/images/pavi/kk.webp', description: 'El billete de circulación común para snacks ligeros y chicles.' },
+    { denom: 10, front: '/images/pavi/n.webp', back: '/images/pavi/nn.webp', description: 'El estándar de oro para comprar golosinas y enviar rosas parlamentarias.' },
+    { denom: 20, front: '/images/pavi/c.webp', back: '/images/pavi/cc.webp', character: 'Raulito', description: 'Billete de inversión. Ideal para iniciar apuestas en el Casino o comprar combos.' },
+    { denom: 50, front: '/images/pavi/d.webp', back: '/images/pavi/dd.webp', character: 'Aura', description: 'Reserva de valor media. Utilizado para privilegios como elegir canciones en el receso.' },
+    { denom: 100, front: '/images/pavi/s.webp', back: '/images/pavi/ss.webp', description: 'El premio mayor de la diplomacia. Adquiere stickers oficiales o exclusividades de alto nivel.' },
+    { denom: 200, front: '/images/pavi/x.webp', back: '/images/pavi/xx.webp', description: 'Edición Limitada. Quien porte este billete tiene acceso VIP indiscutible a los beneficios del Modelo.' },
   ];
 
   const dutyFreeItems = [
-    { name: 'Rosa Parlamentaria (Mensaje Anónimo)', price: 10, icon: <MessageSquare className="w-6 h-6" /> },
-    { name: 'Snack Ligero (Caramelos/Golosinas)', price: 30, icon: <Gift className="w-6 h-6" /> },
-    { name: 'Elegir 1 Canción del Receso', price: 50, icon: <Music className="w-6 h-6" /> },
+    { name: 'Snacks Salados (Doritos, Papas)', price: 30, icon: <Gift className="w-6 h-6" /> },
+    { name: 'Golosinas y Chocolates', price: 20, icon: <Gift className="w-6 h-6" /> },
+    { name: 'Refrescos y Bebidas', price: 50, icon: <Gift className="w-6 h-6" /> },
     { name: 'Sticker Holográfico Oficial PAVIMUN', price: 100, icon: <ShoppingBag className="w-6 h-6" /> },
-    { name: 'Pase VIP (Saltar la Fila del Break)', price: 200, icon: <Shield className="w-6 h-6" /> },
+    { name: 'Reserva de Corneta PAVI', price: 200, icon: <Music className="w-6 h-6" /> },
   ];
 
   if (isLoading) {
@@ -68,17 +68,16 @@ const Banco = () => {
           <div className="absolute inset-0 border-4 border-[#b89456] rounded-full animate-spin border-t-transparent shadow-[0_0_30px_#b89456]"></div>
           <div className="absolute inset-2 border-4 border-[#1b3a24] rounded-full animate-reverse-spin border-b-transparent"></div>
           <Shield className="absolute inset-0 m-auto w-12 h-12 text-[#b89456] animate-pulse" />
-        </div>
-        <h2 className="text-2xl font-bold tracking-widest text-[#b89456] mb-4 uppercase">Banco Central PAVI</h2>
-        <p className="text-gray-400 animate-pulse">{loadingText}</p>
+          <h2 className="text-2xl font-bold tracking-widest text-[#b89456] mb-4 uppercase">Banco Central</h2>
+          <p className="text-gray-400 animate-pulse">{loadingText}</p>
 
-        {/* Progress bar */}
-        <div className="w-64 h-1 bg-gray-800 mt-8 rounded overflow-hidden">
-          <div className="h-full bg-[#b89456] animate-[load_4.5s_ease-in-out_forwards]"></div>
-        </div>
+          {/* Progress bar */}
+          <div className="w-64 h-1 bg-gray-800 mt-8 rounded overflow-hidden">
+            <div className="h-full bg-[#b89456] animate-[load_4.5s_ease-in-out_forwards]"></div>
+          </div>
 
-        <style dangerouslySetInnerHTML={{
-          __html: `
+          <style dangerouslySetInnerHTML={{
+            __html: `
           @keyframes load {
             0% { width: 0%; }
             20% { width: 30%; }
@@ -90,6 +89,7 @@ const Banco = () => {
             animation: spin 3s linear infinite reverse;
           }
         `}} />
+        </div>
       </div>
     );
   }
@@ -166,15 +166,14 @@ const Banco = () => {
               <Shield className="w-4 h-4" /> Economía Oficial PAVIMUN
             </div>
             <h1 className="text-5xl md:text-7xl font-playfair font-bold text-white mb-6 leading-tight drop-shadow-lg">
-              Banco Central <br className="hidden md:block" />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#b89456] to-[#e8c886]">Los Agreda</span>
+              Banco Central
             </h1>
             <p className="text-xl md:text-2xl text-gray-400 mb-10 max-w-2xl font-light">
-              La moneda exclusiva de nuestra simulación. Gana recompensas por tu diplomacia, invierte en los recesos y canjea tus ganancias en nuestro Duty Free.
+              La moneda exclusiva de nuestra simulación. Gana recompensas por tu diplomacia, invierte en los recesos y canjea tus ganancias en La Tiendita.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start">
               <a href="#duty-free" className="px-8 py-4 bg-gradient-to-r from-[#b89456] to-[#937540] hover:from-[#cda766] hover:to-[#a8874d] text-white rounded-lg font-bold transition-all hover:scale-105 hover:shadow-[0_0_20px_rgba(184,148,86,0.4)] flex items-center justify-center gap-2">
-                Ver Duty Free <ArrowRight className="w-5 h-5" />
+                Ver La Tiendita <ArrowRight className="w-5 h-5" />
               </a>
               <a href="#galeria" className="px-8 py-4 border border-gray-600 hover:border-[#b89456] text-gray-300 hover:text-[#b89456] bg-black/20 rounded-lg font-bold transition-all hover:bg-black/40 backdrop-blur-sm flex items-center justify-center gap-2">
                 Conoce los Billetes
@@ -227,7 +226,7 @@ const Banco = () => {
               </div>
               <h3 className="text-2xl font-bold text-white mb-3">3. Disfruta</h3>
               <p className="text-gray-400 leading-relaxed">
-                Acércate a la barra de nuestro <strong>Duty Free PAVI</strong>. Canjea tus billetes acumulados por caramelos, snacks, privilegios del evento o mercancía oficial exclusiva. ¡Tú decides en qué gastar!
+                Acércate a <strong>La Tiendita</strong>. Canjea tus billetes acumulados por caramelos, snacks, o mercancía oficial exclusiva. ¡Tú decides en qué gastar!
               </p>
             </div>
           </div>
@@ -239,7 +238,7 @@ const Banco = () => {
         <div className="container mx-auto px-6 max-w-5xl">
           <div className="flex flex-col md:flex-row justify-between items-end mb-12 border-b border-gray-800 pb-6 border-dashed">
             <div>
-              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-2">Duty Free PAVIMUN</h2>
+              <h2 className="text-4xl md:text-5xl font-playfair font-bold text-white mb-2">La Tiendita</h2>
               <p className="text-[#b89456] tracking-widest uppercase text-sm font-bold">Catálogo Oficial de Recompensas</p>
             </div>
             <div className="mt-4 md:mt-0 bg-[#001529] px-4 py-2 rounded border border-gray-700 text-xs text-gray-400 font-mono">
@@ -275,7 +274,7 @@ const Banco = () => {
           <div className="text-center mb-20">
             <h2 className="text-3xl md:text-5xl font-playfair font-bold text-white mb-4">Reserva Histórica</h2>
             <p className="text-gray-400 max-w-2xl mx-auto text-lg">
-              Conoce el diseño y las medidas de seguridad de las 8 denominaciones oficiales emitidas por el Banco Central Los Agreda.
+              Conoce el diseño y las medidas de seguridad de las 8 denominaciones oficiales emitidas por el Banco Central.
               <br /><span className="text-sm border-b border-gray-600 mt-2 inline-block">Pasa el cursor para ver el reverso.</span>
             </p>
           </div>
@@ -283,7 +282,7 @@ const Banco = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-16">
             {banknotes.map((note) => (
               <div key={note.denom} className="flex flex-col items-center group perspective-1000">
-                <div className="relative w-full aspect-[1/1.5] max-w-[280px] sm:max-w-xs transition-transform duration-[800ms] transform-style-3d group-hover:rotate-y-180 drop-shadow-2xl">
+                <div className="relative w-full aspect-[1/1.5] max-w-[280px] sm:max-w-xs transition-transform duration-700 transform-style-3d group-hover:rotate-y-180 drop-shadow-2xl">
 
                   {/* Front of Banknote */}
                   <div className="absolute inset-0 backface-hidden rounded-md overflow-hidden border border-gray-700 bg-gray-900">
@@ -323,7 +322,7 @@ const Banco = () => {
               <p className="text-xs text-white/80 max-w-xl pr-4">
                 La moneda PAVI no tiene valor financiero legal en el mundo real.
                 Es de uso exclusivo para dinámicas recreativas dentro de las instalaciones del Colegio Pablo VI durante el evento PAVIMUN.
-                La falsificación de esta divisa resultará en la inhabilitación del delegado en el Duty Free y Feria de Inversiones.
+                La falsificación de esta divisa resultará en la inhabilitación del delegado en La Tiendita y Feria de Inversiones.
               </p>
             </div>
           </div>

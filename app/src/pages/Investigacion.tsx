@@ -73,9 +73,9 @@ const Investigacion = () => {
 
       {/* ====== LOADING SCREEN (Restored Neon Crown) ====== */}
       <div
-        className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-all duration-[2000ms] ease-in-out pointer-events-none ${entered ? 'opacity-0' : 'opacity-100'}`}
+        className={`fixed inset-0 z-50 flex items-center justify-center bg-black transition-all duration-[1000ms] ease-in-out pointer-events-none ${entered ? 'opacity-0' : 'opacity-100'}`}
       >
-        <div className={`flex flex-col items-center gap-6 transition-all duration-[1500ms] ${entered ? 'scale-110 opacity-0 blur-sm' : 'scale-100 opacity-100 blur-0'}`}>
+        <div className={`flex flex-col items-center gap-6 transition-all duration-[1000ms] ${entered ? 'scale-110 opacity-0 blur-sm' : 'scale-100 opacity-100 blur-0'}`}>
           {/* Neon Crown Icon using Lucide */}
           <div className="relative">
             <Crown className="w-16 h-16 text-[#ffd700] drop-shadow-[0_0_15px_rgba(255,215,0,0.8)] animate-pulse" strokeWidth={1.5} />
@@ -118,7 +118,7 @@ const Investigacion = () => {
       {/* ====== HERO SECTION ====== */}
       <section className="relative z-10 min-h-screen flex flex-col items-center justify-center pb-20">
 
-        <div className={`relative z-20 text-center transition-all duration-[2000ms] delay-500 ${titleVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-10 blur-sm'}`}>
+        <div className={`relative z-20 text-center transition-all duration-[1000ms] delay-500 ${titleVisible ? 'opacity-100 translate-y-0 blur-0' : 'opacity-0 translate-y-10 blur-sm'}`}>
 
           {/* Logo / Icon */}
           <div className="mb-8 flex justify-center animate-float">

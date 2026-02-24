@@ -81,7 +81,7 @@ const Crisis = () => {
 
       {/* ====== LOADING OVERLAY ====== */}
       <div
-        className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0908] transition-opacity duration-[1500ms] ease-out pointer-events-none ${entered ? 'opacity-0' : 'opacity-100'}`}
+        className={`fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#0a0908] transition-opacity duration-[1000ms] ease-out pointer-events-none ${entered ? 'opacity-0' : 'opacity-100'}`}
       >
         <div className="relative mb-6">
           <History className="w-12 h-12 text-[#c9a980] animate-spin-slow opacity-80" />
