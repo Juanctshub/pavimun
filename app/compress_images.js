@@ -14,18 +14,17 @@ const files = fs.readdirSync(sourceDir).filter(f => f.endsWith('.png'));
 async function processImages() {
     for (const file of files) {
         const sourcePath = path.join(sourceDir, file);
-        // Change extension to webp
         const targetPath = path.join(targetDir, file.replace('.png', '.webp'));
         
-        console.log(Compressing ...);
+        console.log('Compressing ' + file + '...');
         try {
             await sharp(sourcePath)
                 .webp({ quality: 80 })
-                .resize({ width: 1200 }) // reasonable max width for web
+                .resize({ width: 1200 })
                 .toFile(targetPath);
-            console.log(Saved );
+            console.log('Saved ' + targetPath);
         } catch (err) {
-            console.error(Error processing :, err);
+            console.error('Error processing ' + file + ':', err);
         }
     }
 }
