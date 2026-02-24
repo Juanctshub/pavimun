@@ -2,28 +2,44 @@ import { useState, useEffect } from 'react';
 import { Shield, TrendingUp, Handshake, ShoppingBag, Music, Gift, MessageSquare, AlertTriangle, ArrowRight } from 'lucide-react';
 
 const Banco = () => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [pinInput, setPinInput] = useState('');
+  const [pinError, setPinError] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [loadingText, setLoadingText] = useState('Conectando con la Bóveda Central...');
+  const ADMIN_PIN = '0271987AA';
 
-  // Loading Sequence
-  useEffect(() => {
-    const sequence = [
-      { text: 'Autenticando credenciales de delegado...', delay: 1000 },
-      { text: 'Desencriptando reservas de Banco Central...', delay: 2000 },
-      { text: 'Acceso concedido.', delay: 3500 },
-    ];
+  const handlePinSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (pinInput === ADMIN_PIN) {
+      setPinError(false);
+      setIsLoading(true);
+      // Start loading sequence only after correct PIN
+      const sequence = [
+        { text: 'Autenticando credenciales de administrador...', delay: 1000 },
+        { text: 'Desencriptando reservas de Banco Central...', delay: 2000 },
+        { text: 'Acceso concedido.', delay: 3500 },
+      ];
 
-    let timeouts: ReturnType<typeof setTimeout>[] = [];
-    sequence.forEach(({ text, delay }) => {
-      const timeout = setTimeout(() => setLoadingText(text), delay);
-      timeouts.push(timeout);
-    });
+      let timeouts: ReturnType<typeof setTimeout>[] = [];
+      sequence.forEach(({ text, delay }) => {
+        const timeout = setTimeout(() => setLoadingText(text), delay);
+        timeouts.push(timeout);
+      });
 
-    const hideTimeout = setTimeout(() => setIsLoading(false), 4500);
-    timeouts.push(hideTimeout);
+      const hideTimeout = setTimeout(() => {
+        setIsLoading(false);
+        setIsAuthorized(true);
+      }, 4500);
+      timeouts.push(hideTimeout);
+    } else {
+      setPinError(true);
+      setPinInput('');
+      setTimeout(() => setPinError(false), 2000);
+    }
+  };
 
-    return () => timeouts.forEach(clearTimeout);
-  }, []);
+  // Loading Sequence moved to handlePinSubmit
 
   const banknotes = [
     { denom: 1, front: '/images/pavi/f.png', back: '/images/pavi/ff.png' },
@@ -74,6 +90,58 @@ const Banco = () => {
             animation: spin 3s linear infinite reverse;
           }
         `}} />
+      </div>
+    );
+  }
+
+  if (!isAuthorized) {
+    return (
+      <div className="min-h-screen bg-[#000a14] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+        {/* Background elements */}
+        <div className="absolute inset-0 opacity-10 pointer-events-none">
+          <div className="absolute inset-0 bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:50px_50px]"></div>
+        </div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#b89456]/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div className="relative z-10 w-full max-w-md">
+          <div className="bg-[#001529]/80 backdrop-blur-xl border border-gray-800 p-10 rounded-2xl shadow-2xl text-center">
+            <div className="w-20 h-20 bg-[#000a14] rounded-full border border-gray-700 mx-auto flex items-center justify-center mb-6 shadow-inner">
+              <Shield className="w-10 h-10 text-[#b89456]" />
+            </div>
+
+            <h2 className="text-3xl font-playfair font-bold text-white mb-2">Acceso Restringido</h2>
+            <p className="text-gray-400 mb-8 text-sm uppercase tracking-widest font-mono">Bóveda del Banco Central</p>
+
+            <form onSubmit={handlePinSubmit}>
+              <div className="relative mb-6">
+                <input
+                  type="password"
+                  value={pinInput}
+                  onChange={(e) => setPinInput(e.target.value.toUpperCase())}
+                  placeholder="INGRESA EL CÓDIGO"
+                  className={`w-full bg-[#000a14] border ${pinError ? 'border-red-500 text-red-400' : 'border-gray-700 text-white focus:border-[#b89456]'} rounded-xl px-6 py-4 text-center font-mono text-xl tracking-[0.3em] outline-none transition-colors shadow-inner`}
+                  autoFocus
+                />
+                {pinError && (
+                  <div className="absolute -bottom-6 left-0 right-0 text-red-500 text-xs font-mono animate-pulse">
+                    Acceso Denegado
+                  </div>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                className="w-full bg-gradient-to-r from-[#b89456] to-[#937540] hover:from-[#cda766] hover:to-[#a8874d] text-white font-bold py-4 rounded-xl transition-all shadow-[0_0_15px_rgba(184,148,86,0.3)] hover:shadow-[0_0_25px_rgba(184,148,86,0.5)] active:scale-[0.98]"
+              >
+                DESBLOQUEAR
+              </button>
+            </form>
+          </div>
+
+          <div className="mt-8 text-center flex items-center justify-center gap-2 text-gray-500 text-xs font-mono">
+            <AlertTriangle className="w-4 h-4" /> Uso exclusivo de Administración
+          </div>
+        </div>
       </div>
     );
   }
