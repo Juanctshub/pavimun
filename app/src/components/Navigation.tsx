@@ -37,6 +37,7 @@ const Navigation = () => {
     { path: '/inscripciones', label: 'Inscripciones' },
     { path: '/reglamentos', label: 'Reglamentos' },
     { path: '/galeria', label: 'Galería' },
+    { path: '/banco', label: 'Economía' },
   ];
 
   const committees = [
@@ -56,7 +57,7 @@ const Navigation = () => {
   // When at the top (transparent), text/icons should be WHITE.
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
-  const isTransparentPage = location.pathname === '/investigacion' || location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/oiea' || location.pathname === '/prensa';
+  const isTransparentPage = location.pathname === '/investigacion' || location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco';
 
   const forceWhite = isTransparentPage && !scrolled && !isOpen;
 

@@ -19,6 +19,7 @@ import ConsejoSeguridad from './pages/ConsejoSeguridad';
 import OIEA from './pages/OIEA';
 import Prensa from './pages/Prensa';
 import MinistryOfTruth from './pages/MinistryOfTruth';
+import Banco from './pages/Banco';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -51,6 +52,7 @@ function AppContent() {
             <Route path="/consejo-seguridad" element={<ConsejoSeguridad />} />
             <Route path="/oiea" element={<OIEA />} />
             <Route path="/prensa" element={<Prensa />} />
+            <Route path="/banco" element={<Banco />} />
             <Route path="*" element={<MinistryOfTruth />} />
           </Routes>
         </PageTransition>
