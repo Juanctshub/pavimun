@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { Shield, TrendingUp, Handshake, ShoppingBag, Music, Gift, MessageSquare, AlertTriangle, ArrowRight } from 'lucide-react';
 
 const Banco = () => {
