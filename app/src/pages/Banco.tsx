@@ -140,6 +140,9 @@ const Banco = () => {
           .gallery-flip-container.is-flipped .gallery-flip-inner {
             transform: rotateY(180deg) scale(1.1);
           }
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
         `}} />
 
       {/* STAGE 1: PIN SCREEN */}
