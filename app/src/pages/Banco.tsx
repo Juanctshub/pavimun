@@ -112,16 +112,18 @@ const Banco = () => {
           }
           .transform-style-3d {
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
           }
           .backface-hidden {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
           }
           /* Custom 3D Flips */
-          .hero-flip-container { perspective: 1500px; }
+          .hero-flip-container { perspective: 1500px; -webkit-perspective: 1500px; }
           .hero-flip-inner {
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transform: rotateY(0deg) rotateZ(-3deg);
           }
           .hero-flip-container:hover .hero-flip-inner,
@@ -129,10 +131,11 @@ const Banco = () => {
           .hero-flip-container.is-flipped .hero-flip-inner {
             transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
           }
-          .gallery-flip-container { perspective: 1500px; }
+          .gallery-flip-container { perspective: 1500px; -webkit-perspective: 1500px; }
           .gallery-flip-inner {
             transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             transform-style: preserve-3d;
+            -webkit-transform-style: preserve-3d;
             transform: rotateY(0deg);
           }
           .gallery-flip-container:hover .gallery-flip-inner,
@@ -142,6 +145,11 @@ const Banco = () => {
           }
           .rotate-y-180 {
             transform: rotateY(180deg);
+            -webkit-transform: rotateY(180deg);
+          }
+          .rotate-y-0 {
+            transform: rotateY(0deg);
+            -webkit-transform: rotateY(0deg);
           }
         `}} />
 
@@ -236,11 +244,11 @@ const Banco = () => {
             >
               <div className={`relative w-full aspect-auto min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
                 {/* Front */}
-                <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
                 </div>
                 {/* Back */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-0 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI (Cara Detras).webp" alt="100 PAVI Back" className="w-full h-full object-contain pointer-events-none" />
                 </div>
               </div>
@@ -410,11 +418,11 @@ const Banco = () => {
                         >
                           <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]`}>
                             {/* Front */}
-                            <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
+                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
                               <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
                             </div>
                             {/* Back */}
-                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
+                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-0 flex items-center justify-center">
                               <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
                             </div>
                           </div>
