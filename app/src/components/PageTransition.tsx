@@ -6,7 +6,7 @@ interface PageTransitionProps {
 }
 
 // Committee pages have their own loading screens — skip transitions for them
-const COMMITTEE_ROUTES = ['/corte', '/investigacion', '/crisis', '/cia', '/consejo-seguridad', '/oiea', '/prensa'];
+const COMMITTEE_ROUTES = ['/corte', '/investigacion', '/crisis', '/cia', '/consejo-seguridad', '/oiea', '/prensa', '/banco'];
 
 const PageTransition = ({ children }: PageTransitionProps) => {
     const location = useLocation();

@@ -143,7 +143,7 @@ const Banco = () => {
 
       {/* STAGE 3: CONTENT */}
       {authPhase === 'content' && (
-        <div className="min-h-screen bg-[#050505] text-white selection:bg-[#e62429] selection:text-white font-sans overflow-x-hidden">
+        <div className="-mt-[72px] pt-[72px] min-h-screen bg-[#050505] text-white selection:bg-[#e62429] selection:text-white font-sans overflow-x-hidden">
 
           {/* Cinematic top bar */}
           <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-40 pointer-events-none font-mono text-[#e62429] text-xs md:text-sm tracking-[0.3em] font-bold mix-blend-difference">
