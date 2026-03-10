@@ -6,7 +6,12 @@ const Banco = () => {
   const [pinInput, setPinInput] = useState('');
   const [loadingText, setLoadingText] = useState('INI. PROTOCOLO...');
   const [searchTerm, setSearchTerm] = useState('');
+  const [flippedNotes, setFlippedNotes] = useState<number[]>([]);
   const audioRef = useRef<HTMLAudioElement>(null);
+
+  const toggleFlip = (denom: number) => {
+    setFlippedNotes(prev => prev.includes(denom) ? prev.filter(d => d !== denom) : [...prev, denom]);
+  };
 
   const ADMIN_PIN = '0271987AA';
 
@@ -94,6 +99,7 @@ const Banco = () => {
 
   return (
     <>
+      <audio ref={audioRef} src="/audio/luis.mp3" loop preload="auto" />
       <style dangerouslySetInnerHTML={{
         __html: `
           @keyframes slide {
@@ -119,7 +125,8 @@ const Banco = () => {
             transform: rotateY(0deg) rotateZ(-3deg);
           }
           .hero-flip-container:hover .hero-flip-inner,
-          .hero-flip-container:active .hero-flip-inner {
+          .hero-flip-container:active .hero-flip-inner,
+          .hero-flip-container.is-flipped .hero-flip-inner {
             transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
           }
           .gallery-flip-container { perspective: 1500px; }
@@ -129,11 +136,9 @@ const Banco = () => {
             transform: rotateY(0deg);
           }
           .gallery-flip-container:hover .gallery-flip-inner,
-          .gallery-flip-container:active .gallery-flip-inner {
+          .gallery-flip-container:active .gallery-flip-inner,
+          .gallery-flip-container.is-flipped .gallery-flip-inner {
             transform: rotateY(180deg) scale(1.1);
-          }
-          .rotate-y-180 {
-            transform: rotateY(180deg);
           }
         `}} />
 
@@ -203,8 +208,6 @@ const Banco = () => {
       {authPhase === 'content' && (
         <div className="-mt-[72px] pt-[72px] min-h-screen bg-[#050505] text-white selection:bg-[#b89456] selection:text-white font-sans overflow-x-hidden relative">
 
-          <audio ref={audioRef} src="/audio/luis.mp3" loop />
-
           {/* HERO */}
           <section className="relative w-full min-h-screen flex flex-col justify-center items-center border-b-8 border-[#b89456] overflow-hidden bg-[#050505]">
             {/* Grid overlay */}
@@ -224,23 +227,26 @@ const Banco = () => {
             </div>
 
             {/* 3D Banknote IN FRONT OF TEXT */}
-            <div className="relative z-30 w-[85vw] sm:w-[60vw] md:w-[32vw] lg:w-[25vw] flex justify-center mt-16 sm:mt-24 md:mt-32 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)]">
-              <div className="relative w-full aspect-[2/1] hero-flip-inner">
+            <div
+              className={`relative z-30 w-[85vw] sm:w-[60vw] md:w-[35vw] lg:w-[25vw] flex justify-center mt-10 md:mt-32 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              onClick={() => toggleFlip(100)}
+            >
+              <div className={`relative w-full aspect-[2/1] hero-flip-inner transition-transform duration-1000`}>
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
-                  <img src="/images/pavi/100_front.webp" alt="100 PAVI Front" className="w-full h-auto object-contain" />
+                  <img src="/images/pavi/100_front.webp" alt="100 PAVI Front" className="w-full h-auto object-contain pointer-events-none" />
                 </div>
                 {/* Back */}
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
-                  <img src="/images/pavi/100_back.webp" alt="100 PAVI Back" className="w-full h-auto object-contain" />
+                  <img src="/images/pavi/100_back.webp" alt="100 PAVI Back" className="w-full h-auto object-contain pointer-events-none" />
                 </div>
               </div>
             </div>
 
-            {/* Call to action explicitly placed below the banknote */}
-            <div className="absolute bottom-6 flex flex-col items-center z-30 opacity-70">
-              <div className="w-1 h-12 md:h-20 bg-gradient-to-b from-[#b89456] to-transparent mb-4 animate-pulse"></div>
-              <span className="font-mono text-white text-[10px] md:text-xs tracking-[0.3em] font-bold">DESPLAZAR</span>
+            {/* Call to action explicitly placed below the banknote in document flow */}
+            <div className="relative mt-16 mb-8 flex flex-col items-center z-30 opacity-70">
+              <div className="w-1 h-12 md:h-16 bg-gradient-to-b from-[#b89456] to-transparent mb-4 animate-pulse"></div>
+              <span className="font-mono text-white text-[10px] md:text-xs tracking-[0.3em] font-bold">DESPLAZAR HACIA ABAJO</span>
             </div>
           </section>
 
@@ -363,24 +369,24 @@ const Banco = () => {
                 </p>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 max-w-[1400px] mx-auto px-4 sm:px-0">
+              <div className="flex flex-col gap-28 md:grid md:grid-cols-2 lg:grid-cols-2 md:gap-16 w-full max-w-7xl mx-auto px-4 md:px-0">
                 {banknotes.map((note) => (
-                  <div key={note.denom} className="flex flex-col border-2 border-[#222] bg-[#050505] group hover:border-[#444] transition-colors w-full mx-auto md:max-w-none">
+                  <div key={note.denom} className="flex flex-col border-2 border-[#222] bg-[#050505] transition-colors w-full h-full">
                     {/* Dossier Text (Top) */}
-                    <div className="w-full flex flex-col items-start p-6 sm:p-8 relative border-b border-[#222]">
-                      <div className="absolute top-4 sm:top-6 left-4 sm:left-6 text-[#333] group-hover:text-[#b89456] transition-colors flex gap-2">
+                    <div className="w-full flex flex-col items-start p-6 sm:p-10 relative border-b border-[#222]">
+                      <div className="absolute top-4 sm:top-6 left-4 sm:left-6 text-[#333] transition-colors flex gap-2">
                         <Scan className="w-5 h-5" />
                       </div>
                       <div className="absolute top-4 sm:top-6 right-4 sm:right-6 font-mono text-[10px] md:text-xs font-bold text-[#444] tracking-[0.2em]">
                         ACQ: 8092.{note.denom}
                       </div>
 
-                      <div className="mt-8 sm:mt-10 text-[#b89456] font-mono tracking-[0.2em] text-xs md:text-sm font-bold mb-4 flex items-center gap-2">
+                      <div className="mt-8 sm:mt-12 text-[#b89456] font-mono tracking-[0.2em] text-xs md:text-sm font-bold mb-4 flex items-center gap-2">
                         <TrendingUp className="w-4 h-4" /> // {note.subtitle}
                       </div>
 
-                      <h3 className="text-5xl sm:text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white group-hover:text-[#b89456] transition-colors">
-                        {note.denom} <span className="text-3xl text-[#666]">PAVI.</span>
+                      <h3 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white transition-colors">
+                        {note.denom} <br /> <span className="text-3xl text-[#666]">PAVI.</span>
                       </h3>
 
                       {note.character && (
@@ -389,17 +395,20 @@ const Banco = () => {
                         </div>
                       )}
 
-                      <div className="font-mono text-[#a1a1a1] text-[10px] sm:text-xs tracking-[0.1em] leading-relaxed border-l-2 border-[#b89456] pl-3 mt-auto flex-grow min-h-[4rem]">
+                      <div className="font-mono text-[#a1a1a1] text-[10px] sm:text-xs tracking-[0.1em] leading-relaxed border-l-2 border-[#b89456] pl-4 mt-auto min-h-[4rem]">
                         {note.description}
                       </div>
                     </div>
 
                     {/* 3D Banknote (Bottom) - Proper flip geometry */}
-                    <div className="w-full flex justify-center items-center py-16 px-6 bg-[#0a0a0a] relative flex-grow min-h-[280px] sm:min-h-[350px]">
+                    <div className="w-full flex justify-center items-center py-20 px-4 bg-[#0a0a0a] relative flex-grow min-h-[300px]">
                       <div className="absolute top-4 right-4 text-[#333]"><Download className="w-5 h-5" /></div>
 
-                      <div className="relative w-full max-w-[360px] aspect-[2/1] bg-transparent gallery-flip-container cursor-crosshair">
-                        <div className="relative w-full h-full gallery-flip-inner drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]">
+                      <div
+                        className={`relative w-full max-w-[400px] aspect-[2/1] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                        onClick={() => toggleFlip(note.denom)}
+                      >
+                        <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]`}>
                           {/* Front */}
                           <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
                             <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
