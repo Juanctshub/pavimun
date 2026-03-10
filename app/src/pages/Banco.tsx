@@ -78,6 +78,27 @@ const Banco = () => {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
           }
+          /* Custom 3D Flips */
+          .hero-flip-container { perspective: 1500px; }
+          .hero-flip-inner {
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            transform: rotateY(0deg) rotateZ(-3deg);
+          }
+          .hero-flip-container:hover .hero-flip-inner,
+          .hero-flip-container:active .hero-flip-inner {
+            transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
+          }
+          .gallery-flip-container { perspective: 1500px; }
+          .gallery-flip-inner {
+            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            transform-style: preserve-3d;
+            transform: rotateY(0deg);
+          }
+          .gallery-flip-container:hover .gallery-flip-inner,
+          .gallery-flip-container:active .gallery-flip-inner {
+            transform: rotateY(180deg) scale(1.1);
+          }
           .rotate-y-180 {
             transform: rotateY(180deg);
           }
@@ -166,14 +187,14 @@ const Banco = () => {
             </div>
 
             {/* 3D Banknote IN FRONT OF TEXT */}
-            <div className="relative z-30 w-[85vw] md:w-[45vw] flex justify-center perspective-[1200px] mt-12 md:mt-24 group/hero">
-              <div className="relative w-full aspect-[2/1] transition-all duration-1000 transform-style-3d group-hover/hero:rotate-y-180 cursor-pointer rotate-[-2deg] hover:rotate-[0deg] drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] hover:scale-105">
+            <div className="relative z-30 w-[70vw] md:w-[32vw] flex justify-center mt-12 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)]">
+              <div className="relative w-full aspect-[2/1] hero-flip-inner">
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
                   <img src="/images/pavi/100_front.webp" alt="100 PAVI Front" className="w-full h-auto object-contain" />
                 </div>
                 {/* Back */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-[180deg] flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
                   <img src="/images/pavi/100_back.webp" alt="100 PAVI Back" className="w-full h-auto object-contain" />
                 </div>
               </div>
@@ -341,14 +362,14 @@ const Banco = () => {
                     <div className="w-full xl:w-[55%] flex justify-center items-center py-20 px-10 bg-[#0a0a0a] relative">
                       <div className="absolute top-4 right-4 text-[#333]"><Download className="w-6 h-6" /></div>
 
-                      <div className="relative w-full max-w-[500px] aspect-[2/1] bg-transparent group/flip perspective-[1200px] cursor-crosshair">
-                        <div className="relative w-full h-full transition-transform duration-1000 transform-style-3d group-hover/flip:rotate-y-[180deg] drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] group-hover/flip:scale-105">
+                      <div className="relative w-full max-w-[500px] aspect-[2/1] bg-transparent gallery-flip-container cursor-crosshair">
+                        <div className="relative w-full h-full gallery-flip-inner drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]">
                           {/* Front */}
                           <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
                             <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
                           </div>
                           {/* Back */}
-                          <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-[180deg] flex items-center justify-center">
+                          <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
                             <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
                           </div>
                         </div>
