@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
+import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock, Download } from 'lucide-react';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'pin' | 'loading' | 'content'>('pin');
@@ -160,14 +160,23 @@ const Banco = () => {
             </div>
             {/* Huge Text (Foreground outline overlay) */}
             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-10 overflow-hidden w-full drop-shadow-[0_0_20px_rgba(184,148,86,0.5)]">
-              <h1 className="text-[22vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
+              <h1 className="text-[17vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
                 ECONOMÍA
               </h1>
             </div>
 
             {/* 3D Banknote IN FRONT OF TEXT */}
-            <div className="relative z-30 w-[85vw] md:w-[45vw] flex justify-center perspective-1000 mt-12 md:mt-24">
-              <img src="/images/pavi/100_front.webp" alt="100 PAVI" className="w-full h-auto rotate-[-8deg] drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out hover:rotate-[0deg] hover:scale-[1.05]" />
+            <div className="relative z-30 w-[85vw] md:w-[45vw] flex justify-center perspective-[1200px] mt-12 md:mt-24 group/hero">
+              <div className="relative w-full aspect-[2/1] transition-all duration-1000 transform-style-3d group-hover/hero:rotate-y-180 cursor-pointer rotate-[-2deg] hover:rotate-[0deg] drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] hover:scale-105">
+                {/* Front */}
+                <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
+                  <img src="/images/pavi/100_front.webp" alt="100 PAVI Front" className="w-full h-auto object-contain" />
+                </div>
+                {/* Back */}
+                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-[180deg] flex items-center justify-center">
+                  <img src="/images/pavi/100_back.webp" alt="100 PAVI Back" className="w-full h-auto object-contain" />
+                </div>
+              </div>
             </div>
 
             {/* Call to action arrow below screen */}
@@ -292,7 +301,7 @@ const Banco = () => {
                   RESERVA HISTÓRICA
                 </h2>
                 <p className="font-mono font-bold tracking-[0.3em] text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-6 mt-16 text-[#b89456]">
-                  [ TOCA Y MANTÉN O PASA EL CURSOR POR LA IMAGEN PARA DESENCRIPTAR EL REVERSO CLASIFICADO DEL BILLETE ]
+                  [ INTERACTÚA CON EL BILLETE PARA INSPECCIONAR SU REVERSO DE SEGURIDAD MEDIANTE ESCANEO 3D ]
                 </p>
               </div>
 
@@ -332,16 +341,15 @@ const Banco = () => {
                     <div className="w-full xl:w-[55%] flex justify-center items-center py-20 px-10 bg-[#0a0a0a] relative">
                       <div className="absolute top-4 right-4 text-[#333]"><Download className="w-6 h-6" /></div>
 
-                      <div className="relative w-full max-w-[500px] aspect-[2/1] bg-transparent group/flip perspective-[1000px] cursor-crosshair drop-shadow-[0_20px_40px_rgba(184,148,86,0.1)] hover:drop-shadow-[0_30px_60px_rgba(184,148,86,0.3)]">
-                        <div className="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover/flip:rotate-y-180">
+                      <div className="relative w-full max-w-[500px] aspect-[2/1] bg-transparent group/flip perspective-[1200px] cursor-crosshair">
+                        <div className="relative w-full h-full transition-transform duration-1000 transform-style-3d group-hover/flip:rotate-y-[180deg] drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] group-hover/flip:scale-105">
                           {/* Front */}
-                          <div className="absolute inset-0 w-full h-full backface-hidden rounded overflow-hidden bg-black border border-[#333]">
-                            <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-contain filter contrast-125 hover:contrast-150 transition-all pointer-events-none" />
+                          <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
+                            <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
                           </div>
                           {/* Back */}
-                          <div className="absolute inset-0 w-full h-full backface-hidden rounded overflow-hidden bg-black border border-[#b89456] rotate-y-180">
-                            <div className="absolute w-full h-1 bg-[#b89456]/20 top-1/2 -translate-y-1/2 mix-blend-screen shadow-[0_0_20px_#b89456] z-20 pointer-events-none"></div>
-                            <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-contain filter contrast-125 saturate-200 z-10 relative opacity-90 pointer-events-none" />
+                          <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-[180deg] flex items-center justify-center">
+                            <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
                           </div>
                         </div>
                       </div>
@@ -360,14 +368,14 @@ const Banco = () => {
             <div className="absolute bottom-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(-45deg, #000, #000 20px, #b89456 20px, #b89456 40px)' }}></div>
 
             <div className="container mx-auto px-6 max-w-4xl relative z-10 pt-8 pb-8">
-              <AlertTriangle className="w-16 h-16 text-black mx-auto mb-10" strokeWidth={1} />
+              <Landmark className="w-16 h-16 text-black mx-auto mb-10" strokeWidth={1} />
               <p className="font-mono text-black font-black text-xs md:text-sm tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase border-y-[10px] border-black py-8 bg-black/5">
-                <span className="text-white bg-black px-2 py-1 mr-2">[ AVISO CLASIFICADO ]</span> <br className="md:hidden" />
-                LA MONEDA PAVI CARECE DE VALOR FINANCIERO EN EL EXTERIOR. SU DISTRIBUCIÓN ES RESTRINGIDA A EVENTOS TÁCTICOS EN PAVIMUN. <br />
-                LA FALSIFICACIÓN RESULTARÁ EN INHABILITACIÓN PERMANENTE.
+                <span className="text-white bg-black px-2 py-1 mr-2">[ AVISO LEGAL ]</span> <br className="md:hidden" />
+                LA MONEDA PAVI CARECE DE VALOR FINANCIERO FUERA DE LA JURISDICCIÓN DEL EVENTO. SU DISTRIBUCIÓN ESTÁ RESTRINGIDA A LAS CIRCULACIONES OFICIALES Y ACTIVIDADES PREVISTAS. <br />
+                LA FALSIFICACIÓN DEL PAPEL MONEDA RESULTARÁ EN SANCIONES DISCIPLINARIAS.
               </p>
               <div className="mt-12 text-black font-black text-xl tracking-tighter uppercase">
-                MESA ORGANIZADORA // PAVIMUN 2026
+                BANCO CENTRAL PAVIMUN
               </div>
             </div>
           </footer>
