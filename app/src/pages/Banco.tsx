@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Target, Crosshair, Zap, Box, MapPin, Music, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
+import { Target, Crosshair, Zap, Box, MapPin, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'pin' | 'loading' | 'content'>('pin');
@@ -52,7 +52,6 @@ const Banco = () => {
     { name: '[ GOLOSINAS ]', alias: 'Chocolates, Caramelos de Goma', price: 20, icon: <Zap className="w-8 h-8" /> },
     { name: '[ REFRESCOS ]', alias: 'Bebidas Carbonatadas y Sodas', price: 50, icon: <MapPin className="w-8 h-8" /> },
     { name: '[ THE STICKER ]', alias: 'Sticker Holográfico Oficial', price: 100, icon: <Target className="w-8 h-8" /> },
-    { name: '[ CORNETA PAVI ]', alias: 'Reserva de Control de Audio', price: 200, icon: <Music className="w-8 h-8" /> },
   ];
 
   const filteredItems = tienditaItems.filter(item =>
@@ -77,6 +76,7 @@ const Banco = () => {
           }
           .backface-hidden {
             backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
           }
           .rotate-y-180 {
             transform: rotateY(180deg);
@@ -88,15 +88,15 @@ const Banco = () => {
         <div className="fixed inset-0 bg-[#0a0a0a] z-50 flex flex-col justify-center items-center text-white font-mono overflow-hidden">
           {/* Distressed borders */}
           <div className="absolute inset-4 border-2 border-[#1a1a1a] pointer-events-none">
-            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e62429]"></div>
-            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e62429]"></div>
-            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#e62429]"></div>
-            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#e62429]"></div>
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#b89456]"></div>
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#b89456]"></div>
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#b89456]"></div>
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#b89456]"></div>
           </div>
 
-          <Crosshair className="w-24 h-24 text-[#e62429] mb-8 animate-pulse" strokeWidth={1.5} />
+          <Crosshair className="w-24 h-24 text-[#b89456] mb-8 animate-pulse" strokeWidth={1.5} />
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-2 text-center px-4">Bóveda Restringida</h1>
-          <p className="text-[#e62429] tracking-[0.4em] text-sm md:text-base font-bold mb-16">INGRESA EL CÓDIGO [CLASSIFIED]</p>
+          <p className="text-[#b89456] tracking-[0.4em] text-sm md:text-base font-bold mb-16">INGRESA EL CÓDIGO [CLASSIFIED]</p>
 
           <form onSubmit={handlePinSubmit} className="relative z-10 w-full max-w-sm px-6">
             <input
@@ -104,12 +104,12 @@ const Banco = () => {
               value={pinInput}
               onChange={(e) => setPinInput(e.target.value.toUpperCase())}
               placeholder="___ ___ ___"
-              className={`w-full bg-transparent border-b-4 ${pinError ? 'border-[#e62429] text-[#e62429]' : 'border-[#333] text-white focus:border-[#e62429]'} text-center text-3xl md:text-4xl tracking-[0.3em] pb-4 outline-none font-black transition-colors placeholder:text-[#333]`}
+              className={`w-full bg-transparent border-b-4 ${pinError ? 'border-[#b89456] text-[#b89456]' : 'border-[#333] text-white focus:border-[#b89456]'} text-center text-3xl md:text-4xl tracking-[0.3em] pb-4 outline-none font-black transition-colors placeholder:text-[#333]`}
               autoFocus
             />
-            {pinError && <p className="text-[#e62429] text-center mt-6 tracking-widest text-sm font-bold animate-pulse">CÓDIGO INVÁLIDO O CORRUPTO</p>}
+            {pinError && <p className="text-[#b89456] text-center mt-6 tracking-widest text-sm font-bold animate-pulse">CÓDIGO INVÁLIDO O CORRUPTO</p>}
 
-            <button type="submit" className="w-full mt-12 bg-[#e62429] hover:bg-white hover:text-[#e62429] text-black font-black uppercase tracking-widest py-4 text-xl transition-all duration-300">
+            <button type="submit" className="w-full mt-12 bg-[#b89456] hover:bg-white hover:text-[#b89456] text-black font-black uppercase tracking-widest py-4 text-xl transition-all duration-300">
               [ ENTRAR ]
             </button>
           </form>
@@ -118,7 +118,7 @@ const Banco = () => {
 
       {/* STAGE 2: LOADING SCREEN */}
       {authPhase === 'loading' && (
-        <div className="fixed inset-0 bg-[#e62429] z-50 flex flex-col justify-center items-center text-black font-sans overflow-hidden">
+        <div className="fixed inset-0 bg-[#b89456] z-50 flex flex-col justify-center items-center text-black font-sans overflow-hidden">
           {/* Background text moving huge */}
           <div className="absolute whitespace-nowrap text-[30vw] font-black opacity-[0.05] select-none animate-[slide_15s_linear_infinite]">
             LOADING SYSTEM LOADING SYSTEM LOADING SYSTEM
@@ -143,40 +143,36 @@ const Banco = () => {
 
       {/* STAGE 3: CONTENT */}
       {authPhase === 'content' && (
-        <div className="-mt-[72px] pt-[72px] min-h-screen bg-[#050505] text-white selection:bg-[#e62429] selection:text-white font-sans overflow-x-hidden">
+        <div className="-mt-[72px] pt-[72px] min-h-screen bg-[#050505] text-white selection:bg-[#b89456] selection:text-white font-sans overflow-x-hidden">
 
-          {/* Cinematic top bar */}
-          <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-40 pointer-events-none font-mono text-[#e62429] text-xs md:text-sm tracking-[0.3em] font-bold mix-blend-difference">
-            <span>REC // PAVIMUN 2026 // DOSSIER</span>
-            <span className="flex items-center gap-2"><span className="w-3 h-3 bg-[#e62429] rounded-full animate-pulse"></span> LIVE SECURE</span>
-          </div>
+
 
           {/* HERO */}
-          <section className="relative w-full min-h-screen flex flex-col justify-center items-center border-b-8 border-[#e62429] pt-20 overflow-hidden bg-[#050505]">
+          <section className="relative w-full min-h-screen flex flex-col justify-center items-center border-b-8 border-[#b89456] pt-20 overflow-hidden bg-[#050505]">
             {/* Grid overlay */}
             <div className="absolute inset-0 bg-[linear-gradient(rgba(230,36,41,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(230,36,41,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none z-0"></div>
 
-            {/* Huge Text (Background) */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-0 overflow-hidden w-full">
+            {/* Huge Text (Background Glow) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-0 overflow-hidden w-full drop-shadow-[0_0_80px_rgba(184,148,86,0.3)]">
               <h1 className="text-[22vw] font-black uppercase tracking-tighter text-[#151515] leading-[0.8] whitespace-nowrap select-none scale-y-110">
                 ECONOMÍA
               </h1>
             </div>
             {/* Huge Text (Foreground outline overlay) */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-20 overflow-hidden w-full">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-10 overflow-hidden w-full drop-shadow-[0_0_20px_rgba(184,148,86,0.5)]">
               <h1 className="text-[22vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
                 ECONOMÍA
               </h1>
             </div>
 
-            {/* 3D Banknote */}
-            <div className="relative z-10 w-[85vw] md:w-[45vw] flex justify-center perspective-1000 mt-12 md:mt-24">
-              <img src="/images/pavi/100_front.webp" alt="100 PAVI" className="w-full h-auto rotate-[-8deg] drop-shadow-[0_0_80px_rgba(230,36,41,0.5)] transition-transform duration-700 ease-out hover:rotate-[0deg] hover:scale-[1.05]" />
+            {/* 3D Banknote IN FRONT OF TEXT */}
+            <div className="relative z-30 w-[85vw] md:w-[45vw] flex justify-center perspective-1000 mt-12 md:mt-24">
+              <img src="/images/pavi/100_front.webp" alt="100 PAVI" className="w-full h-auto rotate-[-8deg] drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] transition-transform duration-700 ease-out hover:rotate-[0deg] hover:scale-[1.05]" />
             </div>
 
             {/* Call to action arrow below screen */}
             <div className="absolute bottom-12 flex flex-col items-center z-30 opacity-70">
-              <div className="w-1 h-20 bg-gradient-to-b from-[#e62429] to-transparent mb-4 animate-pulse"></div>
+              <div className="w-1 h-20 bg-gradient-to-b from-[#b89456] to-transparent mb-4 animate-pulse"></div>
               <span className="font-mono text-white text-xs tracking-[0.3em] font-bold">DESPLAZAR</span>
             </div>
           </section>
@@ -187,40 +183,40 @@ const Banco = () => {
               <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
 
                 <div className="w-full lg:w-1/3 sticky top-32">
-                  <div className="flex items-center gap-4 mb-6 text-[#e62429] font-mono tracking-widest text-sm font-bold">
+                  <div className="flex items-center gap-4 mb-6 text-[#b89456] font-mono tracking-widest text-sm font-bold">
                     <Target className="w-6 h-6 animate-pulse" /> OPERACIÓN: PAVIMUN
                   </div>
                   <h2 className="text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
-                    CICLO<br /><span className="text-[#e62429] inline-block mt-2">TÁCTICO</span>
+                    CICLO<br /><span className="text-[#b89456] inline-block mt-2">TÁCTICO</span>
                   </h2>
-                  <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#e62429] pl-4">
+                  <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#b89456] pl-4">
                     REGLAS ESTRICTAS DE ENFRENTAMIENTO ECONÓMICO. INSTRUCCIONES CLASIFICADAS: GANA, INVIERTE Y DISFRUTA DURANTE LOS RECESOS OFICIALES.
                   </p>
                 </div>
 
                 <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* GANA */}
-                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
-                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#e62429]">01</div>
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#b89456]">01</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Gana</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
                       SUPERA DESAFÍOS ESTRELÁMPAGO O DEMUESTRA DIPLOMACIA IMPECABLE EN COMITÉ. RECIBE EFECTIVO POR PARTE DEL STAFF ORGANIZADOR COMO RECOMPENSA POR TU DESEMPEÑO.
                     </p>
                   </div>
                   {/* INVIERTE */}
-                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
-                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#e62429]">02</div>
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#b89456]">02</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Invierte</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
                       ACUDE INMEDIATAMENTE A LA FERIA DE INVERSIONES EN LOS RECESOS. APUESTA CONTRA LA CASA EN JUEGOS DE AZAR Y HABILIDAD, Y DOBLA TU CAPITAL EN CUESTIÓN DE MINUTOS.
                     </p>
                   </div>
                   {/* DISFRUTA */}
-                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden md:col-span-2">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
-                    <div className="text-[#e62429] font-black text-6xl mb-6 opacity-30 group-hover:scale-110 transition-transform origin-left group-hover:opacity-100">03</div>
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden md:col-span-2">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-[#b89456] font-black text-6xl mb-6 opacity-30 group-hover:scale-110 transition-transform origin-left group-hover:opacity-100">03</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Disfruta</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
                       GASTA TODOS TUS FONDOS OBTENIDOS EN EL DOSSIER DE COMPRAS DE "LA TIENDITA". ADQUIERE DULCES, SNACKS O BENEFICIOS TÁCTICOS. CERO PREGUNTAS HASTA AGOTAR INVENTARIO.
@@ -242,7 +238,7 @@ const Banco = () => {
 
               <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8 border-b-2 border-[#333] pb-10">
                 <div className="w-full lg:w-auto">
-                  <div className="flex items-center gap-4 text-[#e62429] font-mono tracking-widest text-sm font-bold mb-4">
+                  <div className="flex items-center gap-4 text-[#b89456] font-mono tracking-widest text-sm font-bold mb-4">
                     <Scan className="w-6 h-6 animate-pulse" /> TARGET CATALOG SYSTEM
                   </div>
                   <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] text-white">
@@ -251,35 +247,35 @@ const Banco = () => {
                 </div>
 
                 <div className="w-full lg:w-96 relative group">
-                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[#666] w-6 h-6 group-focus-within:text-[#e62429] transition-colors" />
+                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[#666] w-6 h-6 group-focus-within:text-[#b89456] transition-colors" />
                   <input
                     type="text"
                     placeholder="BUSCAR INVENTARIO..."
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
-                    className="w-full bg-[#111] border-2 border-[#333] focus:border-[#e62429] text-white font-mono py-5 pl-16 pr-6 outline-none transition-colors text-base tracking-widest uppercase placeholder:text-[#444]"
+                    className="w-full bg-[#111] border-2 border-[#333] focus:border-[#b89456] text-white font-mono py-5 pl-16 pr-6 outline-none transition-colors text-base tracking-widest uppercase placeholder:text-[#444]"
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-6">
                 {filteredItems.map((item, idx) => (
-                  <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between bg-[#0a0a0a] border-l-[12px] border-[#333] hover:border-[#e62429] p-8 md:p-10 group transition-all">
+                  <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between bg-[#0a0a0a] border-l-[12px] border-[#333] hover:border-[#b89456] p-8 md:p-10 group transition-all">
                     <div className="flex items-center gap-8 mb-6 md:mb-0">
-                      <div className="text-[#333] group-hover:text-[#e62429] transition-colors">{item.icon}</div>
+                      <div className="text-[#333] group-hover:text-[#b89456] transition-colors">{item.icon}</div>
                       <div>
                         <h4 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">{item.name}</h4>
                         <span className="font-mono text-sm text-gray-500 tracking-[0.2em]">{item.alias}</span>
                       </div>
                     </div>
                     <div className="flex items-baseline gap-4 md:ml-auto md:text-right">
-                      <span className="text-5xl md:text-7xl font-black text-white group-hover:text-[#e62429] transition-colors leading-none">{item.price}</span>
+                      <span className="text-5xl md:text-7xl font-black text-white group-hover:text-[#b89456] transition-colors leading-none">{item.price}</span>
                       <span className="font-mono text-sm tracking-widest text-[#666] font-bold">PAVI</span>
                     </div>
                   </div>
                 ))}
                 {filteredItems.length === 0 && (
-                  <div className="text-center py-20 bg-[#0a0a0a] border-2 border-dashed border-[#e62429] font-mono font-bold tracking-[0.2em] text-[#e62429]">
+                  <div className="text-center py-20 bg-[#0a0a0a] border-2 border-dashed border-[#b89456] font-mono font-bold tracking-[0.2em] text-[#b89456]">
                     [ ADVERTENCIA: ARTÍCULO NO ENCONTRADO EN LA BASE DE DATOS ]
                   </div>
                 )}
@@ -292,10 +288,10 @@ const Banco = () => {
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
               <div className="text-center mb-32 relative">
                 <div className="absolute inset-x-0 w-full h-[1px] bg-[#333] top-1/2 -z-10"></div>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-[#111] inline-block bg-[#111] px-8 py-2" style={{ WebkitTextStroke: '2px #e62429' }}>
+                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-[#111] inline-block bg-[#111] px-8 py-2" style={{ WebkitTextStroke: '2px #b89456' }}>
                   RESERVA HISTÓRICA
                 </h2>
-                <p className="font-mono font-bold tracking-[0.3em] text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-6 mt-16 text-[#e62429]">
+                <p className="font-mono font-bold tracking-[0.3em] text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-6 mt-16 text-[#b89456]">
                   [ TOCA Y MANTÉN O PASA EL CURSOR POR LA IMAGEN PARA DESENCRIPTAR EL REVERSO CLASIFICADO DEL BILLETE ]
                 </p>
               </div>
@@ -306,18 +302,18 @@ const Banco = () => {
 
                     {/* Dossier Text (Left) */}
                     <div className="w-full xl:w-[45%] flex flex-col items-start p-10 md:p-16 relative border-b xl:border-b-0 xl:border-r border-[#222]">
-                      <div className="absolute top-6 left-6 text-[#333] group-hover:text-[#e62429] transition-colors flex gap-4">
+                      <div className="absolute top-6 left-6 text-[#333] group-hover:text-[#b89456] transition-colors flex gap-4">
                         <Scan className="w-6 h-6" />
                       </div>
                       <div className="absolute top-6 right-6 font-mono text-xs font-bold text-[#444] tracking-[0.4em]">
                         ACQ-ID: 8092.{note.denom}
                       </div>
 
-                      <div className="mt-12 text-[#e62429] font-mono tracking-[0.3em] text-sm font-bold mb-6 flex items-center gap-4">
+                      <div className="mt-12 text-[#b89456] font-mono tracking-[0.3em] text-sm font-bold mb-6 flex items-center gap-4">
                         <Crosshair className="w-5 h-5" /> // {note.subtitle}
                       </div>
 
-                      <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white group-hover:text-[#e62429] transition-colors">
+                      <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white group-hover:text-[#b89456] transition-colors">
                         {note.denom} <br /> <span className="text-4xl text-[#666]">PAVI.</span>
                       </h3>
 
@@ -327,23 +323,26 @@ const Banco = () => {
                         </div>
                       )}
 
-                      <div className="font-mono text-[#a1a1a1] text-xs md:text-sm tracking-[0.1em] leading-relaxed border-l-4 border-[#e62429] pl-6 mt-auto">
+                      <div className="font-mono text-[#a1a1a1] text-xs md:text-sm tracking-[0.1em] leading-relaxed border-l-4 border-[#b89456] pl-6 mt-auto">
                         {note.description}
                       </div>
                     </div>
 
-                    {/* 3D Banknote (Right) */}
-                    <div className="w-full xl:w-[55%] perspective-1000 flex justify-center items-center py-20 px-10 bg-[#0a0a0a] relative overflow-hidden">
+                    {/* 3D Banknote (Right) - Proper flip geometry */}
+                    <div className="w-full xl:w-[55%] flex justify-center items-center py-20 px-10 bg-[#0a0a0a] relative">
                       <div className="absolute top-4 right-4 text-[#333]"><Download className="w-6 h-6" /></div>
 
-                      <div className="relative w-full max-w-[500px] aspect-[2/1] transition-transform duration-[800ms] ease-out transform-style-3d group-hover:rotate-y-180 drop-shadow-[0_20px_40px_rgba(230,36,41,0.05)] cursor-crosshair">
-                        <div className="absolute inset-0 backface-hidden rounded overflow-hidden bg-black border border-[#333]">
-                          <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-cover filter contrast-125 hover:contrast-150 transition-all" />
-                        </div>
-                        <div className="absolute inset-0 backface-hidden rounded overflow-hidden bg-black border border-[#e62429] rotate-y-180">
-                          {/* Glitch overlay line inside the back to look cinematic */}
-                          <div className="absolute w-full h-1 bg-[#e62429]/20 top-1/2 -translate-y-1/2 mix-blend-screen shadow-[0_0_20px_#e62429] z-20"></div>
-                          <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-cover filter contrast-125 saturate-200 z-10 relative opacity-90" />
+                      <div className="relative w-full max-w-[500px] aspect-[2/1] bg-transparent group/flip perspective-[1000px] cursor-crosshair drop-shadow-[0_20px_40px_rgba(184,148,86,0.1)] hover:drop-shadow-[0_30px_60px_rgba(184,148,86,0.3)]">
+                        <div className="relative w-full h-full transition-transform duration-700 transform-style-3d group-hover/flip:rotate-y-180">
+                          {/* Front */}
+                          <div className="absolute inset-0 w-full h-full backface-hidden rounded overflow-hidden bg-black border border-[#333]">
+                            <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-contain filter contrast-125 hover:contrast-150 transition-all pointer-events-none" />
+                          </div>
+                          {/* Back */}
+                          <div className="absolute inset-0 w-full h-full backface-hidden rounded overflow-hidden bg-black border border-[#b89456] rotate-y-180">
+                            <div className="absolute w-full h-1 bg-[#b89456]/20 top-1/2 -translate-y-1/2 mix-blend-screen shadow-[0_0_20px_#b89456] z-20 pointer-events-none"></div>
+                            <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-contain filter contrast-125 saturate-200 z-10 relative opacity-90 pointer-events-none" />
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -355,10 +354,10 @@ const Banco = () => {
           </section>
 
           {/* FOOTER */}
-          <footer className="bg-[#e62429] py-20 border-t-8 border-white text-center relative selection:bg-black selection:text-[#e62429]">
+          <footer className="bg-[#b89456] py-20 border-t-8 border-white text-center relative selection:bg-black selection:text-[#b89456]">
             {/* Caution tape styling */}
-            <div className="absolute top-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(45deg, #000, #000 20px, #e62429 20px, #e62429 40px)' }}></div>
-            <div className="absolute bottom-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(-45deg, #000, #000 20px, #e62429 20px, #e62429 40px)' }}></div>
+            <div className="absolute top-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(45deg, #000, #000 20px, #b89456 20px, #b89456 40px)' }}></div>
+            <div className="absolute bottom-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(-45deg, #000, #000 20px, #b89456 20px, #b89456 40px)' }}></div>
 
             <div className="container mx-auto px-6 max-w-4xl relative z-10 pt-8 pb-8">
               <AlertTriangle className="w-16 h-16 text-black mx-auto mb-10" strokeWidth={1} />
