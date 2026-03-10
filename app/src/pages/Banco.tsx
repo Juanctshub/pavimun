@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock, Download } from 'lucide-react';
+import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock } from 'lucide-react';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'initial' | 'typing' | 'loading' | 'content'>('initial');
@@ -75,14 +75,14 @@ const Banco = () => {
   };
 
   const banknotes = [
-    { denom: 1, front: '/images/pavi/01_front.webp', back: '/images/pavi/01_back.webp', subtitle: 'BASE ASSET', description: 'EL INICIO DE LA ECONOMÍA PAVIMUN. DE CIRCULACIÓN PRINCIPAL EN TRANSACCIONES MENORES, VUELTOS Y COMPRAS LIGERAS EN LA TIENDITA.' },
-    { denom: 2, front: '/images/pavi/2_front.webp', back: '/images/pavi/2_back.webp', subtitle: 'POCKET RESERVE', description: 'PARA COMPENSACIONES MENORES Y PAGOS RÁPIDOS EN TRANSACCIONES COTIDIANAS DEL MODELO.' },
-    { denom: 5, front: '/images/pavi/05_front.webp', back: '/images/pavi/05_back.webp', subtitle: 'COMMON CIRCULATION', description: 'OPERATIVIDAD INMEDIATA PARA LA ADQUISICIÓN DE SNACKS MEDIOS Y SUMINISTROS BÁSICOS DURANTE LOS RECESOS.' },
-    { denom: 10, front: '/images/pavi/10_front.webp', back: '/images/pavi/10_back.webp', subtitle: 'GOLD STANDARD', description: 'EL ESTÁNDAR TÁCTICO DE ORO. EMPLEADO PARA COMPRAR GOLOSINAS PREMIUM Y ENVIAR ROSAS PARLAMENTARIAS CLASIFICADAS.' },
-    { denom: 20, front: '/images/pavi/20_front.webp', back: '/images/pavi/20_back.webp', subtitle: 'INVESTMENT TIER', character: 'Raulito', description: 'BILLETE DE INVERSIÓN PRINCIPAL. IDEAL PARA INICIAR APUESTAS EN LAS DINÁMICAS DE FERIA Y DOBLAR CAPITAL ACUMULADO.' },
-    { denom: 50, front: '/images/pavi/50_front.webp', back: '/images/pavi/50_back.webp', subtitle: 'MID RESERVE', character: 'Aura', description: 'RESERVA DE ALTO RIESGO Y VALOR. OTORGA EL PODER DE ADQUIRIR COMBOS DE LA TIENDITA O NEGOCIAR PRIVILEGIOS DE SESIÓN.' },
-    { denom: 100, front: '/images/pavi/100_front.webp', back: '/images/pavi/100_back.webp', subtitle: 'DIPLOMACY REWARD', description: 'EL PREMIO DE LITE DE LA DIPLOMACIA. SOLO PARA TRATADOS CRÍTICOS. SUFICIENTE PARA RECLAMAR STICKERS OFICIALES O BENEFICIOS PREMIUM.' },
-    { denom: 200, front: '/images/pavi/200_front.webp', back: '/images/pavi/200_back.webp', subtitle: 'CLASSIFIED ACCESS', description: 'EDICIÓN RESTRINGIDA. QUIEN PORTE ESTE BILLETE TIENE PODER ABSOLUTO SOBRE COMPRAS MAYORES Y ACCESO VIP A RESERVAS OCULTAS.' },
+    { denom: 1, front: '/images/pavi/1 PAVI.webp', back: '/images/pavi/1 PAVI (Cara Detras).webp', subtitle: 'BASE ASSET', description: 'EL INICIO DE LA ECONOMÍA PAVIMUN. DE CIRCULACIÓN PRINCIPAL EN TRANSACCIONES MENORES, VUELTOS Y COMPRAS LIGERAS EN LA TIENDITA.' },
+    { denom: 2, front: '/images/pavi/2 PAVI.webp', back: '/images/pavi/2 PAVI (Cara Detras).webp', subtitle: 'POCKET RESERVE', description: 'PARA COMPENSACIONES MENORES Y PAGOS RÁPIDOS EN TRANSACCIONES COTIDIANAS DEL MODELO.' },
+    { denom: 5, front: '/images/pavi/5 PAVI.webp', back: '/images/pavi/5 PAVI (Cara Detras).webp', subtitle: 'COMMON CIRCULATION', description: 'OPERATIVIDAD INMEDIATA PARA LA ADQUISICIÓN DE SNACKS MEDIOS Y SUMINISTROS BÁSICOS DURANTE LOS RECESOS.' },
+    { denom: 10, front: '/images/pavi/10 PAVI.webp', back: '/images/pavi/10 PAVI (Cara Detras).webp', subtitle: 'GOLD STANDARD', description: 'EL ESTÁNDAR TÁCTICO DE ORO. EMPLEADO PARA COMPRAR GOLOSINAS PREMIUM Y ENVIAR ROSAS PARLAMENTARIAS CLASIFICADAS.' },
+    { denom: 20, front: '/images/pavi/20 PAVI.webp', back: '/images/pavi/20 PAVI (Cara Detras).webp', subtitle: 'INVESTMENT TIER', character: 'Raulito', description: 'BILLETE DE INVERSIÓN PRINCIPAL. IDEAL PARA INICIAR APUESTAS EN LAS DINÁMICAS DE FERIA Y DOBLAR CAPITAL ACUMULADO.' },
+    { denom: 50, front: '/images/pavi/50 PAVI.webp', back: '/images/pavi/50 PAVI (Cara Detras).webp', subtitle: 'MID RESERVE', character: 'Aura', description: 'RESERVA DE ALTO RIESGO Y VALOR. OTORGA EL PODER DE ADQUIRIR COMBOS DE LA TIENDITA O NEGOCIAR PRIVILEGIOS DE SESIÓN.' },
+    { denom: 100, front: '/images/pavi/100 PAVI.webp', back: '/images/pavi/100 PAVI (Cara Detras).webp', subtitle: 'DIPLOMACY REWARD', description: 'EL PREMIO DE LITE DE LA DIPLOMACIA. SOLO PARA TRATADOS CRÍTICOS. SUFICIENTE PARA RECLAMAR STICKERS OFICIALES O BENEFICIOS PREMIUM.' },
+    { denom: 200, front: '/images/pavi/200 PAVI.webp', back: '/images/pavi/200 PAVI (Cara Detras).webp', subtitle: 'CLASSIFIED ACCESS', description: 'EDICIÓN RESTRINGIDA. QUIEN PORTE ESTE BILLETE TIENE PODER ABSOLUTO SOBRE COMPRAS MAYORES Y ACCESO VIP A RESERVAS OCULTAS.' },
   ];
 
   const tienditaItems = [
@@ -228,26 +228,21 @@ const Banco = () => {
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[85vw] sm:w-[60vw] md:w-[35vw] lg:w-[25vw] flex justify-center mt-10 md:mt-32 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[85vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
-              <div className={`relative w-full aspect-[2/1] hero-flip-inner transition-transform duration-1000`}>
+              <div className={`relative w-full aspect-auto min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
-                  <img src="/images/pavi/100_front.webp" alt="100 PAVI Front" className="w-full h-auto object-contain pointer-events-none" />
+                  <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
                 </div>
                 {/* Back */}
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
-                  <img src="/images/pavi/100_back.webp" alt="100 PAVI Back" className="w-full h-auto object-contain pointer-events-none" />
+                  <img src="/images/pavi/100 PAVI (Cara Detras).webp" alt="100 PAVI Back" className="w-full h-full object-contain pointer-events-none" />
                 </div>
               </div>
             </div>
 
-            {/* Call to action explicitly placed below the banknote in document flow */}
-            <div className="relative mt-16 mb-8 flex flex-col items-center z-30 opacity-70">
-              <div className="w-1 h-12 md:h-16 bg-gradient-to-b from-[#b89456] to-transparent mb-4 animate-pulse"></div>
-              <span className="font-mono text-white text-[10px] md:text-xs tracking-[0.3em] font-bold">DESPLAZAR HACIA ABAJO</span>
-            </div>
           </section>
 
           {/* CICLO TÁCTICO */}
@@ -369,60 +364,67 @@ const Banco = () => {
                 </p>
               </div>
 
-              <div className="flex flex-col gap-28 md:grid md:grid-cols-2 lg:grid-cols-2 gap-y-28 md:gap-x-16 lg:gap-x-24 xl:gap-x-32 w-full mx-auto px-4 md:px-0">
-                {banknotes.map((note) => (
-                  <div key={note.denom} className="flex flex-col border-2 border-[#222] bg-[#050505] transition-colors w-full h-full">
-                    {/* Dossier Text (Top) */}
-                    <div className="w-full flex flex-col items-start p-6 sm:p-10 relative border-b border-[#222]">
-                      <div className="absolute top-4 sm:top-6 left-4 sm:left-6 text-[#333] transition-colors flex gap-2">
-                        <Scan className="w-5 h-5" />
-                      </div>
-                      <div className="absolute top-4 sm:top-6 right-4 sm:right-6 font-mono text-[10px] md:text-xs font-bold text-[#444] tracking-[0.2em]">
-                        ACQ: 8092.{note.denom}
-                      </div>
+              <div className="flex flex-col gap-32 w-full max-w-6xl mx-auto px-4 lg:px-0">
+                {banknotes.map((note, idx) => {
+                  const isLeftText = idx % 2 === 0;
 
-                      <div className="mt-8 sm:mt-12 text-[#b89456] font-mono tracking-[0.2em] text-xs md:text-sm font-bold mb-4 flex items-center gap-2">
-                        <TrendingUp className="w-4 h-4" /> // {note.subtitle}
-                      </div>
+                  return (
+                    <div key={note.denom} className={`flex flex-col ${isLeftText ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24 w-full`}>
 
-                      <h3 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white transition-colors">
-                        {note.denom} <br /> <span className="text-3xl text-[#666]">PAVI.</span>
-                      </h3>
-
-                      {note.character && (
-                        <div className="inline-block bg-white text-black font-black uppercase px-2 sm:px-3 py-1 text-[10px] md:text-xs tracking-[0.2em] mb-6">
-                          OBJETIVO: {note.character}
+                      {/* DOSSIER INFO */}
+                      <div className="w-full lg:w-1/2 flex flex-col border-l-4 lg:border-l-0 lg:border-t-4 border-[#b89456] pl-6 lg:pl-0 lg:pt-8 relative group">
+                        <div className="flex text-[#333] group-hover:text-[#b89456] transition-colors gap-2 mb-4">
+                          <Scan className="w-6 h-6" />
+                          <span className="font-mono text-xs font-bold text-[#444] tracking-[0.3em] ml-auto">
+                            ACQ: 8092.{note.denom}
+                          </span>
                         </div>
-                      )}
 
-                      <div className="font-mono text-[#a1a1a1] text-[10px] sm:text-xs tracking-[0.1em] leading-relaxed border-l-2 border-[#b89456] pl-4 mt-auto min-h-[4rem]">
-                        {note.description}
-                      </div>
-                    </div>
+                        <div className="mb-2 text-[#b89456] font-mono tracking-[0.2em] text-xs md:text-sm font-bold flex items-center gap-2 uppercase">
+                          <TrendingUp className="w-4 h-4" /> // {note.subtitle}
+                        </div>
 
-                    {/* 3D Banknote (Bottom) - Proper flip geometry */}
-                    <div className="w-full flex justify-center items-center py-20 px-4 bg-[#0a0a0a] relative flex-grow min-h-[300px]">
-                      <div className="absolute top-4 right-4 text-[#333]"><Download className="w-5 h-5" /></div>
+                        <h3 className="text-6xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white group-hover:text-[#b89456] transition-colors">
+                          {note.denom} <br className="hidden lg:block" /> <span className="text-4xl text-[#666]">PAVI.</span>
+                        </h3>
 
-                      <div
-                        className={`relative w-full max-w-[400px] aspect-[2/1] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
-                        onClick={() => toggleFlip(note.denom)}
-                      >
-                        <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_15px_30px_rgba(0,0,0,0.8)]`}>
-                          {/* Front */}
-                          <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
-                            <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
+                        {note.character && (
+                          <div className="inline-block bg-white text-black font-black uppercase px-4 py-2 text-xs md:text-sm tracking-[0.3em] mb-6 self-start">
+                            OBJETIVO: {note.character}
                           </div>
-                          {/* Back */}
-                          <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
-                            <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-auto object-contain pointer-events-none" />
-                          </div>
+                        )}
+
+                        <div className="font-mono text-[#a1a1a1] text-xs md:text-sm tracking-[0.1em] leading-relaxed max-w-md">
+                          {note.description}
                         </div>
                       </div>
-                    </div>
 
-                  </div>
-                ))}
+                      {/* 3D BANKNOTE */}
+                      <div className="w-full lg:w-1/2 flex justify-center items-center py-10 relative">
+                        <div
+                          className={`relative w-full max-w-[320px] lg:max-w-[400px] h-[500px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          onClick={() => toggleFlip(note.denom)}
+                        >
+                          <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]`}>
+                            {/* Front */}
+                            <div className="absolute inset-0 w-full h-full backface-hidden flex items-center justify-center">
+                              <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
+                            </div>
+                            {/* Back */}
+                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 flex items-center justify-center">
+                              <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
+                            </div>
+                          </div>
+                        </div>
+
+                        <div className="absolute bottom-0 right-4 lg:-right-10 text-[#222] font-black text-xs font-mono tracking-widest whitespace-nowrap rotate-[-90deg] origin-bottom-right hidden lg:block">
+                          SECUENCIA: {note.denom.toString().padStart(3, '0')} // CARGANDO
+                        </div>
+                      </div>
+
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </section>
