@@ -1,36 +1,35 @@
 import { useState } from 'react';
-import { Shield, TrendingUp, Handshake, ShoppingBag, Music, Gift, AlertTriangle, ChevronRight } from 'lucide-react';
+import { Target, Crosshair, Zap, Box, MapPin, Music, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
 
 const Banco = () => {
-  const [isAuthorized, setIsAuthorized] = useState(false);
+  const [authPhase, setAuthPhase] = useState<'pin' | 'loading' | 'content'>('pin');
   const [pinInput, setPinInput] = useState('');
   const [pinError, setPinError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [loadingText, setLoadingText] = useState('Conectando...');
+  const [loadingText, setLoadingText] = useState('INI. PROTOCOLO...');
+  const [searchTerm, setSearchTerm] = useState('');
+
   const ADMIN_PIN = '0271987AA';
 
   const handlePinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (pinInput === ADMIN_PIN) {
       setPinError(false);
-      setIsLoading(true);
+      setAuthPhase('loading');
+
       const sequence = [
-        { text: 'Autenticando administrador...', delay: 1000 },
-        { text: 'Verificando reservas...', delay: 2000 },
-        { text: 'Acceso concedido.', delay: 3500 },
+        { text: 'VERIFICANDO RED DE MESA...', delay: 500 },
+        { text: 'DESCIFRANDO BÓVEDA CENTRAL...', delay: 1500 },
+        { text: 'ASIGNANDO CLAVE DE ACCESO...', delay: 2500 },
+        { text: 'ACCESO TÁCTICO CONCEDIDO.', delay: 3500 },
       ];
 
-      let timeouts: ReturnType<typeof setTimeout>[] = [];
       sequence.forEach(({ text, delay }) => {
-        const timeout = setTimeout(() => setLoadingText(text), delay);
-        timeouts.push(timeout);
+        setTimeout(() => setLoadingText(text), delay);
       });
 
-      const hideTimeout = setTimeout(() => {
-        setIsLoading(false);
-        setIsAuthorized(true);
+      setTimeout(() => {
+        setAuthPhase('content');
       }, 4500);
-      timeouts.push(hideTimeout);
     } else {
       setPinError(true);
       setPinInput('');
@@ -39,262 +38,344 @@ const Banco = () => {
   };
 
   const banknotes = [
-    { denom: 1, front: '/images/pavi/f.webp', back: '/images/pavi/ff.webp', description: 'El inicio de la economía PAVIMUN. Perfecto para pequeños recargos en La Tiendita.' },
-    { denom: 2, front: '/images/pavi/j.webp', back: '/images/pavi/jj.webp', description: 'Útil para transacciones menores y dar vuelto exacto en las ferias.' },
-    { denom: 5, front: '/images/pavi/k.webp', back: '/images/pavi/kk.webp', description: 'El billete de circulación común para snacks ligeros y chicles.' },
-    { denom: 10, front: '/images/pavi/n.webp', back: '/images/pavi/nn.webp', description: 'El estándar de oro para comprar golosinas y enviar rosas parlamentarias.' },
-    { denom: 20, front: '/images/pavi/c.webp', back: '/images/pavi/cc.webp', character: 'Raulito', description: 'Billete de inversión. Ideal para iniciar apuestas en las dinámicas.' },
-    { denom: 50, front: '/images/pavi/d.webp', back: '/images/pavi/dd.webp', character: 'Aura', description: 'Reserva de valor media. Utilizado para comprar combos o privilegios.' },
-    { denom: 100, front: '/images/pavi/s.webp', back: '/images/pavi/ss.webp', description: 'El premio mayor de la diplomacia. Adquiere stickers oficiales o exclusividades de alto nivel.' },
-    { denom: 200, front: '/images/pavi/x.webp', back: '/images/pavi/xx.webp', description: 'Edición Limitada. Quien porte este billete tiene acceso VIP indiscutible a los beneficios del Modelo.' },
+    { denom: 1, front: '/images/pavi/1_front.webp', back: '/images/pavi/1_back.webp', subtitle: 'BASE ASSET', description: 'EL INICIO DE LA ECONOMÍA PAVIMUN. DE CIRCULACIÓN PRINCIPAL EN TRANSACCIONES MENORES, VUELTOS Y COMPRAS LIGERAS EN LA TIENDITA.' },
+    { denom: 5, front: '/images/pavi/5_front.webp', back: '/images/pavi/5_back.webp', subtitle: 'COMMON CIRCULATION', description: 'OPERATIVIDAD INMEDIATA PARA LA ADQUISICIÓN DE SNACKS MEDIOS Y SUMINISTROS BÁSICOS DURANTE LOS RECESOS.' },
+    { denom: 10, front: '/images/pavi/10_front.webp', back: '/images/pavi/10_back.webp', subtitle: 'GOLD STANDARD', description: 'EL ESTÁNDAR TÁCTICO DE ORO. EMPLEADO PARA COMPRAR GOLOSINAS PREMIUM Y ENVIAR ROSAS PARLAMENTARIAS CLASIFICADAS.' },
+    { denom: 20, front: '/images/pavi/20_front.webp', back: '/images/pavi/20_back.webp', subtitle: 'INVESTMENT TIER', character: 'Raulito', description: 'BILLETE DE INVERSIÓN PRINCIPAL. IDEAL PARA INICIAR APUESTAS EN LAS DINÁMICAS DE FERIA Y DOBLAR CAPITAL ACUMULADO.' },
+    { denom: 50, front: '/images/pavi/50_front.webp', back: '/images/pavi/50_back.webp', subtitle: 'MID RESERVE', character: 'Aura', description: 'RESERVA DE ALTO RIESGO Y VALOR. OTORGA EL PODER DE ADQUIRIR COMBOS DE LA TIENDITA O NEGOCIAR PRIVILEGIOS DE SESIÓN.' },
+    { denom: 100, front: '/images/pavi/100_front.webp', back: '/images/pavi/100_back.webp', subtitle: 'DIPLOMACY REWARD', description: 'EL PREMIO DE LITE DE LA DIPLOMACIA. SOLO PARA TRATADOS CRÍTICOS. SUFICIENTE PARA RECLAMAR STICKERS OFICIALES O BENEFICIOS PREMIUM.' },
+    { denom: 200, front: '/images/pavi/200_front.webp', back: '/images/pavi/200_back.webp', subtitle: 'CLASSIFIED ACCESS', description: 'EDICIÓN RESTRINGIDA. QUIEN PORTE ESTE BILLETE TIENE PODER ABSOLUTO SOBRE COMPRAS MAYORES Y ACCESO VIP A RESERVAS OCULTAS.' },
   ];
 
-  const dutyFreeItems = [
-    { name: 'Snacks Salados (Doritos, Papas)', price: 30, icon: <Gift className="w-5 h-5" /> },
-    { name: 'Golosinas y Chocolates', price: 20, icon: <Gift className="w-5 h-5" /> },
-    { name: 'Refrescos y Bebidas', price: 50, icon: <Gift className="w-5 h-5" /> },
-    { name: 'Sticker Oficial PAVIMUN', price: 100, icon: <ShoppingBag className="w-5 h-5" /> },
-    { name: 'Reserva de Corneta PAVI', price: 200, icon: <Music className="w-5 h-5" /> },
+  const tienditaItems = [
+    { name: '[ SNACKS SALADOS ]', alias: 'Doritos, Papas Fritas, Platanitos', price: 30, icon: <Box className="w-8 h-8" /> },
+    { name: '[ GOLOSINAS ]', alias: 'Chocolates, Caramelos de Goma', price: 20, icon: <Zap className="w-8 h-8" /> },
+    { name: '[ REFRESCOS ]', alias: 'Bebidas Carbonatadas y Sodas', price: 50, icon: <MapPin className="w-8 h-8" /> },
+    { name: '[ THE STICKER ]', alias: 'Sticker Holográfico Oficial', price: 100, icon: <Target className="w-8 h-8" /> },
+    { name: '[ CORNETA PAVI ]', alias: 'Reserva de Control de Audio', price: 200, icon: <Music className="w-8 h-8" /> },
   ];
 
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 bg-[#f5f5f7] flex flex-col items-center justify-center z-50 text-[#1d1d1f] font-sans">
-        <div className="flex flex-col items-center max-w-sm text-center">
-          <Shield className="w-16 h-16 text-[#0066cc] mb-6 animate-pulse" strokeWidth={1.5} />
-          <h2 className="text-3xl font-semibold tracking-tight text-[#1d1d1f] mb-2">Banco Central</h2>
-          <p className="text-[#86868b] text-lg font-medium animate-pulse mb-8">{loadingText}</p>
-
-          <div className="w-48 h-1 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-[#0066cc] rounded-full animate-[load_4.5s_cubic-bezier(0.16,1,0.3,1)_forwards]"></div>
-          </div>
-        </div>
-        <style dangerouslySetInnerHTML={{
-          __html: `
-          @keyframes load {
-            0% { width: 0%; }
-            20% { width: 30%; }
-            50% { width: 40%; }
-            80% { width: 80%; }
-            100% { width: 100%; }
-          }
-        `}} />
-      </div>
-    );
-  }
-
-  if (!isAuthorized) {
-    return (
-      <div className="min-h-screen bg-[#f5f5f7] flex flex-col items-center justify-center p-6 relative overflow-hidden font-sans">
-        <div className="relative z-10 w-full max-w-md">
-          <div className="bg-white/70 backdrop-blur-2xl border border-white/20 p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] text-center">
-            <div className="w-16 h-16 bg-[#f5f5f7] rounded-full mx-auto flex items-center justify-center mb-6">
-              <Shield className="w-8 h-8 text-[#1d1d1f]" strokeWidth={1.5} />
-            </div>
-
-            <h2 className="text-3xl font-semibold text-[#1d1d1f] mb-2 tracking-tight">Acceso Restringido</h2>
-            <p className="text-[#86868b] mb-8 text-sm font-medium">Bóveda del Banco Central</p>
-
-            <form onSubmit={handlePinSubmit}>
-              <div className="relative mb-8">
-                <input
-                  type="password"
-                  value={pinInput}
-                  onChange={(e) => setPinInput(e.target.value.toUpperCase())}
-                  placeholder="Código"
-                  className={`w-full bg-[#f5f5f7] border ${pinError ? 'border-red-500 text-red-500' : 'border-transparent text-[#1d1d1f] focus:border-[#0066cc] focus:bg-white focus:shadow-[0_0_0_4px_rgba(0,102,204,0.1)]'} rounded-2xl px-6 py-4 text-center font-mono text-xl tracking-[0.5em] outline-none transition-all placeholder:tracking-normal placeholder:font-sans placeholder:text-[#86868b]/60`}
-                  autoFocus
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[#0066cc] hover:bg-[#0077ed] text-white font-medium py-4 rounded-2xl transition-all active:scale-[0.98]"
-              >
-                Desbloquear
-              </button>
-            </form>
-          </div>
-
-          <div className="mt-8 text-center flex items-center justify-center gap-2 text-[#86868b] text-xs font-medium">
-            <AlertTriangle className="w-4 h-4" /> Uso exclusivo de Administración
-          </div>
-        </div>
-      </div>
-    );
-  }
+  const filteredItems = tienditaItems.filter(item =>
+    item.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    item.alias.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   return (
-    <div className="min-h-screen bg-[#f5f5f7] text-[#1d1d1f] selection:bg-[#0066cc] selection:text-white font-sans overflow-x-hidden">
+    <>
+      <style dangerouslySetInnerHTML={{
+        __html: `
+          @keyframes slide {
+            0% { transform: translateX(10%); }
+            100% { transform: translateX(-50%); }
+          }
+          @keyframes barload {
+            0% { width: 0%; }
+            100% { width: 100%; }
+          }
+          .transform-style-3d {
+            transform-style: preserve-3d;
+          }
+          .backface-hidden {
+            backface-visibility: hidden;
+          }
+          .rotate-y-180 {
+            transform: rotateY(180deg);
+          }
+        `}} />
 
-      {/* 1. HERO SECTION (Apple Style) */}
-      <section className="relative pt-32 pb-20 overflow-hidden flex flex-col items-center text-center">
-        <div className="container mx-auto px-6 relative z-10 max-w-4xl">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-black/5 text-[#1d1d1f] text-xs font-semibold uppercase tracking-wider mb-8">
-            <Shield className="w-3.5 h-3.5" /> Economía Oficial
+      {/* STAGE 1: PIN SCREEN */}
+      {authPhase === 'pin' && (
+        <div className="fixed inset-0 bg-[#0a0a0a] z-50 flex flex-col justify-center items-center text-white font-mono overflow-hidden">
+          {/* Distressed borders */}
+          <div className="absolute inset-4 border-2 border-[#1a1a1a] pointer-events-none">
+            <div className="absolute top-0 left-0 w-8 h-8 border-t-4 border-l-4 border-[#e62429]"></div>
+            <div className="absolute top-0 right-0 w-8 h-8 border-t-4 border-r-4 border-[#e62429]"></div>
+            <div className="absolute bottom-0 left-0 w-8 h-8 border-b-4 border-l-4 border-[#e62429]"></div>
+            <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#e62429]"></div>
           </div>
-          <h1 className="text-6xl md:text-8xl font-bold text-[#1d1d1f] mb-6 tracking-tighter">
-            Banco Central.
-          </h1>
-          <p className="text-2xl md:text-3xl text-[#86868b] mb-12 max-w-3xl mx-auto font-medium leading-tight">
-            La moneda exclusiva de PAVIMUN. Gana recompensas, invierte inteligentemente y canjea en La Tiendita.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-            <a href="#duty-free" className="px-8 py-4 bg-[#0066cc] hover:bg-[#0077ed] text-white rounded-full font-medium transition-all flex items-center gap-2 text-lg">
-              La Tiendita <ChevronRight className="w-5 h-5" />
-            </a>
-            <a href="#galeria" className="px-8 py-4 text-[#0066cc] hover:text-[#0077ed] rounded-full font-medium transition-all flex items-center gap-2 text-lg hover:bg-[#0066cc]/5">
-              Conoce los Billetes <ChevronRight className="w-5 h-5" />
-            </a>
-          </div>
+
+          <Crosshair className="w-24 h-24 text-[#e62429] mb-8 animate-pulse" strokeWidth={1.5} />
+          <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-2 text-center px-4">Bóveda Restringida</h1>
+          <p className="text-[#e62429] tracking-[0.4em] text-sm md:text-base font-bold mb-16">INGRESA EL CÓDIGO [CLASSIFIED]</p>
+
+          <form onSubmit={handlePinSubmit} className="relative z-10 w-full max-w-sm px-6">
+            <input
+              type="password"
+              value={pinInput}
+              onChange={(e) => setPinInput(e.target.value.toUpperCase())}
+              placeholder="___ ___ ___"
+              className={`w-full bg-transparent border-b-4 ${pinError ? 'border-[#e62429] text-[#e62429]' : 'border-[#333] text-white focus:border-[#e62429]'} text-center text-3xl md:text-4xl tracking-[0.3em] pb-4 outline-none font-black transition-colors placeholder:text-[#333]`}
+              autoFocus
+            />
+            {pinError && <p className="text-[#e62429] text-center mt-6 tracking-widest text-sm font-bold animate-pulse">CÓDIGO INVÁLIDO O CORRUPTO</p>}
+
+            <button type="submit" className="w-full mt-12 bg-[#e62429] hover:bg-white hover:text-[#e62429] text-black font-black uppercase tracking-widest py-4 text-xl transition-all duration-300">
+              [ ENTRAR ]
+            </button>
+          </form>
         </div>
+      )}
 
-        {/* Floating Banknote */}
-        <div className="w-full max-w-2xl mx-auto mt-20 relative perspective-1000">
-          <div className="w-full aspect-[2/1] relative transform-gpu rotate-x-[20deg] animate-[float_6s_ease-in-out_infinite] drop-shadow-2xl">
-            <img src="/images/pavi/s.webp" alt="100 PAVI" className="w-full h-full object-contain filter contrast-105" />
-          </div>
-        </div>
-      </section>
-
-      {/* 2. CÓMO FUNCIONA */}
-      <section className="py-32 bg-white relative">
-        <div className="container mx-auto px-6 max-w-6xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-[#1d1d1f] mb-6 tracking-tight">El Ciclo Económico.</h2>
-            <p className="text-[#86868b] max-w-2xl mx-auto text-xl font-medium">Entiende el flujo de capital dentro de las instalaciones.</p>
+      {/* STAGE 2: LOADING SCREEN */}
+      {authPhase === 'loading' && (
+        <div className="fixed inset-0 bg-[#e62429] z-50 flex flex-col justify-center items-center text-black font-sans overflow-hidden">
+          {/* Background text moving huge */}
+          <div className="absolute whitespace-nowrap text-[30vw] font-black opacity-[0.05] select-none animate-[slide_15s_linear_infinite]">
+            LOADING SYSTEM LOADING SYSTEM LOADING SYSTEM
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {/* Step 1 */}
-            <div className="bg-[#f5f5f7] p-10 rounded-[2rem] transition-all hover:scale-[1.02] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-8 text-[#1d1d1f]">
-                <Handshake className="w-8 h-8" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-3xl font-semibold text-[#1d1d1f] mb-4 tracking-tight">1. Gana.</h3>
-              <p className="text-[#86868b] leading-relaxed font-medium text-lg">
-                Demuestra diplomacia exquisita, ayuda a otros delegados o supera nuestros Desafíos Estrelámpago para ser recompensado con PAVIs físicos por el Staff.
-              </p>
+          <Lock className="w-32 h-32 mb-8 z-10" strokeWidth={1} />
+          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
+            DESENCRIPTANDO<br />BÓVEDA
+          </h2>
+
+          <div className="absolute bottom-24 w-4/5 max-w-3xl z-10">
+            <div className="flex justify-between font-mono text-sm md:text-base tracking-widest font-bold mb-4">
+              <span>[ ESTADO ]</span>
+              <span className="text-white bg-black px-2">{loadingText}</span>
             </div>
-
-            {/* Step 2 */}
-            <div className="bg-[#f5f5f7] p-10 rounded-[2rem] transition-all hover:scale-[1.02] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-8 text-[#0066cc]">
-                <TrendingUp className="w-8 h-8" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-3xl font-semibold text-[#1d1d1f] mb-4 tracking-tight">2. Invierte.</h3>
-              <p className="text-[#86868b] leading-relaxed font-medium text-lg">
-                Dirígete a la Feria de Inversiones durante los recesos. Apuesta contra la casa u otros delegados en juegos de habilidad para multiplicar tus fondos.
-              </p>
-            </div>
-
-            {/* Step 3 */}
-            <div className="bg-[#f5f5f7] p-10 rounded-[2rem] transition-all hover:scale-[1.02] shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-              <div className="w-16 h-16 bg-white rounded-full shadow-sm flex items-center justify-center mb-8 text-[#1d1d1f]">
-                <ShoppingBag className="w-8 h-8" strokeWidth={1.5} />
-              </div>
-              <h3 className="text-3xl font-semibold text-[#1d1d1f] mb-4 tracking-tight">3. Disfruta.</h3>
-              <p className="text-[#86868b] leading-relaxed font-medium text-lg">
-                Acércate a La Tiendita. Canjea tus billetes acumulados por caramelos, snacks, o mercancía oficial exclusiva. ¡Tú decides el beneficio!
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. LA TIENDITA (Catálogo) */}
-      <section id="duty-free" className="py-32 bg-[#f5f5f7] relative">
-        <div className="container mx-auto px-6 max-w-4xl">
-          <div className="text-center mb-20">
-            <h2 className="text-4xl md:text-6xl font-bold text-[#1d1d1f] mb-4 tracking-tight">La Tiendita.</h2>
-            <p className="text-[#86868b] text-xl font-medium">Catálogo Oficial de Recompensas</p>
-          </div>
-
-          <div className="bg-white rounded-[2rem] p-4 md:p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
-            <div className="space-y-2">
-              {dutyFreeItems.map((item, idx) => (
-                <div key={idx} className="flex flex-col sm:flex-row items-start sm:items-center justify-between p-6 hover:bg-[#f5f5f7] rounded-2xl transition-colors group border-b border-black/5 last:border-0">
-                  <div className="flex items-center gap-5 mb-4 sm:mb-0">
-                    <div className="w-12 h-12 bg-black/5 rounded-full flex items-center justify-center text-[#1d1d1f] group-hover:scale-110 transition-transform">
-                      {item.icon}
-                    </div>
-                    <h4 className="text-xl font-semibold text-[#1d1d1f]">{item.name}</h4>
-                  </div>
-                  <div className="flex items-baseline gap-2 bg-[#f5f5f7] sm:bg-transparent px-4 sm:px-0 py-2 sm:py-0 rounded-full">
-                    <span className="text-2xl font-bold text-[#1d1d1f]">{item.price}</span>
-                    <span className="text-sm text-[#86868b] font-semibold tracking-wider">PAVI</span>
-                  </div>
-                </div>
-              ))}
+            <div className="w-full h-3 bg-black/20">
+              <div className="h-full bg-black animate-[barload_4.5s_ease-out_forwards]"></div>
             </div>
           </div>
-          <p className="text-center text-[#86868b] mt-10 font-medium text-sm px-6">
-            * Productos físicos sujetos a disponibilidad. Precios sujetos a inflación del evento.
-          </p>
         </div>
-      </section>
+      )}
 
-      {/* 4. GALERÍA NUMISMÁTICA (Los Billetes) */}
-      <section id="galeria" className="py-32 bg-white border-t border-black/5">
-        <div className="container mx-auto px-6 max-w-7xl">
-          <div className="text-center mb-24">
-            <h2 className="text-4xl md:text-6xl font-bold text-[#1d1d1f] mb-6 tracking-tight">Reserva Histórica.</h2>
-            <p className="text-[#86868b] max-w-2xl mx-auto text-xl font-medium">
-              Conoce el diseño y las medidas de seguridad de las 8 denominaciones oficiales.
-              <br /><span className="text-sm font-semibold mt-4 inline-block px-4 py-2 bg-[#f5f5f7] rounded-full">Toca o pasa el cursor para ver el reverso.</span>
-            </p>
+      {/* STAGE 3: CONTENT */}
+      {authPhase === 'content' && (
+        <div className="min-h-screen bg-[#050505] text-white selection:bg-[#e62429] selection:text-white font-sans overflow-x-hidden">
+
+          {/* Cinematic top bar */}
+          <div className="absolute top-0 left-0 w-full p-6 flex justify-between items-center z-40 pointer-events-none font-mono text-[#e62429] text-xs md:text-sm tracking-[0.3em] font-bold mix-blend-difference">
+            <span>REC // PAVIMUN 2026 // DOSSIER</span>
+            <span className="flex items-center gap-2"><span className="w-3 h-3 bg-[#e62429] rounded-full animate-pulse"></span> LIVE SECURE</span>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            {banknotes.map((note) => (
-              <div key={note.denom} className="flex flex-col items-center group perspective-1000">
-                {/* 3D Flip Container */}
-                <div className="relative w-full aspect-[1/1.5] max-w-[280px] transition-transform duration-700 transform-style-3d group-hover:rotate-y-180 drop-shadow-xl hover:drop-shadow-2xl hover:-translate-y-2">
+          {/* HERO */}
+          <section className="relative w-full min-h-screen flex flex-col justify-center items-center border-b-8 border-[#e62429] pt-20 overflow-hidden bg-[#050505]">
+            {/* Grid overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(230,36,41,0.05)_1px,transparent_1px),linear-gradient(90deg,rgba(230,36,41,0.05)_1px,transparent_1px)] bg-[size:100px_100px] pointer-events-none z-0"></div>
 
-                  {/* Front of Banknote */}
-                  <div className="absolute inset-0 backface-hidden rounded-xl overflow-hidden bg-white border border-black/5">
-                    <img src={note.front} alt={`${note.denom} PAVI Front`} className="w-full h-full object-cover" loading="lazy" />
+            {/* Huge Text (Background) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-0 overflow-hidden w-full">
+              <h1 className="text-[22vw] font-black uppercase tracking-tighter text-[#151515] leading-[0.8] whitespace-nowrap select-none scale-y-110">
+                ECONOMÍA
+              </h1>
+            </div>
+            {/* Huge Text (Foreground outline overlay) */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[60%] flex justify-center pointer-events-none z-20 overflow-hidden w-full">
+              <h1 className="text-[22vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,0.7)' }}>
+                ECONOMÍA
+              </h1>
+            </div>
+
+            {/* 3D Banknote */}
+            <div className="relative z-10 w-[85vw] md:w-[45vw] flex justify-center perspective-1000 mt-12 md:mt-24">
+              <img src="/images/pavi/100_front.webp" alt="100 PAVI" className="w-full h-auto rotate-[-8deg] drop-shadow-[0_0_80px_rgba(230,36,41,0.5)] transition-transform duration-700 ease-out hover:rotate-[0deg] hover:scale-[1.05]" />
+            </div>
+
+            {/* Call to action arrow below screen */}
+            <div className="absolute bottom-12 flex flex-col items-center z-30 opacity-70">
+              <div className="w-1 h-20 bg-gradient-to-b from-[#e62429] to-transparent mb-4 animate-pulse"></div>
+              <span className="font-mono text-white text-xs tracking-[0.3em] font-bold">DESPLAZAR</span>
+            </div>
+          </section>
+
+          {/* CICLO TÁCTICO */}
+          <section className="w-full bg-[#111] py-32 border-b border-[#333] relative">
+            <div className="container mx-auto px-6 max-w-7xl">
+              <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+
+                <div className="w-full lg:w-1/3 sticky top-32">
+                  <div className="flex items-center gap-4 mb-6 text-[#e62429] font-mono tracking-widest text-sm font-bold">
+                    <Target className="w-6 h-6 animate-pulse" /> OPERACIÓN: PAVIMUN
                   </div>
-
-                  {/* Back of Banknote */}
-                  <div className="absolute inset-0 backface-hidden rounded-xl overflow-hidden bg-[#f5f5f7] border border-black/10 rotate-y-180">
-                    <img src={note.back} alt={`${note.denom} PAVI Back`} className="w-full h-full object-cover" loading="lazy" />
-                  </div>
-
-                </div>
-
-                {/* Text Desc */}
-                <div className="mt-8 text-center px-4 w-full">
-                  <h3 className="text-3xl font-bold text-[#1d1d1f] tracking-tight">
-                    {note.denom} <span className="text-[#86868b] text-xl font-semibold">PAVI</span>
-                  </h3>
-                  {note.character && (
-                    <p className="text-xs text-[#0066cc] mt-2 uppercase font-bold tracking-widest bg-[#0066cc]/5 inline-block px-3 py-1 rounded-full">EDICIÓN {note.character}</p>
-                  )}
-                  <p className="mt-5 text-[15px] text-[#86868b] font-medium leading-relaxed max-w-[250px] mx-auto opacity-0 translate-y-2 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500">
-                    {note.description}
+                  <h2 className="text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
+                    CICLO<br /><span className="text-[#e62429] inline-block mt-2">TÁCTICO</span>
+                  </h2>
+                  <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#e62429] pl-4">
+                    REGLAS ESTRICTAS DE ENFRENTAMIENTO ECONÓMICO. INSTRUCCIONES CLASIFICADAS: GANA, INVIERTE Y DISFRUTA DURANTE LOS RECESOS OFICIALES.
                   </p>
                 </div>
+
+                <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
+                  {/* GANA */}
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#e62429]">01</div>
+                    <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Gana</h3>
+                    <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
+                      SUPERA DESAFÍOS ESTRELÁMPAGO O DEMUESTRA DIPLOMACIA IMPECABLE EN COMITÉ. RECIBE EFECTIVO POR PARTE DEL STAFF ORGANIZADOR COMO RECOMPENSA POR TU DESEMPEÑO.
+                    </p>
+                  </div>
+                  {/* INVIERTE */}
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#e62429]">02</div>
+                    <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Invierte</h3>
+                    <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
+                      ACUDE INMEDIATAMENTE A LA FERIA DE INVERSIONES EN LOS RECESOS. APUESTA CONTRA LA CASA EN JUEGOS DE AZAR Y HABILIDAD, Y DOBLA TU CAPITAL EN CUESTIÓN DE MINUTOS.
+                    </p>
+                  </div>
+                  {/* DISFRUTA */}
+                  <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#e62429] transition-colors group relative overflow-hidden md:col-span-2">
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#e62429] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="text-[#e62429] font-black text-6xl mb-6 opacity-30 group-hover:scale-110 transition-transform origin-left group-hover:opacity-100">03</div>
+                    <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Disfruta</h3>
+                    <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
+                      GASTA TODOS TUS FONDOS OBTENIDOS EN EL DOSSIER DE COMPRAS DE "LA TIENDITA". ADQUIERE DULCES, SNACKS O BENEFICIOS TÁCTICOS. CERO PREGUNTAS HASTA AGOTAR INVENTARIO.
+                    </p>
+                  </div>
+                </div>
               </div>
-            ))}
-          </div>
-        </div>
-      </section>
+            </div>
+          </section>
 
-      {/* 5. FOOTER OFICIAL / DISCLAIMER */}
-      <footer className="bg-[#f5f5f7] text-[#1d1d1f] py-12 border-t border-black/5">
-        <div className="container mx-auto px-6 flex flex-col items-center text-center max-w-3xl">
-          <AlertTriangle className="w-8 h-8 text-[#1d1d1f]/40 mb-6" />
-          <p className="text-sm text-[#86868b] font-medium leading-relaxed mb-8">
-            La moneda PAVI no tiene valor financiero legal en el mundo real. Es de uso exclusivo para dinámicas recreativas dentro de las instalaciones del Colegio Pablo VI. La falsificación resultará en inhabilitación.
-          </p>
-          <div className="text-xs font-semibold text-[#1d1d1f]/60 tracking-wider uppercase">
-            Mesa Organizadora PAVIMUN
-          </div>
-        </div>
-      </footer>
+          {/* LA TIENDITA SEARCH CATALOG */}
+          <section id="duty-free" className="w-full bg-[#050505] py-32 relative overflow-hidden border-b-8 border-[#333]">
+            {/* Extremely large BG text */}
+            <div className="absolute top-0 left-[-5%] text-[20vw] font-black text-[#111] select-none pointer-events-none whitespace-nowrap leading-[0.8]">
+              CATÁLOGO CATÁLOGO
+            </div>
 
-    </div>
+            <div className="container mx-auto px-6 max-w-6xl relative z-10">
+
+              <div className="flex flex-col lg:flex-row justify-between items-end mb-16 gap-8 border-b-2 border-[#333] pb-10">
+                <div className="w-full lg:w-auto">
+                  <div className="flex items-center gap-4 text-[#e62429] font-mono tracking-widest text-sm font-bold mb-4">
+                    <Scan className="w-6 h-6 animate-pulse" /> TARGET CATALOG SYSTEM
+                  </div>
+                  <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] text-white">
+                    LA TIENDITA
+                  </h2>
+                </div>
+
+                <div className="w-full lg:w-96 relative group">
+                  <Search className="absolute left-6 top-1/2 -translate-y-1/2 text-[#666] w-6 h-6 group-focus-within:text-[#e62429] transition-colors" />
+                  <input
+                    type="text"
+                    placeholder="BUSCAR INVENTARIO..."
+                    value={searchTerm}
+                    onChange={(e) => setSearchTerm(e.target.value)}
+                    className="w-full bg-[#111] border-2 border-[#333] focus:border-[#e62429] text-white font-mono py-5 pl-16 pr-6 outline-none transition-colors text-base tracking-widest uppercase placeholder:text-[#444]"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-6">
+                {filteredItems.map((item, idx) => (
+                  <div key={idx} className="flex flex-col md:flex-row md:items-center justify-between bg-[#0a0a0a] border-l-[12px] border-[#333] hover:border-[#e62429] p-8 md:p-10 group transition-all">
+                    <div className="flex items-center gap-8 mb-6 md:mb-0">
+                      <div className="text-[#333] group-hover:text-[#e62429] transition-colors">{item.icon}</div>
+                      <div>
+                        <h4 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">{item.name}</h4>
+                        <span className="font-mono text-sm text-gray-500 tracking-[0.2em]">{item.alias}</span>
+                      </div>
+                    </div>
+                    <div className="flex items-baseline gap-4 md:ml-auto md:text-right">
+                      <span className="text-5xl md:text-7xl font-black text-white group-hover:text-[#e62429] transition-colors leading-none">{item.price}</span>
+                      <span className="font-mono text-sm tracking-widest text-[#666] font-bold">PAVI</span>
+                    </div>
+                  </div>
+                ))}
+                {filteredItems.length === 0 && (
+                  <div className="text-center py-20 bg-[#0a0a0a] border-2 border-dashed border-[#e62429] font-mono font-bold tracking-[0.2em] text-[#e62429]">
+                    [ ADVERTENCIA: ARTÍCULO NO ENCONTRADO EN LA BASE DE DATOS ]
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* GALERÍA 3D (RESERVA HISTÓRICA) */}
+          <section id="galeria" className="w-full bg-[#111] pt-32 pb-48 text-white overflow-hidden relative">
+            <div className="container mx-auto px-6 max-w-7xl relative z-10">
+              <div className="text-center mb-32 relative">
+                <div className="absolute inset-x-0 w-full h-[1px] bg-[#333] top-1/2 -z-10"></div>
+                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-[#111] inline-block bg-[#111] px-8 py-2" style={{ WebkitTextStroke: '2px #e62429' }}>
+                  RESERVA HISTÓRICA
+                </h2>
+                <p className="font-mono font-bold tracking-[0.3em] text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-6 mt-16 text-[#e62429]">
+                  [ TOCA Y MANTÉN O PASA EL CURSOR POR LA IMAGEN PARA DESENCRIPTAR EL REVERSO CLASIFICADO DEL BILLETE ]
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-12">
+                {banknotes.map((note) => (
+                  <div key={note.denom} className="flex flex-col xl:flex-row items-stretch border-2 border-[#222] bg-[#050505] group hover:border-[#444] transition-colors w-full">
+
+                    {/* Dossier Text (Left) */}
+                    <div className="w-full xl:w-[45%] flex flex-col items-start p-10 md:p-16 relative border-b xl:border-b-0 xl:border-r border-[#222]">
+                      <div className="absolute top-6 left-6 text-[#333] group-hover:text-[#e62429] transition-colors flex gap-4">
+                        <Scan className="w-6 h-6" />
+                      </div>
+                      <div className="absolute top-6 right-6 font-mono text-xs font-bold text-[#444] tracking-[0.4em]">
+                        ACQ-ID: 8092.{note.denom}
+                      </div>
+
+                      <div className="mt-12 text-[#e62429] font-mono tracking-[0.3em] text-sm font-bold mb-6 flex items-center gap-4">
+                        <Crosshair className="w-5 h-5" /> // {note.subtitle}
+                      </div>
+
+                      <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white group-hover:text-[#e62429] transition-colors">
+                        {note.denom} <br /> <span className="text-4xl text-[#666]">PAVI.</span>
+                      </h3>
+
+                      {note.character && (
+                        <div className="inline-block bg-white text-black font-black uppercase px-4 py-2 text-sm tracking-[0.2em] mb-8">
+                          OBJETIVO: {note.character}
+                        </div>
+                      )}
+
+                      <div className="font-mono text-[#a1a1a1] text-xs md:text-sm tracking-[0.1em] leading-relaxed border-l-4 border-[#e62429] pl-6 mt-auto">
+                        {note.description}
+                      </div>
+                    </div>
+
+                    {/* 3D Banknote (Right) */}
+                    <div className="w-full xl:w-[55%] perspective-1000 flex justify-center items-center py-20 px-10 bg-[#0a0a0a] relative overflow-hidden">
+                      <div className="absolute top-4 right-4 text-[#333]"><Download className="w-6 h-6" /></div>
+
+                      <div className="relative w-full max-w-[500px] aspect-[2/1] transition-transform duration-[800ms] ease-out transform-style-3d group-hover:rotate-y-180 drop-shadow-[0_20px_40px_rgba(230,36,41,0.05)] cursor-crosshair">
+                        <div className="absolute inset-0 backface-hidden rounded overflow-hidden bg-black border border-[#333]">
+                          <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-cover filter contrast-125 hover:contrast-150 transition-all" />
+                        </div>
+                        <div className="absolute inset-0 backface-hidden rounded overflow-hidden bg-black border border-[#e62429] rotate-y-180">
+                          {/* Glitch overlay line inside the back to look cinematic */}
+                          <div className="absolute w-full h-1 bg-[#e62429]/20 top-1/2 -translate-y-1/2 mix-blend-screen shadow-[0_0_20px_#e62429] z-20"></div>
+                          <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-cover filter contrast-125 saturate-200 z-10 relative opacity-90" />
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+                ))}
+              </div>
+            </div>
+          </section>
+
+          {/* FOOTER */}
+          <footer className="bg-[#e62429] py-20 border-t-8 border-white text-center relative selection:bg-black selection:text-[#e62429]">
+            {/* Caution tape styling */}
+            <div className="absolute top-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(45deg, #000, #000 20px, #e62429 20px, #e62429 40px)' }}></div>
+            <div className="absolute bottom-0 left-0 w-full h-4" style={{ background: 'repeating-linear-gradient(-45deg, #000, #000 20px, #e62429 20px, #e62429 40px)' }}></div>
+
+            <div className="container mx-auto px-6 max-w-4xl relative z-10 pt-8 pb-8">
+              <AlertTriangle className="w-16 h-16 text-black mx-auto mb-10" strokeWidth={1} />
+              <p className="font-mono text-black font-black text-xs md:text-sm tracking-[0.2em] md:tracking-[0.4em] leading-loose uppercase border-y-[10px] border-black py-8 bg-black/5">
+                <span className="text-white bg-black px-2 py-1 mr-2">[ AVISO CLASIFICADO ]</span> <br className="md:hidden" />
+                LA MONEDA PAVI CARECE DE VALOR FINANCIERO EN EL EXTERIOR. SU DISTRIBUCIÓN ES RESTRINGIDA A EVENTOS TÁCTICOS EN PAVIMUN. <br />
+                LA FALSIFICACIÓN RESULTARÁ EN INHABILITACIÓN PERMANENTE.
+              </p>
+              <div className="mt-12 text-black font-black text-xl tracking-tighter uppercase">
+                MESA ORGANIZADORA // PAVIMUN 2026
+              </div>
+            </div>
+          </footer>
+
+        </div>
+      )}
+    </>
   );
 };
 
