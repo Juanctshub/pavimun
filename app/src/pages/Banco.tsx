@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Target, Crosshair, Zap, Box, MapPin, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
+import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock, Download, AlertTriangle } from 'lucide-react';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'pin' | 'loading' | 'content'>('pin');
@@ -94,7 +94,7 @@ const Banco = () => {
             <div className="absolute bottom-0 right-0 w-8 h-8 border-b-4 border-r-4 border-[#b89456]"></div>
           </div>
 
-          <Crosshair className="w-24 h-24 text-[#b89456] mb-8 animate-pulse" strokeWidth={1.5} />
+          <Landmark className="w-24 h-24 text-[#b89456] mb-8 animate-pulse" strokeWidth={1.5} />
           <h1 className="text-4xl md:text-6xl font-black uppercase tracking-tighter mb-2 text-center px-4">Bóveda Restringida</h1>
           <p className="text-[#b89456] tracking-[0.4em] text-sm md:text-base font-bold mb-16">INGRESA EL CÓDIGO [CLASSIFIED]</p>
 
@@ -184,42 +184,42 @@ const Banco = () => {
 
                 <div className="w-full lg:w-1/3 sticky top-32">
                   <div className="flex items-center gap-4 mb-6 text-[#b89456] font-mono tracking-widest text-sm font-bold">
-                    <Target className="w-6 h-6 animate-pulse" /> OPERACIÓN: PAVIMUN
+                    <Landmark className="w-6 h-6 animate-pulse" /> ECONOMÍA PAVIMUN
                   </div>
                   <h2 className="text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
-                    CICLO<br /><span className="text-[#b89456] inline-block mt-2">TÁCTICO</span>
+                    FLUJO<br /><span className="text-[#b89456] inline-block mt-2">ECONÓMICO</span>
                   </h2>
                   <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#b89456] pl-4">
-                    REGLAS ESTRICTAS DE ENFRENTAMIENTO ECONÓMICO. INSTRUCCIONES CLASIFICADAS: GANA, INVIERTE Y DISFRUTA DURANTE LOS RECESOS OFICIALES.
+                    NORMAS OFICIALES DE PARTICIPACIÓN ECONÓMICA. PROCEDIMIENTO BANCARIO: GANA, INVIERTE Y ADQUIERE BIENES DURANTE LOS RECESOS.
                   </p>
                 </div>
 
                 <div className="w-full lg:w-2/3 grid grid-cols-1 md:grid-cols-2 gap-8">
                   {/* GANA */}
                   <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><TrendingUp className="w-12 h-12" strokeWidth={1} /></div>
                     <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#b89456]">01</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Gana</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
-                      SUPERA DESAFÍOS ESTRELÁMPAGO O DEMUESTRA DIPLOMACIA IMPECABLE EN COMITÉ. RECIBE EFECTIVO POR PARTE DEL STAFF ORGANIZADOR COMO RECOMPENSA POR TU DESEMPEÑO.
+                      DEMUESTRA DIPLOMACIA IMPECABLE EN COMITÉ O SUPERA DESAFÍOS ESPECIALES. RECIBE DIVISAS DEL BANCO CENTRAL COMO RECOMPENSA POR TU EXCELENCIA.
                     </p>
                   </div>
                   {/* INVIERTE */}
                   <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><TrendingUp className="w-12 h-12" strokeWidth={1} /></div>
                     <div className="text-white font-black text-6xl mb-6 group-hover:scale-110 transition-transform origin-left opacity-30 group-hover:opacity-100 group-hover:text-[#b89456]">02</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Invierte</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
-                      ACUDE INMEDIATAMENTE A LA FERIA DE INVERSIONES EN LOS RECESOS. APUESTA CONTRA LA CASA EN JUEGOS DE AZAR Y HABILIDAD, Y DOBLA TU CAPITAL EN CUESTIÓN DE MINUTOS.
+                      PARTICIPA EN LA FERIA DE INVERSIONES DURANTE LOS RECESOS. MULTIPLICA TUS ACTIVOS PARTICIPANDO EN LAS DISTINTAS DINÁMICAS PREPARADAS PARA LOS DELEGADOS.
                     </p>
                   </div>
                   {/* DISFRUTA */}
                   <div className="border border-[#333] bg-[#0a0a0a] p-10 hover:border-[#b89456] transition-colors group relative overflow-hidden md:col-span-2">
-                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><Crosshair className="w-12 h-12" strokeWidth={1} /></div>
+                    <div className="absolute top-0 right-0 p-4 text-[#333] group-hover:text-[#b89456] transition-colors"><TrendingUp className="w-12 h-12" strokeWidth={1} /></div>
                     <div className="text-[#b89456] font-black text-6xl mb-6 opacity-30 group-hover:scale-110 transition-transform origin-left group-hover:opacity-100">03</div>
                     <h3 className="text-4xl font-black uppercase tracking-tight mb-4 text-white">Disfruta</h3>
                     <p className="text-gray-400 text-sm font-mono leading-relaxed tracking-widest">
-                      GASTA TODOS TUS FONDOS OBTENIDOS EN EL DOSSIER DE COMPRAS DE "LA TIENDITA". ADQUIERE DULCES, SNACKS O BENEFICIOS TÁCTICOS. CERO PREGUNTAS HASTA AGOTAR INVENTARIO.
+                      UTILIZA TUS FONDOS ACUMULADOS EN "LA TIENDITA". ADQUIERE SNACKS, BEBIDAS, DULCES O BENEFICIOS EXCLUSIVOS PARA TU COMITÉ HASTA AGOTAR EXISTENCIAS.
                     </p>
                   </div>
                 </div>
@@ -310,7 +310,7 @@ const Banco = () => {
                       </div>
 
                       <div className="mt-12 text-[#b89456] font-mono tracking-[0.3em] text-sm font-bold mb-6 flex items-center gap-4">
-                        <Crosshair className="w-5 h-5" /> // {note.subtitle}
+                        <TrendingUp className="w-5 h-5" /> // {note.subtitle}
                       </div>
 
                       <h3 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-[0.8] mb-6 text-white group-hover:text-[#b89456] transition-colors">
