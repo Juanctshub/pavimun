@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
-import { Radiation, FileText, Globe, ShieldAlert, Siren, AlertTriangle } from 'lucide-react';
+import { Radiation, FileText, Globe, ShieldAlert, Siren, AlertTriangle, Users } from 'lucide-react';
 
 const OIEA = () => {
   const [loading, setLoading] = useState(true);
@@ -400,7 +400,7 @@ const OIEA = () => {
               </div>
 
               {/* Documentation Link */}
-              <div className="pt-8 border-t border-white/10">
+              <div className="pt-8 border-t border-white/10 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <a
                   href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"
                   target="_blank"
@@ -422,6 +422,26 @@ const OIEA = () => {
                     </div>
                   </div>
                 </a>
+
+                <button
+                  onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                  className="group block relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-500/30 p-1 transition-all hover:shadow-[0_0_30px_rgba(0,100,255,0.2)] hover:border-blue-400/50 text-left w-full h-full"
+                >
+                  <div className="relative bg-[#050a10] rounded-lg p-6 flex items-center justify-between group-hover:bg-[#0a1525] transition-colors h-full">
+                    <div className="flex items-center gap-4">
+                      <div className="p-4 bg-blue-500/20 text-blue-400 rounded-full group-hover:scale-110 group-hover:bg-blue-500/30 transition-all duration-500">
+                        <Users className="w-8 h-8" />
+                      </div>
+                      <div>
+                        <h4 className="text-xl font-bold text-white group-hover:text-blue-300 transition-colors">Conoce a tu mesa</h4>
+                        <p className="text-sm text-gray-500 group-hover:text-gray-400 transition-colors">Directorio de Autoridades</p>
+                      </div>
+                    </div>
+                    <div className="text-blue-500 opacity-50 group-hover:opacity-100 group-hover:translate-x-2 transition-all duration-300">
+                      <Users className="w-6 h-6" />
+                    </div>
+                  </div>
+                </button>
               </div>
 
             </div>

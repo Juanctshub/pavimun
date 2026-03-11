@@ -300,7 +300,7 @@ const ConsejoSeguridad = () => {
                 </blockquote>
 
                 {/* Documentation Links */}
-                <div className="grid sm:grid-cols-2 gap-4 mt-12">
+                <div className="grid sm:grid-cols-3 gap-4 mt-12">
                   {/* Guia */}
                   <a
                     href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" // Update if different specific folder needed
@@ -316,6 +316,20 @@ const ConsejoSeguridad = () => {
                       <span className="text-[10px] text-gray-500 uppercase tracking-wider">Protocolos de Crisis</span>
                     </div>
                   </a>
+
+                  {/* Mesa */}
+                  <button
+                    onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                    className="flex items-center gap-4 p-4 bg-[#1a0505] hover:bg-[#2a0a0a] border border-red-900/30 hover:border-red-600/50 rounded transition-all group w-full text-left"
+                  >
+                    <div className="p-3 bg-red-900/20 rounded text-red-500 group-hover:text-white transition-colors">
+                      <Users className="w-6 h-6" />
+                    </div>
+                    <div>
+                      <h5 className="font-bold text-white text-sm leading-tight">Conoce a tu mesa</h5>
+                      <span className="text-[10px] text-gray-500 uppercase tracking-wider">Autoridades</span>
+                    </div>
+                  </button>
 
                   {/* Reglamento */}
                   <a

@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { X, AlertTriangle, FileText, Download, Crown, Volume2, VolumeX } from 'lucide-react';
+import { X, AlertTriangle, FileText, Download, Crown, Volume2, VolumeX, Users } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Investigacion = () => {
@@ -206,7 +206,19 @@ const Investigacion = () => {
               <div className="h-[1px] w-24 bg-[#ffd700]/30 mx-auto mt-4" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-8">
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Mesa */}
+              <button
+                onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                className="reveal group flex items-start p-8 bg-white/[0.03] border border-white/10 hover:border-[#ffd700]/50 transition-all duration-500 hover:-translate-y-1 text-left w-full"
+              >
+                <Users className="w-8 h-8 text-[#ffd700] opacity-70 group-hover:opacity-100 mr-6 mt-1 flex-shrink-0" />
+                <div>
+                  <h4 className="text-xl font-serif text-white mb-2 group-hover:text-[#ffd700] transition-colors leading-tight">Conoce a tu mesa</h4>
+                  <p className="text-sm text-white/50 font-mono">Directorio de Autoridades</p>
+                </div>
+              </button>
+
               {/* Guide */}
               <a
                 href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"

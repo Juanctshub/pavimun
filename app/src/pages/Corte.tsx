@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
-import { Search, ChevronRight, FileText, Scale, X, Volume2, VolumeX, Download } from 'lucide-react';
+import { Search, ChevronRight, FileText, Scale, X, Volume2, VolumeX, Download, Users } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 /* ═══════════════════════════════════════════════════════════
@@ -513,8 +513,20 @@ const Corte = () => {
                   <p className="text-[#005ea2] font-bold text-base group-hover:underline leading-tight mb-1">Guía Académica.pdf</p>
                   <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">DOJ dossier</p>
                 </div>
-                <Download className="w-5 h-5 text-gray-300 group-hover:text-[#005ea2] transition-colors self-center" />
+                <Download className="w-5 h-5 text-gray-300 group-hover:text-[#005ea2] transition-colors self-center flex-shrink-0" />
               </a>
+
+              <button onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                className="flex items-start gap-4 group bg-white p-4 border border-gray-300 shadow-sm hover:shadow-lg hover:border-[#002244] transition-all rounded w-full text-left">
+                <div className="bg-red-50 p-2 rounded group-hover:bg-red-100 transition-colors">
+                  <Users className="w-8 h-8 text-[#cf102d] flex-shrink-0" />
+                </div>
+                <div className="flex-1">
+                  <p className="text-[#005ea2] font-bold text-base group-hover:underline leading-tight mb-1">Conoce a tu mesa</p>
+                  <p className="text-xs text-gray-500 font-semibold uppercase tracking-wider">Directorio Oficial</p>
+                </div>
+                <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#005ea2] transition-colors self-center flex-shrink-0" />
+              </button>
 
               <a href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo" target="_blank" rel="noopener noreferrer"
                 onClick={(e) => {

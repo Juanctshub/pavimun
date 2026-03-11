@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Volume2, VolumeX, Globe, Newspaper, FileText } from 'lucide-react';
+import { Volume2, VolumeX, Globe, Newspaper, FileText, Users } from 'lucide-react';
 
 const Prensa = () => {
   const [loading, setLoading] = useState(true);
@@ -304,7 +304,8 @@ const Prensa = () => {
           </div>
 
           <div className="flex flex-col items-center gap-12 translate-z-0">
-            <a href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" target="_blank" rel="noopener noreferrer" className="group relative cursor-pointer">
+            <div className="flex flex-col md:flex-row gap-6">
+              <a href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph" target="_blank" rel="noopener noreferrer" className="group relative cursor-pointer">
               <div className="absolute inset-0 bg-blue-600 blur-2xl opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
               <div className="relative flex items-center gap-5 bg-[#0a0a0a] border border-blue-500/30 px-8 py-5 rounded-full hover:border-blue-400 hover:scale-105 transition-all duration-300 shadow-2xl">
                 <div className="p-3 bg-blue-600/20 rounded-full group-hover:bg-blue-600 text-blue-400 group-hover:text-white transition-colors duration-300">
@@ -317,6 +318,22 @@ const Prensa = () => {
                 <div className="ml-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-blue-400">→</div>
               </div>
             </a>
+            
+            <button onClick={() => alert("Próximamente: Conoce a tu mesa")} className="group relative cursor-pointer text-left h-full">
+              <div className="absolute inset-0 bg-blue-600 blur-2xl opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
+              <div className="relative flex items-center gap-5 bg-[#0a0a0a] border border-blue-500/30 px-8 py-5 rounded-full hover:border-blue-400 hover:scale-105 transition-all duration-300 shadow-2xl h-full w-full">
+                <div className="p-3 bg-blue-600/20 rounded-full group-hover:bg-blue-600 text-blue-400 group-hover:text-white transition-colors duration-300">
+                  <Users className="w-6 h-6" />
+                </div>
+                <div className="flex flex-col text-left">
+                  <span className="text-[10px] text-gray-400 uppercase tracking-[0.2em] font-bold group-hover:text-blue-300">Directorio de Autoridades</span>
+                  <span className="text-xl font-bold text-white group-hover:text-white transition-colors">Conoce a tu mesa</span>
+                </div>
+                <div className="ml-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-blue-400">→</div>
+              </div>
+            </button>
+            </div>
+            
             <div className="text-center max-w-2xl mx-auto opacity-70 mb-20">
               <p className="text-2xl font-serif italic text-gray-400">"Si no se comunica, la historia simplemente no existe."</p>
               <div className="w-16 h-1 bg-blue-500 mx-auto mt-6 rounded-full opacity-50" />

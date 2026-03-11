@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Shield, Lock, AlertTriangle, Fingerprint, FileText, ChevronDown, Volume2, VolumeX, Eye, Brain } from 'lucide-react';
+import { Shield, Lock, AlertTriangle, Fingerprint, FileText, ChevronDown, Volume2, VolumeX, Eye, Brain, Users } from 'lucide-react';
 
 const CIA = () => {
   // No useScrollReveal - ensuring content visibility
@@ -310,7 +310,7 @@ const CIA = () => {
               <div className="h-[1px] w-12 bg-white/20" />
             </div>
 
-            <div className="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
               {/* Guia */}
               <a
                 href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"
@@ -324,6 +324,18 @@ const CIA = () => {
                 <h4 className="text-xl font-bold text-white mb-2">Guía Académica</h4>
                 <p className="text-sm text-gray-500">Protocolos de Modificación</p>
               </a>
+
+              {/* Mesa */}
+              <button
+                onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                className="group flex flex-col items-center justify-center p-8 bg-[#0f0f20]/80 backdrop-blur-md hover:bg-[#15152a] border border-blue-900/30 hover:border-blue-500/50 rounded-lg transition-all duration-300 w-full h-full"
+              >
+                <div className="w-12 h-12 bg-blue-900/20 rounded-full flex items-center justify-center mb-4 text-blue-400 group-hover:text-blue-300 transition-colors">
+                  <Users className="w-6 h-6" />
+                </div>
+                <h4 className="text-xl font-bold text-white mb-2 text-center leading-tight">Conoce a tu mesa</h4>
+                <p className="text-sm text-gray-500 text-center">Autoridades</p>
+              </button>
 
               {/* Reglamento */}
               <a
