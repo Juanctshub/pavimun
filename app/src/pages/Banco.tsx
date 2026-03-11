@@ -198,8 +198,8 @@ const Banco = () => {
             LOADING SYSTEM LOADING SYSTEM LOADING SYSTEM
           </div>
 
-          <Lock className="w-32 h-32 mb-8 z-10" strokeWidth={1} />
-          <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
+          <Lock className="w-24 h-24 sm:w-32 sm:h-32 mb-8 z-10" strokeWidth={1} />
+          <h2 className="text-5xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
             DESENCRIPTANDO<br />BÓVEDA
           </h2>
 
@@ -242,7 +242,7 @@ const Banco = () => {
               className={`relative z-30 w-[85vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
-              <div className={`relative w-full aspect-auto min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
+              <div className={`relative w-full aspect-auto min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
@@ -395,8 +395,8 @@ const Banco = () => {
                           <TrendingUp className="w-4 h-4" /> // {note.subtitle}
                         </div>
 
-                        <h3 className="text-6xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white group-hover:text-[#b89456] transition-colors">
-                          {note.denom} <br className="hidden lg:block" /> <span className="text-4xl text-[#666]">PAVI.</span>
+                        <h3 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white group-hover:text-[#b89456] transition-colors">
+                          {note.denom} <br className="hidden lg:block" /> <span className="text-3xl sm:text-4xl text-[#666]">PAVI.</span>
                         </h3>
 
                         {note.character && (
@@ -413,7 +413,7 @@ const Banco = () => {
                       {/* 3D BANKNOTE */}
                       <div className="w-full lg:w-1/2 flex justify-center items-center py-10 relative">
                         <div
-                          className={`relative w-full max-w-[320px] lg:max-w-[400px] h-[500px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          className={`relative w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] h-[350px] sm:h-[450px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
                           onClick={() => toggleFlip(note.denom)}
                         >
                           <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]`}>
