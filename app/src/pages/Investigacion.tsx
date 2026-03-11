@@ -6,6 +6,13 @@ const Investigacion = () => {
   useScrollReveal();
 
   const [entered, setEntered] = useState(false);
+
+  // Hide global navigation during loading
+  useEffect(() => {
+    if (!entered) document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [entered]);
   const [titleVisible, setTitleVisible] = useState(false);
   const [showEasterEgg, setShowEasterEgg] = useState(false);
   const [isMuted, setIsMuted] = useState(false); // Default to unmuted if possible, but browser might force it

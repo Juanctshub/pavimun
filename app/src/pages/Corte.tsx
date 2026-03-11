@@ -193,6 +193,13 @@ const GoogleIntro = ({ onDone }: { onDone: () => void }) => {
 // ═══ MAIN PAGE (DOJ AESTHETIC) ═══
 const Corte = () => {
   const [loading, setLoading] = useState(true);
+
+  // Hide global navigation during loading
+  useEffect(() => {
+    if (loading) document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [loading]);
   const [muted, setMuted] = useState(true);
   const [uaPlaying, setUaPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);

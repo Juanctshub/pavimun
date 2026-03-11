@@ -76,6 +76,12 @@
     -webkit-text-fill-color: transparent;
     background-clip: text;
   }
+
+  /* Global utility to hide Navigation while Committee Loaders trigger */
+  body.hide-nav header {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
 }
 
 @layer components {

@@ -1,9 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'initial' | 'typing' | 'loading' | 'content'>('initial');
+
+  // Hide global navigation during authentication phase
+  useEffect(() => {
+    if (authPhase !== 'content') document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [authPhase]);
   const [pinInput, setPinInput] = useState('');
   const [loadingText, setLoadingText] = useState('INI. PROTOCOLO...');
   const [searchTerm, setSearchTerm] = useState('');

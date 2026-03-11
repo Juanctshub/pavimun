@@ -3,6 +3,13 @@ import { Volume2, VolumeX, Globe, Newspaper, FileText, Users } from 'lucide-reac
 
 const Prensa = () => {
   const [loading, setLoading] = useState(true);
+
+  // Hide global navigation during loading
+  useEffect(() => {
+    if (loading) document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [loading]);
   const [videoEnded, setVideoEnded] = useState(false);
   const [crtPhase, setCrtPhase] = useState(0); // 0=playing, 1=static, 2=shrink, 3=done
   const introVideoRef = useRef<HTMLVideoElement>(null);

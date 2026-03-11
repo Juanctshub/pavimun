@@ -3,6 +3,13 @@ import { BookOpen, FileText, AlertTriangle, History, ChevronDown, Volume2, Volum
 
 const Crisis = () => {
   const [entered, setEntered] = useState(false);
+
+  // Hide global navigation during loading
+  useEffect(() => {
+    if (!entered) document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [entered]);
   const [contentVisible, setContentVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const [isMuted, setIsMuted] = useState(true);

@@ -4,6 +4,13 @@ import { AlertTriangle, Users, ShieldAlert, Radio, FileText, Lock, Globe, Flame,
 
 const ConsejoSeguridad = () => {
   const [loading, setLoading] = useState(true);
+
+  // Hide global navigation during loading
+  useEffect(() => {
+    if (loading) document.body.classList.add('hide-nav');
+    else document.body.classList.remove('hide-nav');
+    return () => document.body.classList.remove('hide-nav');
+  }, [loading]);
   const [exiting, setExiting] = useState(false); // For exit transition
   const [isPlaying, setIsPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
