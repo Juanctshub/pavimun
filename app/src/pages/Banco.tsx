@@ -198,8 +198,8 @@ const Banco = () => {
             LOADING SYSTEM LOADING SYSTEM LOADING SYSTEM
           </div>
 
-          <Lock className="w-24 h-24 sm:w-32 sm:h-32 mb-8 z-10" strokeWidth={1} />
-          <h2 className="text-5xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
+          <Lock className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 mb-8 z-10" strokeWidth={1} />
+          <h2 className="text-4xl sm:text-5xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
             DESENCRIPTANDO<br />BÓVEDA
           </h2>
 
@@ -226,23 +226,23 @@ const Banco = () => {
 
             {/* Hugest background text responsive */}
             <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none z-0 overflow-hidden w-full">
-              <h1 className="text-[20vw] sm:text-[14vw] font-black uppercase tracking-tighter text-transparent select-none scale-y-110 drop-shadow-[0_0_100px_rgba(184,148,86,0.8)]" style={{ WebkitTextStroke: '4px rgba(184,148,86,0.9)' }}>
+              <h1 className="text-[18vw] sm:text-[14vw] font-black uppercase tracking-tighter text-transparent select-none scale-y-110 drop-shadow-[0_0_100px_rgba(184,148,86,0.8)]" style={{ WebkitTextStroke: '4px rgba(184,148,86,0.9)' }}>
                 ECONOMÍA
               </h1>
             </div>
 
             <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none z-10 overflow-hidden w-full blur-[1px]">
-              <h1 className="text-[20vw] sm:text-[14vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,1)' }}>
+              <h1 className="text-[18vw] sm:text-[14vw] font-black uppercase tracking-tighter leading-[0.8] whitespace-nowrap text-transparent select-none scale-y-110" style={{ WebkitTextStroke: '2px rgba(255,255,255,1)' }}>
                 ECONOMÍA
               </h1>
             </div>
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[85vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[80vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
-              <div className={`relative w-full aspect-auto min-h-[300px] sm:min-h-[400px] lg:min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
+              <div className={`relative w-full aspect-auto min-h-[250px] sm:min-h-[400px] lg:min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
@@ -365,12 +365,12 @@ const Banco = () => {
           {/* GALERÍA 3D (RESERVA HISTÓRICA) */}
           <section id="galeria" className="w-full bg-[#111] pt-32 pb-48 text-white overflow-hidden relative">
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
-              <div className="text-center mb-32 relative">
+              <div className="text-center mb-16 md:mb-32 relative">
                 <div className="absolute inset-x-0 w-full h-[1px] bg-[#333] top-1/2 -z-10"></div>
-                <h2 className="text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-[#111] inline-block bg-[#111] px-8 py-2" style={{ WebkitTextStroke: '2px #b89456' }}>
+                <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter leading-none text-[#111] inline-block bg-[#111] px-4 md:px-8 py-2" style={{ WebkitTextStroke: '2px #b89456' }}>
                   RESERVA HISTÓRICA
                 </h2>
-                <p className="font-mono font-bold tracking-[0.3em] text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-6 mt-16 text-[#b89456]">
+                <p className="font-mono font-bold tracking-[0.2em] md:tracking-[0.3em] text-[10px] sm:text-xs md:text-sm max-w-2xl mx-auto border-2 border-[#333] bg-[#050505] p-4 md:p-6 mt-12 md:mt-16 text-[#b89456]">
                   [ INTERACTÚA CON EL BILLETE PARA INSPECCIONAR SU REVERSO DE SEGURIDAD MEDIANTE ESCANEO 3D ]
                 </p>
               </div>
@@ -391,29 +391,29 @@ const Banco = () => {
                           </span>
                         </div>
 
-                        <div className="mb-2 text-[#b89456] font-mono tracking-[0.2em] text-xs md:text-sm font-bold flex items-center gap-2 uppercase">
+                        <div className="mb-2 text-[#b89456] font-mono tracking-[0.2em] text-[10px] md:text-xs lg:text-sm font-bold flex items-center gap-2 uppercase">
                           <TrendingUp className="w-4 h-4" /> // {note.subtitle}
                         </div>
 
-                        <h3 className="text-5xl sm:text-7xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white group-hover:text-[#b89456] transition-colors">
-                          {note.denom} <br className="hidden lg:block" /> <span className="text-3xl sm:text-4xl text-[#666]">PAVI.</span>
+                        <h3 className="text-4xl sm:text-6xl lg:text-8xl font-black uppercase tracking-tighter leading-none mb-6 text-white group-hover:text-[#b89456] transition-colors">
+                          {note.denom} <br className="hidden lg:block" /> <span className="text-2xl sm:text-3xl lg:text-4xl text-[#666]">PAVI.</span>
                         </h3>
 
                         {note.character && (
-                          <div className="inline-block bg-white text-black font-black uppercase px-4 py-2 text-xs md:text-sm tracking-[0.3em] mb-6 self-start">
+                          <div className="inline-block bg-white text-black font-black uppercase px-4 py-2 text-[10px] md:text-xs lg:text-sm tracking-[0.2em] md:tracking-[0.3em] mb-6 self-start">
                             OBJETIVO: {note.character}
                           </div>
                         )}
 
-                        <div className="font-mono text-[#a1a1a1] text-xs md:text-sm tracking-[0.1em] leading-relaxed max-w-md">
+                        <div className="font-mono text-[#a1a1a1] text-[11px] sm:text-xs lg:text-sm tracking-[0.1em] leading-relaxed max-w-md">
                           {note.description}
                         </div>
                       </div>
 
                       {/* 3D BANKNOTE */}
-                      <div className="w-full lg:w-1/2 flex justify-center items-center py-10 relative">
+                      <div className="w-full lg:w-1/2 flex justify-center items-center py-6 lg:py-10 relative">
                         <div
-                          className={`relative w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] h-[350px] sm:h-[450px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          className={`relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[400px] h-[300px] sm:h-[450px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
                           onClick={() => toggleFlip(note.denom)}
                         >
                           <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]`}>
