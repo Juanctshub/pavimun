@@ -1,5 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Banco = () => {
   const [authPhase, setAuthPhase] = useState<'initial' | 'typing' | 'loading' | 'content'>('initial');
@@ -390,7 +391,14 @@ const Banco = () => {
                   const isLeftText = idx % 2 === 0;
 
                   return (
-                    <div key={note.denom} className={`flex flex-col ${isLeftText ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24 w-full`}>
+                    <motion.div 
+                      key={note.denom} 
+                      initial={{ opacity: 0, y: 100 }}
+                      whileInView={{ opacity: 1, y: 0 }}
+                      viewport={{ once: true, margin: "-100px" }}
+                      transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                      className={`flex flex-col ${isLeftText ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24 w-full`}
+                    >
 
                       {/* DOSSIER INFO */}
                       <div className="w-full lg:w-1/2 flex flex-col border-l-4 lg:border-l-0 lg:border-t-4 border-[#b89456] pl-6 lg:pl-0 lg:pt-8 relative group">
@@ -443,7 +451,7 @@ const Banco = () => {
                         </div>
                       </div>
 
-                    </div>
+                    </motion.div>
                   );
                 })}
               </div>

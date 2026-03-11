@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect, useState, useCallback } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import Navigation from './components/Navigation';
 import GlobalMusicPlayer from './components/GlobalMusicPlayer';
 import SplashScreen from './components/SplashScreen';
@@ -30,32 +31,34 @@ function ScrollToTop() {
 }
 
 function AppContent() {
+  const location = useLocation();
+  
   return (
     <>
       <ScrollToTop />
       <Navigation />
       <GlobalMusicPlayer />
       <main className="pt-[72px]">
-        <PageTransition>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/que-es-mun" element={<QueEsMUN />} />
-            <Route path="/staff" element={<StaffOrganizador />} />
-            <Route path="/matrices" element={<Matrices />} />
-            <Route path="/inscripciones" element={<Inscripciones />} />
-            <Route path="/reglamentos" element={<Reglamentos />} />
-            <Route path="/galeria" element={<Galeria />} />
-            <Route path="/corte" element={<Corte />} />
-            <Route path="/investigacion" element={<Investigacion />} />
-            <Route path="/crisis" element={<Crisis />} />
-            <Route path="/cia" element={<CIA />} />
-            <Route path="/consejo-seguridad" element={<ConsejoSeguridad />} />
-            <Route path="/oiea" element={<OIEA />} />
-            <Route path="/prensa" element={<Prensa />} />
-            <Route path="/banco" element={<Banco />} />
-            <Route path="*" element={<MinistryOfTruth />} />
+        <AnimatePresence mode="wait">
+          <Routes location={location} key={location.pathname}>
+            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+            <Route path="/que-es-mun" element={<PageTransition><QueEsMUN /></PageTransition>} />
+            <Route path="/staff" element={<PageTransition><StaffOrganizador /></PageTransition>} />
+            <Route path="/matrices" element={<PageTransition><Matrices /></PageTransition>} />
+            <Route path="/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
+            <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
+            <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
+            <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
+            <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
+            <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
+            <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
+            <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
+            <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
+            <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
+            <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
+            <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
           </Routes>
-        </PageTransition>
+        </AnimatePresence>
       </main>
     </>
   );
