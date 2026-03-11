@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import { Landmark, TrendingUp, Target, Zap, Box, MapPin, Search, Scan, Lock } from 'lucide-react';
 
 const Banco = () => {
@@ -99,6 +99,15 @@ const Banco = () => {
 
   return (
     <>
+      {/* PRELOAD VITAL ASSETS TO PREVENT BLANK FLIPS */}
+      <div style={{ display: 'none' }} aria-hidden="true">
+        {banknotes.map(note => (
+          <React.Fragment key={note.denom}>
+            <img src={note.front} alt="" />
+            <img src={note.back} alt="" />
+          </React.Fragment>
+        ))}
+      </div>
       <audio ref={audioRef} src="/audio/luis.mp3" loop preload="auto" />
       <style dangerouslySetInnerHTML={{
         __html: `
@@ -110,46 +119,42 @@ const Banco = () => {
             0% { width: 0%; }
             100% { width: 100%; }
           }
-          .transform-style-3d {
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
-          }
           .backface-hidden {
             backface-visibility: hidden;
             -webkit-backface-visibility: hidden;
           }
           /* Custom 3D Flips */
-          .hero-flip-container { perspective: 1500px; -webkit-perspective: 1500px; }
-          .hero-flip-inner {
+          .flip-card { perspective: 1500px; -webkit-perspective: 1500px; }
+          .flip-front, .flip-back {
             transition: all 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
-            transform: rotateY(0deg) rotateZ(-3deg);
           }
-          .hero-flip-container:hover .hero-flip-inner,
-          .hero-flip-container:active .hero-flip-inner,
-          .hero-flip-container.is-flipped .hero-flip-inner {
-            transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
-          }
-          .gallery-flip-container { perspective: 1500px; -webkit-perspective: 1500px; }
-          .gallery-flip-inner {
-            transition: transform 1s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            transform-style: preserve-3d;
-            -webkit-transform-style: preserve-3d;
-            transform: rotateY(0deg);
-          }
-          .gallery-flip-container:hover .gallery-flip-inner,
-          .gallery-flip-container:active .gallery-flip-inner,
-          .gallery-flip-container.is-flipped .gallery-flip-inner {
-            transform: rotateY(180deg) scale(1.1);
-          }
-          .rotate-y-180 {
-            transform: rotateY(180deg);
-            -webkit-transform: rotateY(180deg);
-          }
-          .rotate-y-0 {
+          .flip-front {
             transform: rotateY(0deg);
             -webkit-transform: rotateY(0deg);
+          }
+          .hero-front { transform: rotateY(0deg) rotateZ(-3deg); -webkit-transform: rotateY(0deg) rotateZ(-3deg); }
+          .flip-back {
+            transform: rotateY(-180deg);
+            -webkit-transform: rotateY(-180deg);
+          }
+          
+          /* Hover/Active states */
+          .flip-card:hover .hero-front, .flip-card:active .hero-front, .flip-card.is-flipped .hero-front {
+            transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
+            -webkit-transform: rotateY(180deg) rotateZ(0deg) scale(1.05);
+          }
+          .flip-card:hover .flip-back, .flip-card:active .flip-back, .flip-card.is-flipped .flip-back {
+            transform: rotateY(0deg) scale(1.05);
+            -webkit-transform: rotateY(0deg) scale(1.05);
+          }
+          
+          .gallery-card:hover .flip-front, .gallery-card:active .flip-front, .gallery-card.is-flipped .flip-front {
+            transform: rotateY(180deg) scale(1.1);
+            -webkit-transform: rotateY(180deg) scale(1.1);
+          }
+          .gallery-card:hover .flip-back, .gallery-card:active .flip-back, .gallery-card.is-flipped .flip-back {
+            transform: rotateY(0deg) scale(1.1);
+            -webkit-transform: rotateY(0deg) scale(1.1);
           }
         `}} />
 
@@ -239,16 +244,16 @@ const Banco = () => {
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[80vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 hero-flip-container cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[80vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
-              <div className={`relative w-full aspect-auto min-h-[250px] sm:min-h-[400px] lg:min-h-[500px] hero-flip-inner transition-transform duration-1000`}>
+              <div className={`relative w-full aspect-auto min-h-[250px] sm:min-h-[400px] lg:min-h-[500px]`}>
                 {/* Front */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full backface-hidden flip-front hero-front z-10 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
                 </div>
                 {/* Back */}
-                <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-0 flex items-center justify-center">
+                <div className="absolute inset-0 w-full h-full backface-hidden flip-back z-0 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI (Cara Detras).webp" alt="100 PAVI Back" className="w-full h-full object-contain pointer-events-none" />
                 </div>
               </div>
@@ -265,7 +270,7 @@ const Banco = () => {
                   <div className="flex items-center gap-4 mb-6 text-[#b89456] font-mono tracking-widest text-sm font-bold">
                     <Landmark className="w-6 h-6 animate-pulse" /> ECONOMÍA PAVIMUN
                   </div>
-                  <h2 className="text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
+                  <h2 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
                     FLUJO<br /><span className="text-[#b89456] inline-block mt-2">ECONÓMICO</span>
                   </h2>
                   <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#b89456] pl-4">
@@ -363,7 +368,12 @@ const Banco = () => {
           </section>
 
           {/* GALERÍA 3D (RESERVA HISTÓRICA) */}
-          <section id="galeria" className="w-full bg-[#111] pt-32 pb-48 text-white overflow-hidden relative">
+          <section id="galeria" className="w-full bg-[#0a0a0a] pt-32 pb-48 text-white overflow-hidden relative border-y-8 border-[#333]">
+            {/* Tactical Grid Background Overlay */}
+            <div className="absolute inset-0 bg-[linear-gradient(rgba(184,148,86,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(184,148,86,0.03)_1px,transparent_1px)] bg-[size:60px_60px] pointer-events-none z-0"></div>
+            {/* Ambient Center Glow */}
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-[50vh] bg-[#b89456] opacity-[0.02] blur-[150px] pointer-events-none z-0"></div>
+
             <div className="container mx-auto px-6 max-w-7xl relative z-10">
               <div className="text-center mb-16 md:mb-32 relative">
                 <div className="absolute inset-x-0 w-full h-[1px] bg-[#333] top-1/2 -z-10"></div>
@@ -413,16 +423,16 @@ const Banco = () => {
                       {/* 3D BANKNOTE */}
                       <div className="w-full lg:w-1/2 flex justify-center items-center py-6 lg:py-10 relative">
                         <div
-                          className={`relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[400px] h-[300px] sm:h-[450px] lg:h-[600px] bg-transparent gallery-flip-container cursor-crosshair ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          className={`relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[400px] h-[300px] sm:h-[450px] lg:h-[600px] bg-transparent flip-card gallery-card cursor-crosshair drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
                           onClick={() => toggleFlip(note.denom)}
                         >
-                          <div className={`relative w-full h-full gallery-flip-inner transition-transform duration-1000 drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)]`}>
+                          <div className={`relative w-full h-full`}>
                             {/* Front */}
-                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-0 z-10 flex items-center justify-center">
+                            <div className="absolute inset-0 w-full h-full backface-hidden flip-front z-10 flex items-center justify-center">
                               <img src={note.front} alt={`Front ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
                             </div>
                             {/* Back */}
-                            <div className="absolute inset-0 w-full h-full backface-hidden rotate-y-180 z-0 flex items-center justify-center">
+                            <div className="absolute inset-0 w-full h-full backface-hidden flip-back z-0 flex items-center justify-center">
                               <img src={note.back} alt={`Back ${note.denom}`} className="w-full h-full object-contain pointer-events-none" />
                             </div>
                           </div>
