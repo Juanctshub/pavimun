@@ -6,9 +6,9 @@ const OIEA = () => {
 
   // Hide global navigation during loading
   useEffect(() => {
-    if (loading) document.body.classList.add('hide-nav');
-    else document.body.classList.remove('hide-nav');
-    return () => document.body.classList.remove('hide-nav');
+    if (loading) window.dispatchEvent(new Event('hide-nav'));
+    else window.dispatchEvent(new Event('show-nav'));
+    return () => { window.dispatchEvent(new Event('show-nav')); };
   }, [loading]);
   const [isPlaying, setIsPlaying] = useState(false);
   const [videoBlocked, setVideoBlocked] = useState(false);

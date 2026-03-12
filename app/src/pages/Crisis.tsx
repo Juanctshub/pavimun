@@ -6,9 +6,9 @@ const Crisis = () => {
 
   // Hide global navigation during loading
   useEffect(() => {
-    if (!entered) document.body.classList.add('hide-nav');
-    else document.body.classList.remove('hide-nav');
-    return () => document.body.classList.remove('hide-nav');
+    if (!entered) window.dispatchEvent(new Event('hide-nav'));
+    else window.dispatchEvent(new Event('show-nav'));
+    return () => { window.dispatchEvent(new Event('show-nav')); };
   }, [entered]);
   const [contentVisible, setContentVisible] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);

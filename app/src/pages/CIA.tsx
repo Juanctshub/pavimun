@@ -9,9 +9,9 @@ const CIA = () => {
 
   // Hide global navigation during loading/boot sequence
   useEffect(() => {
-    if (!accessGranted) document.body.classList.add('hide-nav');
-    else document.body.classList.remove('hide-nav');
-    return () => document.body.classList.remove('hide-nav');
+    if (!accessGranted) window.dispatchEvent(new Event('hide-nav'));
+    else window.dispatchEvent(new Event('show-nav'));
+    return () => { window.dispatchEvent(new Event('show-nav')); };
   }, [accessGranted]);
   const [isMuted, setIsMuted] = useState(true);
   const videoRef = useRef<HTMLVideoElement>(null);

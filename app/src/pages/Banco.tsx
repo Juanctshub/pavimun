@@ -7,9 +7,9 @@ const Banco = () => {
 
   // Hide global navigation during authentication phase
   useEffect(() => {
-    if (authPhase !== 'content') document.body.classList.add('hide-nav');
-    else document.body.classList.remove('hide-nav');
-    return () => document.body.classList.remove('hide-nav');
+    if (authPhase !== 'content') window.dispatchEvent(new Event('hide-nav'));
+    else window.dispatchEvent(new Event('show-nav'));
+    return () => { window.dispatchEvent(new Event('show-nav')); };
   }, [authPhase]);
   const [pinInput, setPinInput] = useState('');
   const [loadingText, setLoadingText] = useState('INI. PROTOCOLO...');

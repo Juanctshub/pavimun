@@ -4,6 +4,20 @@ import { Link, useLocation } from 'react-router-dom';
 const Navigation = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
+  const [isHidden, setIsHidden] = useState(false);
+
+  useEffect(() => {
+    const handleHide = () => setIsHidden(true);
+    const handleShow = () => setIsHidden(false);
+    
+    window.addEventListener('hide-nav', handleHide);
+    window.addEventListener('show-nav', handleShow);
+    
+    return () => {
+      window.removeEventListener('hide-nav', handleHide);
+      window.removeEventListener('show-nav', handleShow);
+    };
+  }, []);
   const location = useLocation();
 
   useEffect(() => {
@@ -66,6 +80,8 @@ const Navigation = () => {
   const iconColorClass = forceWhite ? 'text-white' : 'text-[#1a237e]';
   const burgerBgClass = forceWhite ? 'bg-white' : 'bg-[#1a237e]';
   const burgerHoverClass = forceWhite ? 'hover:bg-white/10' : 'hover:bg-black/[0.04]';
+
+  if (isHidden) return null;
 
   return (
     <>
