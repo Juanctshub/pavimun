@@ -71,9 +71,10 @@ const Navigation = () => {
   // When at the top (transparent), text/icons should be WHITE.
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
-  const isTransparentPage = location.pathname === '/investigacion' || location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco';
+  const isTransparentPage = location.pathname === '/investigacion' || location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco' || location.pathname === '/corte';
+  const isDarkPage = location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/investigacion' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco';
 
-  const forceWhite = isTransparentPage && !scrolled && !isOpen;
+  const forceWhite = (isTransparentPage && !scrolled && !isOpen) || (isDarkPage && (scrolled || isOpen));
 
   // Dynamic classes
   const textColorClass = forceWhite ? 'text-white' : 'text-[#1a237e]';
@@ -81,20 +82,21 @@ const Navigation = () => {
   const burgerBgClass = forceWhite ? 'bg-white' : 'bg-[#1a237e]';
   const burgerHoverClass = forceWhite ? 'hover:bg-white/10' : 'hover:bg-black/[0.04]';
 
+  const headerBgClass = scrolled || isOpen
+    ? (isDarkPage ? 'bg-[#050505]/90 backdrop-blur-md shadow-lg border-b border-white/10' : 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)]')
+    : 'bg-transparent';
+
   if (isHidden) return null;
 
   return (
     <>
       {/* Fixed Header */}
       <header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${scrolled || isOpen
-          ? 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)]'
-          : 'bg-transparent'
-          }`}
+        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-out ${headerBgClass}`}
         style={{
-          borderBottom: scrolled
+          borderBottom: scrolled && !isDarkPage
             ? '1px solid rgba(0, 0, 0, 0.06)'
-            : '1px solid transparent',
+            : '',
         }}
       >
         <div className="pavi-container">

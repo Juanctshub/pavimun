@@ -32,13 +32,27 @@ function ScrollToTop() {
 
 function AppContent() {
   const location = useLocation();
-  
+  const [hideNavSpacing, setHideNavSpacing] = useState(false);
+
+  useEffect(() => {
+    const handleHide = () => setHideNavSpacing(true);
+    const handleShow = () => setHideNavSpacing(false);
+    
+    window.addEventListener('hide-nav', handleHide);
+    window.addEventListener('show-nav', handleShow);
+    
+    return () => {
+      window.removeEventListener('hide-nav', handleHide);
+      window.removeEventListener('show-nav', handleShow);
+    };
+  }, []);
+
   return (
     <>
       <ScrollToTop />
       <Navigation />
       <GlobalMusicPlayer />
-      <main className="pt-[72px]">
+      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing ? "" : "pt-[72px]"}`}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />

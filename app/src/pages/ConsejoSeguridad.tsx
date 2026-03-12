@@ -89,8 +89,8 @@ const ConsejoSeguridad = () => {
           {/* Deep Dark Red (Bottom) */}
           <div className="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-[#2d0303] to-[#5c0a0a] z-0"></div>
 
-          {/* Noise & Texture - INCREASED INTENSITY */}
-          <div className="absolute inset-0 z-10 opacity-50 pointer-events-none animate-noise bg-[url('https://media.giphy.com/media/oEI9uBYSzLpBK/giphy.gif')] mix-blend-overlay"></div>
+          {/* Noise & Texture - OPTIMIZED */}
+          <div className="absolute inset-0 z-10 opacity-40 pointer-events-none bg-[url('/images/noise.png')] mix-blend-screen"></div>
 
           {/* CRT Scanlines - INCREASED VISIBILITY */}
           <div className="absolute inset-0 z-20 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] bg-[length:100%_4px,3px_100%] pointer-events-none opacity-80"></div>
