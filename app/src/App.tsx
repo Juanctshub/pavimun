@@ -22,6 +22,7 @@ import Prensa from './pages/Prensa';
 import MinistryOfTruth from './pages/MinistryOfTruth';
 import Banco from './pages/Banco';
 import MesaConsejo from './pages/MesaConsejo';
+import MesaInvestigacion from './pages/MesaInvestigacion';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -65,6 +66,7 @@ function AppContent() {
             <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
             <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
             <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
+            <Route path="/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
             <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
             <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
             <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />

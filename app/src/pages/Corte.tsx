@@ -200,7 +200,7 @@ const Corte = () => {
     else window.dispatchEvent(new Event('show-nav'));
     return () => { window.dispatchEvent(new Event('show-nav')); };
   }, [loading]);
-  const [muted, setMuted] = useState(true);
+  const [muted, setMuted] = useState(false);
   const [uaPlaying, setUaPlaying] = useState(false);
   const audioRef = useRef<HTMLAudioElement>(null);
 
@@ -216,12 +216,13 @@ const Corte = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  // Audio fade-in logic
+  // Audio fade-in logic — plays epsteinsong.mp3 after loading finishes
   useEffect(() => {
     if (loading) return;
     const a = audioRef.current;
     if (!a) return;
     a.volume = 0;
+    a.muted = false;
     a.play().then(() => {
       let v = 0;
       const i = setInterval(() => {
@@ -230,12 +231,15 @@ const Corte = () => {
         a.volume = v;
       }, 80);
     }).catch(() => { });
+
+    return () => { a.pause(); a.currentTime = 0; };
   }, [loading]);
 
   const toggleMute = () => {
     if (audioRef.current) {
-      audioRef.current.muted = !muted;
-      setMuted(!muted);
+      const next = !muted;
+      audioRef.current.muted = next;
+      setMuted(next);
     }
   };
 
@@ -243,6 +247,24 @@ const Corte = () => {
 
   return (
     <div className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-[#002244] selection:text-white">
+      {/* Corte-specific audio */}
+      <audio ref={audioRef} src="/videos/epsteinsong.mp3" loop preload="auto" />
+
+      {/* Floating Mute/Unmute Button */}
+      <button
+        onClick={toggleMute}
+        className="fixed bottom-6 right-6 z-[60] group"
+        title={muted ? 'Activar sonido' : 'Silenciar'}
+      >
+        {!muted && <div className="absolute inset-0 rounded-full bg-[#002244]/30 animate-ping" />}
+        <div className={`relative p-3.5 rounded-full backdrop-blur-xl border shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 ${
+          !muted
+            ? 'bg-[#002244]/90 border-[#002244]/50 text-white shadow-[#002244]/30'
+            : 'bg-white/80 border-gray-200 text-gray-500 hover:text-[#002244] shadow-black/10'
+        }`}>
+          {!muted ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
+        </div>
+      </button>
 
       {/* ── Official US Gov Banner ── */}
       <div className="bg-[#1b1b1b] text-white py-1.5 px-4 md:px-8 text-[11px] flex items-center gap-3 relative z-20">
