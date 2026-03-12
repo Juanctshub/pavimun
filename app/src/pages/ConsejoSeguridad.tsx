@@ -1,5 +1,6 @@
 
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { AlertTriangle, Users, ShieldAlert, Radio, FileText, Lock, Globe, Flame, Skull } from 'lucide-react';
 
 const ConsejoSeguridad = () => {
@@ -325,8 +326,8 @@ const ConsejoSeguridad = () => {
                   </a>
 
                   {/* Mesa */}
-                  <button
-                    onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                  <Link
+                    to="/consejo-seguridad/mesa"
                     className="flex items-center gap-4 p-4 bg-[#1a0505] hover:bg-[#2a0a0a] border border-red-900/30 hover:border-red-600/50 rounded transition-all group w-full text-left"
                   >
                     <div className="p-3 bg-red-900/20 rounded text-red-500 group-hover:text-white transition-colors">
@@ -336,7 +337,7 @@ const ConsejoSeguridad = () => {
                       <h5 className="font-bold text-white text-sm leading-tight">Conoce a tu mesa</h5>
                       <span className="text-[10px] text-gray-500 uppercase tracking-wider">Autoridades</span>
                     </div>
-                  </button>
+                  </Link>
 
                   {/* Reglamento */}
                   <a

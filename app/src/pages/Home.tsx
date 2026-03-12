@@ -256,8 +256,8 @@ const Home = () => {
 
       {/* ====== COUNTDOWN SECTION ====== */}
       <section className="relative py-20 md:py-28 overflow-hidden">
-        {/* Correct PAVIMUN Blue: #1a237e */}
-        <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #1a237e 12%, #1a237e 88%, #ffffff 100%)' }} />
+        {/* Correct PAVIMUN Blue: #1a237e, minimized white fade */}
+        <div className="absolute inset-0 -z-10" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #1a237e 3%, #1a237e 97%, #ffffff 100%)' }} />
 
         <div className="pavi-container relative z-10">
           <div className="reveal flex flex-col items-center">
