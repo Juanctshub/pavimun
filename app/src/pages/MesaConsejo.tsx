@@ -185,7 +185,10 @@ Al asumir por segunda vez el rol de mesa directiva, me entusiasma el crecimiento
                   
                   {/* Bio */}
                   <div className="relative">
-                    <div className={`text-gray-400 leading-relaxed text-lg space-y-4 overflow-hidden transition-all duration-700 ${expandedIdx === idx ? 'max-h-[3000px]' : 'max-h-[250px]'}`}>
+                    <div
+                      className="text-gray-400 leading-relaxed text-lg space-y-4 overflow-hidden transition-all duration-700"
+                      style={{ maxHeight: expandedIdx === idx ? '5000px' : '250px' }}
+                    >
                       {auth.bio.split('\n\n').map((paragraph, pIdx) => (
                         <p key={pIdx} className="text-justify">
                           {pIdx === 0 && <span className="text-red-500 font-bold text-3xl float-left mr-3 leading-none mt-1">{paragraph.charAt(0)}</span>}

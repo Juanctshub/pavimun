@@ -71,8 +71,10 @@ const Navigation = () => {
   // When at the top (transparent), text/icons should be WHITE.
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
-  const isTransparentPage = location.pathname === '/investigacion' || location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco' || location.pathname === '/corte';
-  const isDarkPage = location.pathname === '/crisis' || location.pathname === '/cia' || location.pathname === '/consejo-seguridad' || location.pathname === '/investigacion' || location.pathname === '/oiea' || location.pathname === '/prensa' || location.pathname === '/banco';
+  const darkPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco'];
+  const transparentPaths = [...darkPaths, '/corte'];
+  const isTransparentPage = transparentPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isDarkPage = darkPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   const forceWhite = (isTransparentPage && !scrolled && !isOpen) || (isDarkPage && (scrolled || isOpen));
 
@@ -149,13 +151,13 @@ const Navigation = () => {
               >
                 <div className="flex flex-col items-center justify-center w-5 h-4 relative">
                   <span
-                    className={`absolute w-5 h-[1.5px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? 'rotate-45 top-[7px] bg-[#1a237e]' : `top-[1px] ${burgerBgClass}`}`}
+                    className={`absolute w-5 h-[1.5px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? `rotate-45 top-[7px] ${isDarkPage ? 'bg-white' : 'bg-[#1a237e]'}` : `top-[1px] ${burgerBgClass}`}`}
                   />
                   <span
                     className={`absolute w-5 h-[1.5px] rounded-full transition-all duration-300 top-[7px] ${isOpen ? 'opacity-0 scale-x-0' : 'opacity-100 scale-x-100'} ${burgerBgClass}`}
                   />
                   <span
-                    className={`absolute w-5 h-[1.5px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? '-rotate-45 top-[7px] bg-[#1a237e]' : `top-[13px] ${burgerBgClass}`}`}
+                    className={`absolute w-5 h-[1.5px] rounded-full transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] ${isOpen ? `-rotate-45 top-[7px] ${isDarkPage ? 'bg-white' : 'bg-[#1a237e]'}` : `top-[13px] ${burgerBgClass}`}`}
                   />
                 </div>
               </button>
@@ -174,7 +176,7 @@ const Navigation = () => {
       >
         {/* Background */}
         <div
-          className={`absolute inset-0 bg-white/[0.97] backdrop-blur-2xl transition-all duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'
+          className={`absolute inset-0 ${isDarkPage ? 'bg-[#050505]/[0.97]' : 'bg-white/[0.97]'} backdrop-blur-2xl transition-all duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'
             }`}
         />
 
@@ -192,8 +194,8 @@ const Navigation = () => {
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-4'
                     } ${isActive(item.path)
-                      ? 'text-white bg-[#1a237e]'
-                      : 'text-[#1a237e] hover:bg-[#1a237e]/[0.05]'
+                      ? (isDarkPage ? 'text-black bg-white' : 'text-white bg-[#1a237e]')
+                      : (isDarkPage ? 'text-white hover:bg-white/10' : 'text-[#1a237e] hover:bg-[#1a237e]/[0.05]')
                     }`}
                   style={{
                     transitionDelay: isOpen ? `${index * 30 + 50}ms` : '0ms',
@@ -206,7 +208,7 @@ const Navigation = () => {
 
             {/* Divider */}
             <div
-              className={`h-[1px] bg-gradient-to-r from-transparent via-[#1a237e]/10 to-transparent mx-6 mb-6 transition-all duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'
+              className={`h-[1px] bg-gradient-to-r from-transparent ${isDarkPage ? 'via-white/10' : 'via-[#1a237e]/10'} to-transparent mx-6 mb-6 transition-all duration-500 ${isOpen ? 'opacity-100' : 'opacity-0'
                 }`}
               style={{ transitionDelay: isOpen ? '300ms' : '0ms' }}
             />
@@ -231,8 +233,8 @@ const Navigation = () => {
                     ? 'opacity-100 translate-y-0'
                     : 'opacity-0 translate-y-4'
                     } ${isActive(item.path)
-                      ? 'text-white bg-[#2e7d32]'
-                      : 'text-[#1a237e]/70 hover:bg-[#1a237e]/[0.04]'
+                      ? (isDarkPage ? 'text-black bg-white' : 'text-white bg-[#2e7d32]')
+                      : (isDarkPage ? 'text-white/70 hover:bg-white/10' : 'text-[#1a237e]/70 hover:bg-[#1a237e]/[0.04]')
                     }`}
                   style={{
                     transitionDelay: isOpen ? `${index * 30 + 340}ms` : '0ms',
@@ -249,13 +251,13 @@ const Navigation = () => {
                 }`}
               style={{ transitionDelay: isOpen ? '600ms' : '0ms' }}
             >
-              <div className="h-[1px] bg-gradient-to-r from-transparent via-[#1a237e]/10 to-transparent mb-8" />
+              <div className={`h-[1px] bg-gradient-to-r from-transparent ${isDarkPage ? 'via-white/10' : 'via-[#1a237e]/10'} to-transparent mb-8`} />
               <img
                 src="/images/colegio-logo.jpg"
                 alt="Colegio Pablo VI"
                 className="h-12 w-auto mx-auto object-contain mb-3 opacity-40"
               />
-              <p className="text-[#1a237e]/50 font-semibold text-xs tracking-[0.05em]">Colegio Pablo VI</p>
+              <p className={`${isDarkPage ? 'text-white/50' : 'text-[#1a237e]/50'} font-semibold text-xs tracking-[0.05em]`}>Colegio Pablo VI</p>
               <p className="text-gray-300 text-[10px] mt-1 tracking-[0.15em] uppercase">
                 PAVIMUN · I Edición
               </p>

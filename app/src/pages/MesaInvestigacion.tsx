@@ -202,7 +202,10 @@ Sin más nada que acotar, les deseo la mayor de las suertes, porque la excelenci
 
                   {/* Bio - Expandable */}
                   <div className="relative">
-                    <div className={`text-gray-400 leading-relaxed text-base space-y-4 overflow-hidden transition-all duration-700 ${expandedIdx === idx ? 'max-h-[3000px]' : 'max-h-[200px]'}`}>
+                    <div
+                      className="text-gray-400 leading-relaxed text-base space-y-4 overflow-hidden transition-all duration-700"
+                      style={{ maxHeight: expandedIdx === idx ? '5000px' : '200px' }}
+                    >
                       {auth.bio.split('\n\n').map((p, pIdx) => (
                         <p key={pIdx} className="text-justify">
                           {pIdx === 0 && <span className="text-[#ffd700] font-bold text-2xl float-left mr-2 leading-none mt-1">{p.charAt(0)}</span>}

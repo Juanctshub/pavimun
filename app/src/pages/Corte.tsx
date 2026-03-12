@@ -221,16 +221,32 @@ const Corte = () => {
     if (loading) return;
     const a = audioRef.current;
     if (!a) return;
-    a.volume = 0;
-    a.muted = false;
-    a.play().then(() => {
+
+    const fadeIn = () => {
       let v = 0;
+      a.volume = 0;
       const i = setInterval(() => {
         v += 0.005;
         if (v >= 0.15) { v = 0.15; clearInterval(i); }
         a.volume = v;
       }, 80);
-    }).catch(() => { });
+    };
+
+    a.volume = 0;
+    a.muted = false;
+    a.play().then(fadeIn).catch(() => {
+      // Autoplay blocked — wait for first user click/touch
+      const tryPlay = () => {
+        a.volume = 0;
+        a.play().then(() => {
+          fadeIn();
+          document.removeEventListener('click', tryPlay);
+          document.removeEventListener('touchstart', tryPlay);
+        }).catch(() => {});
+      };
+      document.addEventListener('click', tryPlay, { once: false });
+      document.addEventListener('touchstart', tryPlay, { once: false });
+    });
 
     return () => { a.pause(); a.currentTime = 0; };
   }, [loading]);
