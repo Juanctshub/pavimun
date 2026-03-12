@@ -252,10 +252,10 @@ const Banco = () => {
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[80vw] sm:w-[60vw] md:w-[35vw] lg:w-[35vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[80vw] sm:w-[50vw] md:w-[35vw] lg:w-[30vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
-              <div className={`relative w-full aspect-auto min-h-[250px] sm:min-h-[400px] lg:min-h-[500px]`}>
+              <div className={`relative w-full aspect-[1/2] max-h-[70vh]`}>
                 {/* Front */}
                 <div className="absolute inset-0 w-full h-full backface-hidden flip-front hero-front z-10 flex items-center justify-center">
                   <img src="/images/pavi/100 PAVI.webp" alt="100 PAVI Front" className="w-full h-full object-contain pointer-events-none" />
@@ -272,13 +272,13 @@ const Banco = () => {
           {/* CICLO TÁCTICO */}
           <section className="w-full bg-[#111] py-32 border-b border-[#333] relative">
             <div className="container mx-auto px-6 max-w-7xl">
-              <div className="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+              <div className="flex flex-col lg:flex-row gap-8 lg:gap-24 items-start">
 
                 <div className="w-full lg:w-1/3 sticky top-32">
                   <div className="flex items-center gap-4 mb-6 text-[#b89456] font-mono tracking-widest text-sm font-bold">
                     <Landmark className="w-6 h-6 animate-pulse" /> ECONOMÍA PAVIMUN
                   </div>
-                  <h2 className="text-6xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
+                  <h2 className="text-5xl md:text-7xl font-black uppercase tracking-tighter leading-[0.85] mb-8 text-white">
                     FLUJO<br /><span className="text-[#b89456] inline-block mt-2">ECONÓMICO</span>
                   </h2>
                   <p className="font-mono text-gray-400 text-sm tracking-widest leading-relaxed border-l-4 border-[#b89456] pl-4">
@@ -333,7 +333,7 @@ const Banco = () => {
                   <div className="flex items-center gap-4 text-[#b89456] font-mono tracking-widest text-sm font-bold mb-4">
                     <Scan className="w-6 h-6 animate-pulse" /> TARGET CATALOG SYSTEM
                   </div>
-                  <h2 className="text-7xl md:text-9xl font-black uppercase tracking-tighter leading-[0.8] text-white">
+                  <h2 className="text-5xl md:text-7xl lg:text-9xl font-black uppercase tracking-tighter leading-[0.8] text-white">
                     LA TIENDITA
                   </h2>
                 </div>
@@ -356,12 +356,12 @@ const Banco = () => {
                     <div className="flex items-center gap-8 mb-6 md:mb-0">
                       <div className="text-[#333] group-hover:text-[#b89456] transition-colors">{item.icon}</div>
                       <div>
-                        <h4 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">{item.name}</h4>
-                        <span className="font-mono text-sm text-gray-500 tracking-[0.2em]">{item.alias}</span>
+                        <h4 className="text-2xl sm:text-3xl md:text-5xl font-black uppercase tracking-tighter text-white mb-2">{item.name}</h4>
+                        <span className="font-mono text-xs sm:text-sm text-gray-500 tracking-[0.2em]">{item.alias}</span>
                       </div>
                     </div>
                     <div className="flex items-baseline gap-4 md:ml-auto md:text-right">
-                      <span className="text-5xl md:text-7xl font-black text-white group-hover:text-[#b89456] transition-colors leading-none">{item.price}</span>
+                      <span className="text-4xl sm:text-5xl md:text-7xl font-black text-white group-hover:text-[#b89456] transition-colors leading-none">{item.price}</span>
                       <span className="font-mono text-sm tracking-widest text-[#666] font-bold">PAVI</span>
                     </div>
                   </div>
@@ -438,7 +438,7 @@ const Banco = () => {
                       {/* 3D BANKNOTE */}
                       <div className="w-full lg:w-1/2 flex justify-center items-center py-6 lg:py-10 relative">
                         <div
-                          className={`relative w-full max-w-[240px] sm:max-w-[320px] lg:max-w-[400px] h-[300px] sm:h-[450px] lg:h-[600px] bg-transparent flip-card gallery-card cursor-crosshair drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          className={`relative w-[65vw] sm:w-[50vw] max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] aspect-[1/2] max-h-[75vh] bg-transparent flip-card gallery-card cursor-crosshair drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
                           onClick={() => toggleFlip(note.denom)}
                         >
                           <div className={`relative w-full h-full`}>
