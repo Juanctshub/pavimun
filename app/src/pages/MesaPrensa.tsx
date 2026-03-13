@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 /* ═══════════════════════════════════════════════════════════
    MESA DIRECTIVA — PRENSA (PRESS)
    High-End 3D Holographic UI · Interactive Editorial Design
+   Last Deployment Trigger: 2026-03-13 18:30 (Re-Publishing)
    ═══════════════════════════════════════════════════════════ */
 
 const MesaPrensa = () => {
