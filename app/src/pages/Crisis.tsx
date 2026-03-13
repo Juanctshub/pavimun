@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { BookOpen, FileText, AlertTriangle, History, ChevronDown, Volume2, VolumeX, Users } from 'lucide-react';
 
 const Crisis = () => {
@@ -216,8 +217,8 @@ const Crisis = () => {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
 
             {/* Mesa */}
-            <button
-              onClick={() => alert("Próximamente: Conoce a tu mesa")}
+            <Link
+              to="/crisis/mesa"
               className="group relative p-10 bg-[#1c1917] hover:bg-[#25211e] border border-[#c9a980]/10 hover:border-[#c9a980]/40 transition-all duration-500 overflow-hidden text-left w-full block h-full"
             >
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
@@ -230,7 +231,7 @@ const Crisis = () => {
                   <p className="text-[#888] text-sm font-mono leading-tight">Directorio de Autoridades</p>
                 </div>
               </div>
-            </button>
+            </Link>
 
             <a
               href="https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph"
