@@ -46,7 +46,7 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco'];
+  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco', '/corte'];
   const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
@@ -67,7 +67,7 @@ function AppContent() {
       <ScrollToTop />
       <Navigation />
       <GlobalMusicPlayer />
-      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"}`}>
+      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"} ${isOverlaidNav ? "bg-[#050505]" : ""}`}>
         <Suspense fallback={null}>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
@@ -110,7 +110,7 @@ function App() {
   return (
     <Router>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`w-full overflow-x-hidden min-h-screen bg-[#050505] ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+      <div className={`w-full overflow-x-hidden min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <AppContent />
       </div>
     </Router>
