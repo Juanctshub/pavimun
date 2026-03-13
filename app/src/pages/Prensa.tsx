@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, Globe, Newspaper, FileText, Users } from 'lucide-react';
 
 const Prensa = () => {
@@ -326,7 +327,7 @@ const Prensa = () => {
               </div>
             </a>
             
-            <button onClick={() => alert("Próximamente: Conoce a tu mesa")} className="group relative cursor-pointer text-left h-full">
+            <Link to="/prensa/mesa" className="group relative cursor-pointer text-left h-full">
               <div className="absolute inset-0 bg-blue-600 blur-2xl opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
               <div className="relative flex items-center gap-5 bg-[#0a0a0a] border border-blue-500/30 px-8 py-5 rounded-full hover:border-blue-400 hover:scale-105 transition-all duration-300 shadow-2xl h-full w-full">
                 <div className="p-3 bg-blue-600/20 rounded-full group-hover:bg-blue-600 text-blue-400 group-hover:text-white transition-colors duration-300">
@@ -338,7 +339,7 @@ const Prensa = () => {
                 </div>
                 <div className="ml-4 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300 text-blue-400">→</div>
               </div>
-            </button>
+            </Link>
             </div>
             
             <div className="text-center max-w-2xl mx-auto opacity-70 mb-20">

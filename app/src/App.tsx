@@ -29,6 +29,7 @@ const MesaConsejo = lazy(() => import('./pages/MesaConsejo'));
 const MesaInvestigacion = lazy(() => import('./pages/MesaInvestigacion'));
 const MesaCorte = lazy(() => import('./pages/MesaCorte'));
 const MesaCrisis = lazy(() => import('./pages/MesaCrisis'));
+const MesaPrensa = lazy(() => import('./pages/MesaPrensa'));
 
 
 
@@ -88,6 +89,7 @@ function AppContent() {
               <Route path="/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
               <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
               <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
+              <Route path="/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
               <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
               <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
             </Routes>
@@ -108,7 +110,7 @@ function App() {
   return (
     <Router>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`w-full overflow-x-hidden min-h-screen bg-gradient-to-b from-white via-gray-50/30 to-white ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+      <div className={`w-full overflow-x-hidden min-h-screen bg-[#050505] ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
         <AppContent />
       </div>
     </Router>
