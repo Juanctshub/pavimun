@@ -23,6 +23,7 @@ import MinistryOfTruth from './pages/MinistryOfTruth';
 import Banco from './pages/Banco';
 import MesaConsejo from './pages/MesaConsejo';
 import MesaInvestigacion from './pages/MesaInvestigacion';
+import MesaCorte from './pages/MesaCorte';
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -37,7 +38,7 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco', '/corte'];
+  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco'];
   const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
@@ -69,6 +70,7 @@ function AppContent() {
             <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
             <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
             <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
+            <Route path="/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />
             <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
             <Route path="/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
             <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />

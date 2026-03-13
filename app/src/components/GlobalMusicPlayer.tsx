@@ -2,7 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Volume2, VolumeX } from 'lucide-react';
 
-const COMMITTEE_ROUTES = ['/corte', '/investigacion', '/investigacion/mesa', '/crisis', '/cia', '/consejo-seguridad', '/consejo-seguridad/mesa', '/oiea', '/prensa', '/banco'];
+const COMMITTEE_ROUTES = ['/corte', '/corte/mesa', '/investigacion', '/investigacion/mesa', '/crisis', '/cia', '/consejo-seguridad', '/consejo-seguridad/mesa', '/oiea', '/prensa', '/banco'];
 
 const GlobalMusicPlayer = () => {
     const location = useLocation();

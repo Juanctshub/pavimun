@@ -208,7 +208,11 @@ const MesaInvestigacion = () => {
                   <div className="absolute -inset-2 bg-gradient-to-br from-[#ffd700]/20 via-transparent to-[#ffd700]/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
                   <div className="absolute -inset-[1px] bg-gradient-to-br from-[#ffd700]/40 to-[#ffd700]/10 rounded-lg" />
                   
-                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#111]">
+                  <div className="relative aspect-[3/4] overflow-hidden rounded-lg bg-[#0a0a0a]">
+                    {/* UN Logo watermark behind the image for when aspect ratio doesn't fill */}
+                    <div className="absolute inset-0 flex items-center justify-center opacity-10">
+                      <svg className="w-32 h-32 text-[#ffd700]" viewBox="0 0 100 100" fill="currentColor"><circle cx="50" cy="50" r="45" fill="none" stroke="currentColor" strokeWidth="2"/><circle cx="50" cy="50" r="38" fill="none" stroke="currentColor" strokeWidth="1"/><text x="50" y="40" textAnchor="middle" fontSize="10" fontWeight="bold" fill="currentColor">UN</text><text x="50" y="55" textAnchor="middle" fontSize="6" fill="currentColor">PAVIMUN</text><path d="M 20 65 Q 50 80 80 65" fill="none" stroke="currentColor" strokeWidth="1.5"/><path d="M 20 35 Q 50 20 80 35" fill="none" stroke="currentColor" strokeWidth="1.5"/></svg>
+                    </div>
                     <img
                       src={auth.image}
                       alt={auth.name}
