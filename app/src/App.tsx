@@ -29,17 +29,7 @@ const MesaConsejo = lazy(() => import('./pages/MesaConsejo'));
 const MesaInvestigacion = lazy(() => import('./pages/MesaInvestigacion'));
 const MesaCorte = lazy(() => import('./pages/MesaCorte'));
 
-// Minimal loader for lazy pages
-function LazyFallback() {
-  return (
-    <div className="min-h-screen flex items-center justify-center">
-      <div className="flex flex-col items-center gap-3">
-        <div className="w-8 h-8 border-2 border-[#1a237e] border-t-transparent rounded-full animate-spin" />
-        <span className="text-[#1a237e]/60 text-xs font-semibold tracking-widest uppercase">Cargando</span>
-      </div>
-    </div>
-  );
-}
+
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -76,7 +66,7 @@ function AppContent() {
       <Navigation />
       <GlobalMusicPlayer />
       <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"}`}>
-        <Suspense fallback={<LazyFallback />}>
+        <Suspense fallback={null}>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<PageTransition><Home /></PageTransition>} />
