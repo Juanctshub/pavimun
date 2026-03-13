@@ -15,6 +15,7 @@ const MesaCrisis = () => {
   // Audio
   const audioRef = useRef<HTMLAudioElement>(null);
   const [muted, setMuted] = useState(false);
+  const [showEasterEgg, setShowEasterEgg] = useState(false);
 
   useEffect(() => {
     const a = audioRef.current;
@@ -181,13 +182,15 @@ const MesaCrisis = () => {
               </div>
             </div>
 
-            {/* Coat of arms / Seal */}
-            <div className="flex-shrink-0">
-              <div className="w-28 h-28 sm:w-32 sm:h-32 rounded-full bg-gradient-to-br from-[#FFD700]/20 to-[#c9a980]/10 border-2 border-[#c9a980]/30 flex flex-col items-center justify-center relative">
-                <div className="absolute -inset-2 rounded-full border border-[#c9a980]/10" />
-                <Landmark className="w-10 h-10 text-[#FFD700] mb-1" />
-                <span className="text-[#c9a980] font-mono text-[7px] tracking-[0.3em] uppercase">Congreso</span>
-                <EightStars className="mt-1" />
+            {/* Ads Gallery - Replaces Seal */}
+            <div className="flex-shrink-0 flex items-center gap-4">
+              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1 bg-black shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                <img src="/images/mesas/crisis/ads/hh.jpg" alt="Vintage Ad 1" className="w-24 h-auto sm:w-32 sepia-[0.3] hover:sepia-0 transition-all duration-700" />
+                <div className="absolute inset-0 border border-[#c9a980]/20 pointer-events-none" />
+              </div>
+              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1 bg-black shadow-lg transform rotate-[3deg] hover:rotate-0 transition-transform duration-500">
+                <img src="/images/mesas/crisis/ads/jj.jpg" alt="Vintage Ad 2" className="w-24 h-auto sm:w-32 sepia-[0.3] hover:sepia-0 transition-all duration-700" />
+                <div className="absolute inset-0 border border-[#c9a980]/20 pointer-events-none" />
               </div>
             </div>
           </div>
@@ -274,6 +277,49 @@ const MesaCrisis = () => {
                       <span className="text-[#c9a980] font-mono text-[9px] tracking-widest">{auth.expediente}</span>
                     </div>
                   </div>
+
+                  {/* Advertisement below photo for President */}
+                  {auth.name === 'Daniel Guanipa' && (
+                    <motion.div 
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      whileInView={{ opacity: 1, scale: 1 }}
+                      className="mt-6 p-2 bg-black border border-[#c9a980]/20 shadow-2xl relative group overflow-hidden"
+                    >
+                      <img 
+                        src="/images/mesas/crisis/ads/l_ad.jpg" 
+                        alt="Publicidad Epoca" 
+                        className="w-full h-auto sepia-[0.2] group-hover:sepia-0 transition-all duration-700" 
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent pointer-events-none" />
+                    </motion.div>
+                  )}
+
+                  {/* Easter Egg for Vice President */}
+                  {auth.name === 'María Gracia' && (
+                    <div className="mt-6 flex flex-col items-center">
+                      <button 
+                        onClick={() => setShowEasterEgg(!showEasterEgg)}
+                        className="px-6 py-2 border border-[#FFD700]/40 text-[#FFD700]/60 hover:text-[#FFD700] hover:border-[#FFD700] hover:bg-[#FFD700]/5 transition-all duration-300 font-mono text-[10px] tracking-[0.3em] uppercase flex items-center gap-2 group"
+                      >
+                        <Star className={`w-3 h-3 ${showEasterEgg ? 'fill-[#FFD700]' : ''} transition-all`} />
+                        {showEasterEgg ? 'Cerrar Archivo' : 'Ver Archivo Clasificado'}
+                      </button>
+                      
+                      {showEasterEgg && (
+                        <motion.div 
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          className="mt-4 p-2 bg-black border border-[#c9a980]/20 shadow-2xl overflow-hidden"
+                        >
+                          <img 
+                            src="/images/mesas/crisis/ads/n.jpg" 
+                            alt="Publicidad Secreta" 
+                            className="w-full h-auto sepia-[0.2]" 
+                          />
+                        </motion.div>
+                      )}
+                    </div>
+                  )}
                 </div>
 
                 {/* ── Content Panel — 3/5 ── */}
