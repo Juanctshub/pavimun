@@ -183,13 +183,13 @@ const MesaCrisis = () => {
             </div>
 
             {/* Ads Gallery - Replaces Seal */}
-            <div className="flex-shrink-0 flex items-center gap-4">
-              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1 bg-black shadow-lg transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
-                <img src="/images/mesas/crisis/ads/hh.jpg" alt="Vintage Ad 1" className="w-24 h-auto sm:w-32 sepia-[0.3] hover:sepia-0 transition-all duration-700" />
+            <div className="flex-shrink-0 flex flex-col sm:flex-row items-center gap-6 mt-8 lg:mt-0">
+              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1.5 bg-black shadow-2xl transform rotate-[-2deg] hover:rotate-0 transition-transform duration-500">
+                <img src="/images/mesas/crisis/ads/hh.jpg" alt="Vintage Ad 1" className="w-56 h-auto sm:w-80 lg:w-96 sepia-[0.2] hover:sepia-0 transition-all duration-700" />
                 <div className="absolute inset-0 border border-[#c9a980]/20 pointer-events-none" />
               </div>
-              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1 bg-black shadow-lg transform rotate-[3deg] hover:rotate-0 transition-transform duration-500">
-                <img src="/images/mesas/crisis/ads/jj.jpg" alt="Vintage Ad 2" className="w-24 h-auto sm:w-32 sepia-[0.3] hover:sepia-0 transition-all duration-700" />
+              <div className="relative group overflow-hidden border border-[#c9a980]/30 p-1.5 bg-black shadow-2xl transform rotate-[3deg] hover:rotate-0 transition-transform duration-500">
+                <img src="/images/mesas/crisis/ads/jj.jpg" alt="Vintage Ad 2" className="w-56 h-auto sm:w-80 lg:w-96 sepia-[0.2] hover:sepia-0 transition-all duration-700" />
                 <div className="absolute inset-0 border border-[#c9a980]/20 pointer-events-none" />
               </div>
             </div>
