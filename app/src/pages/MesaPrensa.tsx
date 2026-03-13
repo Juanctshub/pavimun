@@ -39,16 +39,16 @@ const MesaPrensa = () => {
 
   const authorities = [
     {
-      role: 'Presidente de Mesa',
+      role: 'Directora Editorial · Estratega ONU',
       name: 'Valeska Corobo',
       image: '/images/mesas/prensa/v.jpeg',
-      title: 'Directora Editorial · Estratega ONU',
+      title: 'Presidente de Mesa',
       tag: 'EDITORIAL CHIEF',
       experience: '3 Años de Trayectoria en MUN',
       bio: [
         '¡Hola! Soy Valeska Corobo, Presidente del Comité de Prensa. Llevo 3 años participando en los Modelos de Naciones Unidas, siendo mi primer modelo en febrero de 2023.',
         'Principalmente me destaco por ser delegada de comités ONU, consiguiendo ganar una Mejor Delegación en un comité de Consejo de Seguridad, sin embargo, también me he dado la oportunidad de delegar en otros comités cómo Crisis y Prensa.',
-        'Cómo Mesa Directiva en modelos, tuve mi primera oportunidad de manejar un comité de prensa en octubre de 2024, estableciéndome como misión que los delegados de prensa tuvieran mayor presencia dentro de los modelos de Naciones Unidas.'
+        'Cómo Mesa Directiva en modelos, tuve mi primera oportunidad de manejar en octubre de 2024, estableciéndome como misión que los delegados de prensa tuvieran mayor presencia dentro de los modelos de Naciones Unidas.'
       ],
       stats: [
         { label: 'Experiencia', value: '3+ Años' },
@@ -57,10 +57,10 @@ const MesaPrensa = () => {
       ]
     },
     {
-      role: 'Vice-Presidenta de Mesa',
+      role: 'Faculty Advisor · Analista de Comunicación',
       name: 'Sara Riera',
       image: '/images/mesas/prensa/s.jpeg',
-      title: 'Faculty Advisor · Analista de Comunicación',
+      title: 'Vice-Presidente de Mesa',
       tag: 'LEAD ANALYST',
       experience: 'Desde 2022 · SVPMUN Elite',
       bio: [
@@ -126,22 +126,61 @@ const MesaPrensa = () => {
              </motion.div>
           ))}
         </div>
+        {/* Floating Geometric Particles */}
+        <div className="absolute inset-0 pointer-events-none">
+          {[...Array(20)].map((_, i) => (
+            <motion.div
+              key={i}
+              initial={{ opacity: 0, scale: 0 }}
+              animate={{ 
+                opacity: [0, 0.4, 0], 
+                scale: [0, 1, 0],
+                x: [Math.random() * 100 - 50, Math.random() * 100 - 50],
+                y: [Math.random() * 100 - 50, Math.random() * 100 - 50]
+              }}
+              transition={{ 
+                duration: 5 + Math.random() * 5, 
+                repeat: Infinity, 
+                delay: Math.random() * 5 
+              }}
+              className="absolute w-1 h-1 bg-cyan-400 rounded-sm"
+              style={{ 
+                top: `${Math.random() * 100}%`, 
+                left: `${Math.random() * 100}%` 
+              }}
+            />
+          ))}
+        </div>
       </div>
 
-      {/* ═══ FLOATING NEWS TICKER — POSITIONED BELOW NAV ═══ */}
-      <div className="fixed top-[72px] left-0 w-full z-40 bg-blue-600/20 backdrop-blur-xl border-y border-white/10 h-10 flex items-center overflow-hidden">
-        <motion.div 
-          initial={{ x: "100%" }}
-          animate={{ x: "-100%" }}
-          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
-          className="whitespace-nowrap flex gap-12"
-        >
-          {[...Array(5)].map((_, i) => (
-            <span key={i} className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.4em] text-cyan-300 drop-shadow-[0_0_8px_#06b6d4]">
-              PAVIMUN PRESS EXCLUSIVE • BREAKING NEWS • NEW DIMENSION OF JOURNALISM • LIVE UPDATES FROM THE CORE • SYNC_ESTABLISHED •
-            </span>
-          ))}
-        </motion.div>
+      {/* ═══ SEAMLESS NEWS TICKER — POSITIONED BELOW NAV ═══ */}
+      <div className="fixed top-[72px] left-0 w-full z-40 bg-blue-600/30 backdrop-blur-3xl border-y border-white/10 h-10 flex items-center overflow-hidden">
+        <div className="flex whitespace-nowrap">
+          <motion.div 
+            initial={{ x: 0 }}
+            animate={{ x: "-100%" }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex gap-12 pr-12"
+          >
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.4em] text-cyan-300 drop-shadow-[0_0_8px_#06b6d4]">
+                PAVIMUN PRESS EXCLUSIVE • BREAKING NEWS • NEW DIMENSION OF JOURNALISM • LIVE UPDATES FROM THE CORE • SYNC_ESTABLISHED •
+              </span>
+            ))}
+          </motion.div>
+          <motion.div 
+            initial={{ x: 0 }}
+            animate={{ x: "-100%" }}
+            transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
+            className="flex gap-12 pr-12"
+          >
+            {[...Array(5)].map((_, i) => (
+              <span key={i} className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.4em] text-cyan-300 drop-shadow-[0_0_8px_#06b6d4]">
+                PAVIMUN PRESS EXCLUSIVE • BREAKING NEWS • NEW DIMENSION OF JOURNALISM • LIVE UPDATES FROM THE CORE • SYNC_ESTABLISHED •
+              </span>
+            ))}
+          </motion.div>
+        </div>
       </div>
 
       <nav className="relative z-10 max-w-7xl mx-auto px-6 pt-24 pb-12">
@@ -158,9 +197,15 @@ const MesaPrensa = () => {
           className="perspective-2000"
         >
           <div className="relative p-10 sm:p-20 bg-gradient-to-br from-white/[0.03] to-white/[0.01] backdrop-blur-3xl border border-white/10 rounded-[3rem] overflow-hidden shadow-2xl">
-            {/* Holographic Glitch lines */}
+            {/* Holographic Glitch lines & Corners */}
             <div className="absolute top-0 right-0 w-32 h-[1px] bg-gradient-to-r from-transparent to-cyan-500 shadow-[0_0_15px_#06b6d4]" />
             <div className="absolute bottom-0 left-0 w-32 h-[1px] bg-gradient-to-r from-cyan-500 to-transparent shadow-[0_0_15px_#06b6d4]" />
+            
+            {/* Technical Corner Brackets */}
+            <div className="absolute top-10 left-10 w-12 h-12 border-t-2 border-l-2 border-cyan-500/40 rounded-tl-lg" />
+            <div className="absolute top-10 right-10 w-12 h-12 border-t-2 border-r-2 border-cyan-500/40 rounded-tr-lg" />
+            <div className="absolute bottom-10 left-10 w-12 h-12 border-b-2 border-l-2 border-cyan-500/40 rounded-bl-lg" />
+            <div className="absolute bottom-10 right-10 w-12 h-12 border-b-2 border-r-2 border-cyan-500/40 rounded-br-lg" />
             
             <div className="relative flex flex-col md:flex-row items-center justify-between gap-12">
               <div className="space-y-6 max-w-2xl text-center md:text-left">
@@ -229,7 +274,7 @@ const MesaPrensa = () => {
                     className="w-full h-full object-cover transition-transform duration-1000 group-hover:scale-105"
                   />
                   {/* Digital Overlays */}
-                  <div className="absolute inset-x-0 bottom-0 p-8 pt-24 bg-gradient-to-t from-black via-black/80 to-transparent">
+                  <div className="absolute inset-x-0 bottom-0 p-8 pt-24 bg-gradient-to-t from-black via-black/90 to-transparent">
                     <div className="flex items-center gap-2 mb-3">
                       <div className="h-[1px] w-8 bg-cyan-500/50" />
                       <span className="text-cyan-400 font-mono text-[10px] tracking-[0.4em] uppercase">{auth.tag}</span>
@@ -237,21 +282,45 @@ const MesaPrensa = () => {
                     <h2 className="text-4xl sm:text-5xl font-black italic text-white tracking-tighter uppercase mb-1">
                       {auth.name}
                     </h2>
-                    <p className="text-cyan-100/60 font-mono text-xs tracking-wider uppercase">{auth.role}</p>
+                    <p className="text-cyan-100/90 font-mono text-xs sm:text-sm font-bold tracking-[0.15em] uppercase">{auth.role}</p>
+                  </div>
+
+                  {/* PRESS ID BADGE EFFECT */}
+                  <div className="absolute top-6 left-6 z-20 pointer-events-none group-hover:scale-110 transition-transform duration-500">
+                    <div className="bg-black/80 backdrop-blur-xl border border-cyan-500/30 p-3 rounded-lg flex flex-col items-center gap-1 shadow-[0_0_20px_rgba(6,182,212,0.2)]">
+                      <div className="w-10 h-10 border border-cyan-500/20 rounded-full flex items-center justify-center">
+                         <Globe className="w-5 h-5 text-cyan-400 animate-spin-slow" />
+                      </div>
+                      <span className="text-[6px] font-mono text-cyan-500 tracking-widest">AUTHENTICATED</span>
+                    </div>
+                  </div>
+                  
+                  {/* Digital Glitch Frames */}
+                  <div className="absolute top-0 right-0 w-24 h-24 pointer-events-none">
+                    <div className="absolute top-0 right-0 w-full h-[1px] bg-gradient-to-l from-cyan-500 to-transparent opacity-40" />
+                    <div className="absolute top-0 right-0 h-full w-[1px] bg-gradient-to-b from-cyan-500 to-transparent opacity-40" />
+                  </div>
+                  <div className="absolute bottom-0 left-0 w-24 h-24 pointer-events-none">
+                    <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-cyan-500 to-transparent opacity-40" />
+                    <div className="absolute bottom-0 left-0 h-full w-[1px] bg-gradient-to-t from-cyan-500 to-transparent opacity-40" />
                   </div>
                   
                   {/* Interactive Stats Panel (Visible only on PC) */}
-                  <div className="absolute top-6 right-6 hidden md:flex flex-col gap-3">
+                  <div className="absolute bottom-[100px] right-6 hidden md:flex flex-col gap-3">
                     {auth.stats.map((stat, sIdx) => (
-                      <div key={sIdx} className="px-3 py-1.5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl text-center min-w-[100px]">
+                      <motion.div 
+                        key={sIdx}
+                        whileHover={{ x: -10, backgroundColor: "rgba(6, 182, 212, 0.2)" }}
+                        className="px-3 py-1.5 bg-black/60 backdrop-blur-xl border border-white/10 rounded-xl text-center min-w-[100px] transition-colors"
+                      >
                         <p className="text-[8px] font-mono text-cyan-400/50 uppercase tracking-widest">{stat.label}</p>
                         <p className="text-xs font-bold text-white uppercase">{stat.value}</p>
-                      </div>
+                      </motion.div>
                     ))}
                   </div>
 
-                  {/* Corner Marks */}
-                  <div className="absolute top-6 left-6 w-8 h-8 border-t border-l border-white/20 rounded-tl-xl" />
+                  {/* Scanline line overlay */}
+                  <div className="absolute inset-0 pointer-events-none bg-[linear-gradient(to_bottom,transparent,rgba(6,182,212,0.05)_50%,transparent)] bg-[length:100%_4px] animate-scanline" />
                 </div>
               </div>
 
