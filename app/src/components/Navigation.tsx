@@ -72,7 +72,7 @@ const Navigation = () => {
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
   const darkPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco'];
-  const transparentPaths = [...darkPaths, '/corte'];
+  const transparentPaths = [...darkPaths];
   const isTransparentPage = transparentPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isDarkPage = darkPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 

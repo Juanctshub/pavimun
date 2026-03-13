@@ -1,29 +1,45 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence } from 'framer-motion';
 import Navigation from './components/Navigation';
 import GlobalMusicPlayer from './components/GlobalMusicPlayer';
 import SplashScreen from './components/SplashScreen';
 import PageTransition from './components/PageTransition';
+
+// Eagerly load Home (first page users see)
 import Home from './pages/Home';
-import QueEsMUN from './pages/QueEsMUN';
-import StaffOrganizador from './pages/StaffOrganizador';
-import Matrices from './pages/Matrices';
-import Inscripciones from './pages/Inscripciones';
-import Reglamentos from './pages/Reglamentos';
-import Galeria from './pages/Galeria';
-import Corte from './pages/Corte';
-import Investigacion from './pages/Investigacion';
-import Crisis from './pages/Crisis';
-import CIA from './pages/CIA';
-import ConsejoSeguridad from './pages/ConsejoSeguridad';
-import OIEA from './pages/OIEA';
-import Prensa from './pages/Prensa';
-import MinistryOfTruth from './pages/MinistryOfTruth';
-import Banco from './pages/Banco';
-import MesaConsejo from './pages/MesaConsejo';
-import MesaInvestigacion from './pages/MesaInvestigacion';
-import MesaCorte from './pages/MesaCorte';
+
+// Lazy load all other pages for code splitting & faster initial load
+const QueEsMUN = lazy(() => import('./pages/QueEsMUN'));
+const StaffOrganizador = lazy(() => import('./pages/StaffOrganizador'));
+const Matrices = lazy(() => import('./pages/Matrices'));
+const Inscripciones = lazy(() => import('./pages/Inscripciones'));
+const Reglamentos = lazy(() => import('./pages/Reglamentos'));
+const Galeria = lazy(() => import('./pages/Galeria'));
+const Corte = lazy(() => import('./pages/Corte'));
+const Investigacion = lazy(() => import('./pages/Investigacion'));
+const Crisis = lazy(() => import('./pages/Crisis'));
+const CIA = lazy(() => import('./pages/CIA'));
+const ConsejoSeguridad = lazy(() => import('./pages/ConsejoSeguridad'));
+const OIEA = lazy(() => import('./pages/OIEA'));
+const Prensa = lazy(() => import('./pages/Prensa'));
+const MinistryOfTruth = lazy(() => import('./pages/MinistryOfTruth'));
+const Banco = lazy(() => import('./pages/Banco'));
+const MesaConsejo = lazy(() => import('./pages/MesaConsejo'));
+const MesaInvestigacion = lazy(() => import('./pages/MesaInvestigacion'));
+const MesaCorte = lazy(() => import('./pages/MesaCorte'));
+
+// Minimal loader for lazy pages
+function LazyFallback() {
+  return (
+    <div className="min-h-screen flex items-center justify-center">
+      <div className="flex flex-col items-center gap-3">
+        <div className="w-8 h-8 border-2 border-[#1a237e] border-t-transparent rounded-full animate-spin" />
+        <span className="text-[#1a237e]/60 text-xs font-semibold tracking-widest uppercase">Cargando</span>
+      </div>
+    </div>
+  );
+}
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -60,29 +76,31 @@ function AppContent() {
       <Navigation />
       <GlobalMusicPlayer />
       <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"}`}>
-        <AnimatePresence mode="wait">
-          <Routes location={location} key={location.pathname}>
-            <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-            <Route path="/que-es-mun" element={<PageTransition><QueEsMUN /></PageTransition>} />
-            <Route path="/staff" element={<PageTransition><StaffOrganizador /></PageTransition>} />
-            <Route path="/matrices" element={<PageTransition><Matrices /></PageTransition>} />
-            <Route path="/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
-            <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
-            <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
-            <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
-            <Route path="/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />
-            <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
-            <Route path="/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
-            <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
-            <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
-            <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
-            <Route path="/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
-            <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
-            <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
-            <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
-            <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
-          </Routes>
-        </AnimatePresence>
+        <Suspense fallback={<LazyFallback />}>
+          <AnimatePresence mode="wait">
+            <Routes location={location} key={location.pathname}>
+              <Route path="/" element={<PageTransition><Home /></PageTransition>} />
+              <Route path="/que-es-mun" element={<PageTransition><QueEsMUN /></PageTransition>} />
+              <Route path="/staff" element={<PageTransition><StaffOrganizador /></PageTransition>} />
+              <Route path="/matrices" element={<PageTransition><Matrices /></PageTransition>} />
+              <Route path="/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
+              <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
+              <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
+              <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
+              <Route path="/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />
+              <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
+              <Route path="/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
+              <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
+              <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
+              <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
+              <Route path="/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
+              <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
+              <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
+              <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
+              <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
+            </Routes>
+          </AnimatePresence>
+        </Suspense>
       </main>
     </>
   );
