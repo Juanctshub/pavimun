@@ -20,7 +20,7 @@ const MesaPrensa = () => {
     if (!a) return;
     const fadeIn = () => {
       let v = 0; a.volume = 0;
-      const i = setInterval(() => { v += 0.005; if (v >= 0.15) { v = 0.15; clearInterval(i); } a.volume = v; }, 100);
+      const i = setInterval(() => { v += 0.005; if (v >= 0.35) { v = 0.35; clearInterval(i); } a.volume = v; }, 100);
     };
     a.volume = 0; a.muted = false;
     a.play().then(fadeIn).catch(() => {
@@ -80,7 +80,7 @@ const MesaPrensa = () => {
   return (
     <div className="min-h-screen bg-[#050505] text-[#d1d5db] font-sans selection:bg-cyan-500/30 overflow-x-hidden">
       
-      <audio ref={audioRef} src="/audio/fuera.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/audio/fuera2.mp3" loop preload="auto" />
 
       {/* ═══ CYBER BACKGROUND ═══ */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -96,28 +96,49 @@ const MesaPrensa = () => {
         <motion.div 
           animate={{ x: [0, 100, 0], y: [0, -50, 0] }} 
           transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-          className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" 
+          className="absolute -top-1/4 -right-1/4 w-[800px] h-[600px] bg-blue-600/10 rounded-full blur-[120px]" 
         />
         <motion.div 
           animate={{ x: [0, -100, 0], y: [0, 50, 0] }} 
           transition={{ duration: 15, repeat: Infinity, ease: 'linear' }}
           className="absolute -bottom-1/4 -left-1/4 w-[500px] h-[500px] bg-cyan-600/10 rounded-full blur-[100px]" 
         />
-        {/* Digital Scanline */}
-        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.02] to-transparent h-20 w-full animate-scanline" />
+        {/* Glitchy Scanline */}
+        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-white/[0.03] to-transparent h-40 w-full animate-scanline shadow-[0_0_50px_rgba(6,182,212,0.1)]" />
+
+        {/* Floating Editorial Phrases */}
+        <div className="absolute inset-0 z-0">
+          {[
+            { text: 'VERITAS', top: '15%', left: '10%', delay: 0 },
+            { text: 'OBJECTIVE', top: '45%', right: '5%', delay: 2 },
+            { text: 'EDITORIAL', top: '75%', left: '20%', delay: 4 },
+            { text: 'UPLINK_09', top: '30%', left: '70%', delay: 1 },
+          ].map((phrase, pi) => (
+             <motion.div
+               key={pi}
+               initial={{ opacity: 0 }}
+               animate={{ opacity: [0, 0.2, 0] }}
+               transition={{ duration: 5, repeat: Infinity, delay: phrase.delay }}
+               className="absolute font-mono text-[4rem] font-black text-white/5 select-none pointer-events-none tracking-[1em]"
+               style={{ top: phrase.top, left: phrase.left, right: phrase.right }}
+             >
+               {phrase.text}
+             </motion.div>
+          ))}
+        </div>
       </div>
 
-      {/* ═══ FLOATING NEWS TICKER ═══ */}
-      <div className="fixed top-0 left-0 w-full z-50 bg-blue-600/10 backdrop-blur-md border-b border-white/10 h-8 flex items-center overflow-hidden">
+      {/* ═══ FLOATING NEWS TICKER — POSITIONED BELOW NAV ═══ */}
+      <div className="fixed top-[72px] left-0 w-full z-40 bg-blue-600/20 backdrop-blur-xl border-y border-white/10 h-10 flex items-center overflow-hidden">
         <motion.div 
           initial={{ x: "100%" }}
           animate={{ x: "-100%" }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
+          transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
           className="whitespace-nowrap flex gap-12"
         >
           {[...Array(5)].map((_, i) => (
-            <span key={i} className="text-[10px] font-mono font-bold tracking-[0.3em] text-cyan-400">
-              PAVIMUN PRESS EXCLUSIVE • BREAKING NEWS • NEW DIMENSION OF JOURNALISM • LIVE UPDATES FROM THE CORE • 
+            <span key={i} className="text-[10px] sm:text-xs font-mono font-bold tracking-[0.4em] text-cyan-300 drop-shadow-[0_0_8px_#06b6d4]">
+              PAVIMUN PRESS EXCLUSIVE • BREAKING NEWS • NEW DIMENSION OF JOURNALISM • LIVE UPDATES FROM THE CORE • SYNC_ESTABLISHED •
             </span>
           ))}
         </motion.div>
