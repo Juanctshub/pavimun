@@ -259,7 +259,12 @@ const Corte = () => {
     }
   };
 
-  if (loading) return <GoogleIntro onDone={handleDone} />;
+  if (loading) return (
+    <>
+      <audio ref={audioRef} src="/videos/epsteinsong.mp3" loop preload="auto" />
+      <GoogleIntro onDone={handleDone} />
+    </>
+  );
 
   return (
     <div className="min-h-screen bg-white text-[#1a1a1a] font-sans selection:bg-[#002244] selection:text-white">

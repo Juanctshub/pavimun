@@ -36,6 +36,10 @@ function AppContent() {
   const location = useLocation();
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
+  // Pages where the nav is transparent/overlaid — no top padding needed
+  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco', '/corte'];
+  const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+
   useEffect(() => {
     const handleHide = () => setHideNavSpacing(true);
     const handleShow = () => setHideNavSpacing(false);
@@ -54,7 +58,7 @@ function AppContent() {
       <ScrollToTop />
       <Navigation />
       <GlobalMusicPlayer />
-      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing ? "" : "pt-[72px]"}`}>
+      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"}`}>
         <AnimatePresence mode="wait">
           <Routes location={location} key={location.pathname}>
             <Route path="/" element={<PageTransition><Home /></PageTransition>} />
