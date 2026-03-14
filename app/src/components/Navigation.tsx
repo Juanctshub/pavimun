@@ -75,8 +75,12 @@ const Navigation = () => {
   const transparentPaths = [...darkPaths];
   const isTransparentPage = transparentPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isDarkPage = darkPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  
+  // Forces the navbar to be solid white even at the top of these pages
+  const forceSolidPaths = ['/corte'];
+  const isForceSolidPage = forceSolidPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
-  const forceWhite = (isTransparentPage && !scrolled && !isOpen) || (isDarkPage && (scrolled || isOpen));
+  const forceWhite = ((isTransparentPage && !scrolled && !isOpen) || (isDarkPage && (scrolled || isOpen))) && !isForceSolidPage;
 
   // Dynamic classes
   const textColorClass = forceWhite ? 'text-white' : 'text-[#1a237e]';
@@ -84,7 +88,7 @@ const Navigation = () => {
   const burgerBgClass = forceWhite ? 'bg-white' : 'bg-[#1a237e]';
   const burgerHoverClass = forceWhite ? 'hover:bg-white/10' : 'hover:bg-black/[0.04]';
 
-  const headerBgClass = scrolled || isOpen
+  const headerBgClass = (scrolled || isOpen || isForceSolidPage)
     ? (isDarkPage ? 'bg-[#050505]/90 backdrop-blur-md shadow-lg border-b border-white/10' : 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)]')
     : 'bg-transparent';
 
