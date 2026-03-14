@@ -62,7 +62,7 @@ const MesaPrensa = () => {
   const { scrollYProgress } = useScroll();
   const rotateX = useTransform(scrollYProgress, [0, 0.2], [5, 0]);
   const scale = useTransform(scrollYProgress, [0, 0.2], [0.95, 1]);
-  const sideOpacity = useTransform(scrollYProgress, [0, 0.1], [0, 1]);
+  const sideOpacity = useTransform(scrollYProgress, [0, 0.15], [0.7, 1]);
 
   const authorities = [
     {
