@@ -221,19 +221,25 @@ const MesaOIEA = () => {
                                         {/* Interference overlay */}
                                         <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.05)_1px,transparent_1px)] bg-[size:100%_3px] pointer-events-none opacity-40" />
                                         
-                                        {/* Labels moved to solve overlap */}
-                                        <div className="absolute top-0 inset-x-0 p-4 flex justify-between items-start pointer-events-none z-20">
-                                            <div className="flex items-center gap-2 px-3 py-1 bg-cyan-950/80 border border-cyan-500/40 backdrop-blur-sm rounded-sm">
-                                                <UserCheck className="w-3 h-3 text-cyan-400" />
-                                                <span className="text-[9px] font-mono tracking-widest text-cyan-100 uppercase font-bold">ACCESO CONCEDIDO</span>
+                                        {/* Labels - Visible on Desktop only on image */}
+                                        <div className="absolute top-0 inset-x-0 p-3 sm:p-4 hidden sm:flex justify-between items-start sm:items-center gap-2 pointer-events-none z-20">
+                                            <div className="flex items-center gap-2 px-2.5 py-1 bg-red-950/80 border border-red-600/40 backdrop-blur-sm rounded-sm">
+                                                <UserCheck className="w-2.5 h-2.5 text-red-400" />
+                                                <span className="text-[8px] font-mono tracking-widest text-red-100 uppercase font-bold">ID VERIFICADO</span>
                                             </div>
-                                            <div className="px-2 py-1 bg-amber-950/80 border border-amber-500/40 backdrop-blur-sm rounded-sm">
+                                            <div className="hidden sm:block px-2 py-1 bg-amber-950/80 border border-amber-500/40 backdrop-blur-sm rounded-sm">
                                                 <span className="text-[8px] font-mono text-amber-500 uppercase font-bold tracking-tighter">SEC_LVL_5</span>
                                             </div>
                                         </div>
 
                                         {/* Identity Detail Area */}
-                                        <div className="absolute bottom-0 inset-x-0 p-8 sm:p-10 bg-gradient-to-t from-[#05080a] via-[#05080a]/90 to-transparent z-20">
+                                        <div className="absolute bottom-0 inset-x-0 p-5 sm:p-10 bg-gradient-to-t from-[#05080a] via-[#05080a]/90 to-transparent z-20">
+                                            {/* Mobile-only ID Badge - NEW LOCATION OUTSIDE DENSE AREA */}
+                                            <div className="flex sm:hidden items-center gap-2 px-2.5 py-1 bg-red-950/80 border border-red-600/40 backdrop-blur-sm rounded-sm w-fit mb-4">
+                                                <UserCheck className="w-2.5 h-2.5 text-red-400" />
+                                                <span className="text-[8px] font-mono tracking-widest text-red-100 uppercase font-bold">ID VERIFICADO</span>
+                                            </div>
+
                                             <h2 className="text-4xl sm:text-6xl font-black text-white uppercase tracking-tighter leading-none mb-3 drop-shadow-lg">
                                                 {auth.name}
                                             </h2>

@@ -110,7 +110,7 @@ const MesaCorte = () => {
         {/* Federal stars pattern */}
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='30' y='35' text-anchor='middle' fill='white' font-size='14'%3E★%3C/text%3E%3C/svg%3E")`, backgroundSize: '60px 60px' }} />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-24 sm:pt-28 pb-14 sm:pb-20">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-14 sm:pb-20">
           <Link to="/corte" className="inline-flex items-center gap-2 text-white/40 hover:text-white font-sans text-xs tracking-wider mb-10 transition-colors uppercase group">
             <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
             Regresar a Corte
@@ -155,6 +155,8 @@ const MesaCorte = () => {
             <span>Derecho Internacional</span>
             <span className="text-[#bf9b30]">•</span>
             <span>Justicia Global</span>
+            <span className="text-[#bf9b30] hidden md:inline">•</span>
+            <span className="hidden md:inline">Corte de La Haya</span>
           </div>
         </div>
       </div>

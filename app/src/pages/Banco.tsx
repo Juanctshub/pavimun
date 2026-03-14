@@ -252,7 +252,7 @@ const Banco = () => {
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[65vw] sm:w-[50vw] md:w-[35vw] lg:w-[30vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[48vw] sm:w-[50vw] md:w-[35vw] lg:w-[30vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
               <div className={`relative w-full aspect-[1/2] max-h-[70vh]`}>
