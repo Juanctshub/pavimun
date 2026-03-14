@@ -74,9 +74,9 @@ const MesaCorte = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8f6f0] text-[#1a1a1a] font-serif relative">
+    <div className="min-h-screen bg-[#f8f6f0] text-[#1a1a1a] font-serif relative overflow-hidden">
       
-      <audio ref={audioRef} src="/videos/epsteinsong.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/videos/aa.mp3" loop preload="auto" />
 
       {/* Mute */}
       <button onClick={toggleMute} className="fixed bottom-6 right-6 z-[60] group" title={muted ? 'Activar sonido' : 'Silenciar'}>
@@ -87,7 +87,19 @@ const MesaCorte = () => {
       </button>
 
       {/* Subtle paper texture overlay */}
-      <div className="fixed inset-0 pointer-events-none z-0 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
+      <div className="fixed inset-0 pointer-events-none z-10 opacity-[0.04]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
+
+      {/* DECORATIVE BACKGROUND ELEMENTS: Justice Pillars */}
+      <div className="fixed inset-0 pointer-events-none flex justify-between px-10 opacity-[0.03] z-0">
+        <div className="h-full w-24 border-x-4 border-[#002244] relative">
+          <div className="absolute top-0 w-full h-20 bg-[#002244]" />
+          <div className="absolute bottom-0 w-full h-20 bg-[#002244]" />
+        </div>
+        <div className="h-full w-24 border-x-4 border-[#002244] relative">
+          <div className="absolute top-0 w-full h-20 bg-[#002244]" />
+          <div className="absolute bottom-0 w-full h-20 bg-[#002244]" />
+        </div>
+      </div>
 
       {/* ═══ DOJ HEADER BANNER ═══ */}
       <div className="relative bg-[#002244] overflow-hidden">
@@ -155,7 +167,7 @@ const MesaCorte = () => {
           <Scale className="w-[500px] h-[500px] text-[#002244]" />
         </div>
 
-        <div className="relative z-10 space-y-24 md:space-y-32">
+        <div className="relative z-10 space-y-24 md:space-y-32 text-left">
           {authorities.map((auth, idx) => (
             <motion.div
               key={auth.name}
@@ -196,6 +208,18 @@ const MesaCorte = () => {
                       loading="lazy"
                       className="w-full aspect-[3/4] object-cover transition-all duration-700 group-hover:scale-[1.03]"
                     />
+
+                    {/* OFFICIAL WAX SEAL ORNAMENT */}
+                    <div className="absolute -top-6 -left-6 z-30 w-16 h-16 pointer-events-none drop-shadow-lg">
+                      <div className="w-full h-full rounded-full bg-red-700 border-2 border-red-800 flex items-center justify-center relative overflow-hidden">
+                        <Scale className="w-8 h-8 text-white/50" />
+                        <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-black/20" />
+                      </div>
+                    </div>
+
+                    {/* EVIDENCE SCANNING EFFECT */}
+                    <div className="absolute inset-x-0 top-0 h-1 bg-blue-400/30 blur-sm z-30 animate-scanline-fast opacity-0 group-hover:opacity-100" />
+                    <div className="absolute inset-y-0 left-0 w-1 bg-blue-400/30 blur-sm z-30 animate-pulse opacity-0 group-hover:opacity-100" />
                     
                     {/* Official nameplate */}
                     <div className="absolute bottom-0 inset-x-0 z-20">
@@ -308,8 +332,8 @@ const MesaCorte = () => {
                 <Scale className="w-6 h-6 text-[#002244]/20" />
               </div>
               <div>
-                <p className="text-[#002244]/40 font-sans text-xs font-bold tracking-wider uppercase">Corte Internacional de Justicia</p>
-                <p className="text-[#002244]/20 font-sans text-[10px] tracking-widest uppercase mt-0.5">Directorio Oficial · Fin del Expediente</p>
+                <p className="text-[#002244]/40 font-sans text-xs font-bold tracking-wider uppercase text-left">Corte Internacional de Justicia</p>
+                <p className="text-[#002244]/20 font-sans text-[10px] tracking-widest uppercase mt-0.5 text-left">Directorio Oficial · Fin del Expediente</p>
               </div>
             </div>
             <div className="flex items-center gap-3 text-[#bf9b30]/30 font-sans text-xs tracking-widest uppercase">

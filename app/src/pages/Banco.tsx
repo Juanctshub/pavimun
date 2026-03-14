@@ -252,7 +252,7 @@ const Banco = () => {
 
             {/* 3D Banknote IN FRONT OF TEXT */}
             <div
-              className={`relative z-30 w-[80vw] sm:w-[50vw] md:w-[35vw] lg:w-[30vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
+              className={`relative z-30 w-[65vw] sm:w-[50vw] md:w-[35vw] lg:w-[30vw] flex justify-center mt-10 md:mt-16 flip-card cursor-pointer drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] ${flippedNotes.includes(100) ? 'is-flipped' : ''}`}
               onClick={() => toggleFlip(100)}
             >
               <div className={`relative w-full aspect-[1/2] max-h-[70vh]`}>
@@ -438,7 +438,7 @@ const Banco = () => {
                       {/* 3D BANKNOTE */}
                       <div className="w-full lg:w-1/2 flex justify-center items-center py-6 lg:py-10 relative">
                         <div
-                          className={`relative w-[65vw] sm:w-[50vw] max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] aspect-[1/2] max-h-[75vh] bg-transparent flip-card gallery-card cursor-crosshair drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
+                          className={`relative w-[55vw] sm:w-[50vw] max-w-[280px] sm:max-w-[320px] lg:max-w-[400px] aspect-[1/2] max-h-[75vh] bg-transparent flip-card gallery-card cursor-crosshair drop-shadow-[0_20px_40px_rgba(0,0,0,0.8)] ${flippedNotes.includes(note.denom) ? 'is-flipped' : ''}`}
                           onClick={() => toggleFlip(note.denom)}
                         >
                           <div className={`relative w-full h-full`}>

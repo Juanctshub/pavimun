@@ -108,7 +108,7 @@ const MesaInvestigacion = () => {
     <div className="min-h-screen bg-[#0a0a0a] text-gray-200 font-sans selection:bg-[#ffd700]/30 selection:text-white relative overflow-hidden">
       
       {/* Audio */}
-      <audio ref={audioRef} src="/audio/lol.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/videos/uu.mp3" loop preload="auto" />
 
       {/* Mute Button */}
       <button
