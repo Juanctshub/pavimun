@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft, Radiation, AlertTriangle, Atom, Volume2, VolumeX, Database, ShieldAlert, Thermometer, UserCheck } from 'lucide-react';
+import { ArrowLeft, Radiation, AlertTriangle, Atom, Volume2, VolumeX, Database, ShieldAlert, Thermometer, UserCheck, Activity, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const MesaOIEA = () => {
@@ -66,7 +66,7 @@ const MesaOIEA = () => {
         },
         {
             role: 'Vice-Presidente de Mesa',
-            name: 'Roberto Schanbuay',
+            name: 'Roberto Scharbaay',
             image: '/images/mesas/oiea/r.jpeg',
             motto: '"La diplomacia es la herramienta de transformación técnica y social."',
             stats: { level: '2.4 mSv/h', status: 'OPERATIVO', auth: 'NIVEL 4' },
@@ -79,45 +79,48 @@ const MesaOIEA = () => {
     ];
 
     const { scrollYProgress } = useScroll();
-    const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [0.1, 0.3]);
+    const backgroundOpacity = useTransform(scrollYProgress, [0, 0.5], [0.1, 0.4]);
+    const bluePulse = useTransform(scrollYProgress, [0, 0.2, 0.4, 0.6, 0.8, 1], [0.1, 0.3, 0.1, 0.3, 0.1, 0.3]);
 
     return (
-        <div className="min-h-screen bg-[#080808] text-amber-50 font-sans selection:bg-amber-500/30 selection:text-white relative overflow-hidden">
+        <div className="min-h-screen bg-[#05080a] text-amber-50 font-sans selection:bg-cyan-500/30 selection:text-white relative overflow-hidden">
             
             {/* Audio */}
             <audio ref={audioRef} src="/videos/mac.mp3" loop preload="auto" />
 
-            {/* Chernobyl Background Overlays */}
+            {/* Chernobyl & Cherenkov Background Overlays */}
             <div className="fixed inset-0 pointer-events-none z-0">
                 <motion.div 
                     style={{ opacity: backgroundOpacity }}
-                    className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(245,158,11,0.15),transparent_70%)]"
+                    className="absolute inset-0 bg-[radial-gradient(circle_at_50%_0%,rgba(6,182,212,0.15),transparent_70%)]"
                 />
-                <div className="absolute inset-0 opacity-[0.05]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
+                <motion.div 
+                    style={{ opacity: bluePulse }}
+                    className="absolute inset-0 bg-[#06b6d4]/5 mix-blend-screen"
+                />
+                <div className="absolute inset-0 opacity-[0.07]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }} />
                 
-                {/* Geiger scan lines */}
-                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-20">
-                    <div className="w-full h-[2px] bg-amber-500/30 absolute shadow-[0_0_15px_rgba(245,158,11,0.5)] animate-[geigerScan_4s_ease-in-out_infinite]" />
+                {/* Cherenkov scan lines (Blue) */}
+                <div className="absolute inset-0 overflow-hidden pointer-events-none opacity-30">
+                    <div className="w-full h-[1px] bg-cyan-400/40 absolute shadow-[0_0_20px_rgba(34,211,238,0.6)] animate-[geigerScan_6s_linear_infinite]" />
+                    <div className="w-full h-[1px] bg-amber-500/20 absolute shadow-[0_0_15px_rgba(245,158,11,0.3)] animate-[geigerScan_8s_linear_infinite_reverse]" />
                 </div>
 
                 {/* Industrial grid */}
-                <div className="absolute inset-0 bg-[linear-gradient(rgba(245,158,11,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.03)_1px,transparent_1px)] bg-[size:40px_40px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(6,182,212,0.03)_1px,transparent_1px)] bg-[size:50px_50px]" />
+                <div className="absolute inset-0 bg-[linear-gradient(rgba(245,158,11,0.02)_1px,transparent_1px),linear-gradient(90deg,rgba(245,158,11,0.02)_1px,transparent_1px)] bg-[size:150px_150px]" />
             </div>
 
             <style dangerouslySetInnerHTML={{ __html: `
                 @keyframes geigerScan {
-                    0% { top: -10%; }
-                    100% { top: 110%; }
+                    0% { transform: translateY(-100%); }
+                    100% { transform: translateY(1100%); }
                 }
-                @keyframes flicker {
-                    0% { opacity: 0.8; }
-                    5% { opacity: 0.9; }
-                    10% { opacity: 0.4; }
-                    15% { opacity: 1; }
-                    20% { opacity: 0.8; }
-                    100% { opacity: 1; }
+                @keyframes reactor-pulse {
+                    0%, 100% { opacity: 0.3; transform: scale(1); }
+                    50% { opacity: 0.6; transform: scale(1.1); }
                 }
-                .flicker-text { animation: flicker 3s infinite; }
+                .reactor-glow { animation: reactor-pulse 4s ease-in-out infinite; }
             `}} />
 
             {/* Mute Button */}
@@ -126,11 +129,11 @@ const MesaOIEA = () => {
                 className="fixed bottom-6 right-6 z-[60] group"
                 title={muted ? 'Activar sonido' : 'Silenciar'}
             >
-                {!muted && <div className="absolute inset-0 rounded-full bg-amber-500/30 animate-ping" />}
+                {!muted && <div className="absolute inset-0 rounded-full bg-cyan-500/30 animate-ping" />}
                 <div className={`relative p-3.5 rounded-full backdrop-blur-xl border shadow-xl transition-all duration-300 hover:scale-110 active:scale-95 ${
                     !muted
-                        ? 'bg-amber-600/90 border-amber-400/50 text-white shadow-amber-500/20'
-                        : 'bg-black/80 border-amber-900/40 text-gray-500 hover:text-amber-500 shadow-black/10'
+                        ? 'bg-cyan-600/90 border-cyan-400/50 text-white shadow-cyan-500/20'
+                        : 'bg-black/80 border-cyan-900/40 text-gray-500 hover:text-cyan-500 shadow-black/10'
                 }`}>
                     {!muted ? <Volume2 className="w-5 h-5" /> : <VolumeX className="w-5 h-5" />}
                 </div>
@@ -140,101 +143,128 @@ const MesaOIEA = () => {
 
                 {/* ── Header ── */}
                 <motion.div
-                    initial={{ opacity: 0, x: -50 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8 }}
-                    className="mb-20 md:mb-28"
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
+                    className="mb-20 md:mb-32 text-center md:text-left relative"
                 >
                     <Link
                         to="/oiea"
-                        className="inline-flex items-center gap-2 text-amber-500/60 hover:text-amber-400 font-mono text-[10px] sm:text-xs tracking-[0.4em] mb-10 transition-colors uppercase group border border-amber-500/20 px-4 py-2 bg-amber-500/5 backdrop-blur-sm"
+                        className="inline-flex items-center gap-2 text-cyan-500/60 hover:text-cyan-400 font-mono text-[10px] sm:text-xs tracking-[0.4em] mb-12 transition-colors uppercase group border border-cyan-500/20 px-6 py-2.5 bg-cyan-500/5 backdrop-blur-md rounded-sm"
                     >
                         <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        RETORNAR AL COMITÉ
+                        TERMINAL DE COMITÉ
                     </Link>
 
-                    <div className="flex flex-col md:flex-row items-baseline gap-4 mb-4">
-                        <Radiation className="w-10 h-10 text-amber-500 animate-spin-slow" />
-                        <h1 className="text-5xl sm:text-7xl md:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-amber-500 via-amber-400 to-amber-600 uppercase tracking-tighter leading-none italic">
+                    <div className="flex flex-col md:flex-row items-center md:items-baseline gap-6 mb-6">
+                        <div className="relative">
+                            <Radiation className="w-12 h-12 text-cyan-400 animate-spin-slow relative z-10" />
+                            <div className="absolute inset-0 bg-cyan-500/40 blur-xl reactor-glow" />
+                        </div>
+                        <h1 className="text-6xl sm:text-8xl md:text-[10rem] font-black text-transparent bg-clip-text bg-gradient-to-br from-cyan-400 via-white to-blue-600 uppercase tracking-tighter leading-none italic drop-shadow-[0_0_30px_rgba(6,182,212,0.3)]">
                             OIEA
                         </h1>
                     </div>
                     
-                    <div className="flex flex-wrap items-center gap-4 text-amber-500/60 font-mono text-xs sm:text-sm tracking-[0.2em] uppercase">
-                        <span className="bg-amber-500/10 border border-amber-500/30 px-3 py-1 flicker-text">IDENTIFICACIÓN DE MESA DIRECTIVA</span>
-                        <div className="h-[1px] w-20 bg-amber-500/30" />
-                        <span>VERSIÓN 1.0.CHERNOBYL</span>
+                    <div className="flex flex-wrap items-center justify-center md:justify-start gap-4 text-cyan-500/70 font-mono text-xs sm:text-sm tracking-[0.3em] uppercase">
+                        <span className="bg-cyan-500/10 border border-cyan-500/30 px-4 py-1.5 rounded-sm flex items-center gap-2">
+                             <Activity className="w-4 h-4" /> REGISTRO DE MESA DIRECTIVA
+                        </span>
+                        <div className="hidden md:block h-[1px] w-32 bg-gradient-to-r from-cyan-500/40 to-transparent" />
+                        <span className="text-amber-500/60">SECTOR: PRYPIAT '86</span>
                     </div>
 
-                    {/* Warning Stripe */}
-                    <div className="mt-8 h-4 w-full bg-[repeating-linear-gradient(45deg,#080808,#080808_10px,#f59e0b_10px,#f59e0b_20px)] opacity-40 rounded-full" />
+                    {/* Industrial Danger stripes */}
+                    <div className="mt-12 space-y-2">
+                        <div className="h-2 w-full bg-[repeating-linear-gradient(45deg,#05080a,#05080a_20px,#f59e0b_20px,#f59e0b_40px)] opacity-20" />
+                        <div className="h-1 w-full bg-[repeating-linear-gradient(45deg,#05080a,#05080a_10px,#06b6d4_10px,#06b6d4_20px)] opacity-20" />
+                    </div>
                 </motion.div>
 
                 {/* ── Profiles ── */}
-                <div className="space-y-40">
+                <div className="space-y-48 lg:space-y-64">
                     {authorities.map((auth, idx) => (
                         <motion.div
                             key={auth.name}
-                            initial={{ opacity: 0, y: 100 }}
-                            whileInView={{ opacity: 1, y: 0 }}
+                            initial={{ opacity: 0, x: idx % 2 === 0 ? -40 : 40 }}
+                            whileInView={{ opacity: 1, x: 0 }}
                             viewport={{ once: true, margin: "-100px" }}
-                            transition={{ duration: 1, ease: 'easeOut' }}
-                            className="relative"
+                            transition={{ duration: 1.2, ease: [0.22, 1, 0.36, 1] }}
+                            className="relative group"
                         >
-                            {/* Background Number */}
-                            <div className="absolute -top-20 -left-10 text-[200px] font-black text-amber-500/5 select-none pointer-events-none font-mono">
-                                {String(idx + 1).padStart(2, '0')}
+                            {/* Technical Overlays */}
+                            <div className={`absolute -top-12 ${idx % 2 === 0 ? '-right-4' : '-left-4'} font-mono text-[120px] font-black text-cyan-500/[0.03] select-none pointer-events-none leading-none`}>
+                                ATOM_{idx + 1}
                             </div>
 
-                            <div className={`grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-12 lg:gap-20 items-center ${idx % 2 === 1 ? 'lg:grid-cols-[1.5fr_1fr]' : ''}`}>
+                            <div className={`grid grid-cols-1 lg:grid-cols-[1fr_1.4fr] gap-16 lg:gap-24 items-center ${idx % 2 === 1 ? 'lg:grid-cols-[1.4fr_1fr]' : ''}`}>
                                 
                                 {/* Photo Container */}
-                                <div className={`relative group ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
-                                    {/* Tech Borders */}
-                                    <div className="absolute -inset-4 border border-amber-500/10 pointer-events-none group-hover:border-amber-500/30 transition-colors duration-500" />
-                                    <div className="absolute -top-4 -left-4 w-8 h-8 border-t-2 border-l-2 border-amber-500/40" />
-                                    <div className="absolute -bottom-4 -right-4 w-8 h-8 border-b-2 border-r-2 border-amber-500/40" />
+                                <div className={`relative ${idx % 2 === 1 ? 'lg:order-2' : ''}`}>
+                                    {/* Tech Borders - Cherenkov Blue */}
+                                    <div className="absolute -inset-6 border border-cyan-500/10 pointer-events-none group-hover:border-cyan-500/30 transition-all duration-700" />
+                                    <div className="absolute -top-6 -left-6 w-12 h-12 border-t-2 border-l-2 border-cyan-500/50" />
+                                    <div className="absolute -bottom-6 -right-6 w-12 h-12 border-b-2 border-r-2 border-cyan-500/50" />
+                                    
+                                    {/* Animated UI Elements around photo */}
+                                    <div className="absolute -right-8 top-1/4 h-24 w-[2px] bg-gradient-to-b from-transparent via-cyan-500/40 to-transparent animate-pulse" />
+                                    <div className="absolute -left-8 bottom-1/4 h-24 w-[2px] bg-gradient-to-b from-transparent via-amber-500/40 to-transparent animate-pulse delay-1000" />
 
                                     {/* Main Image */}
-                                    <div className="relative aspect-[4/5] overflow-hidden bg-zinc-900 border border-amber-500/20 shadow-2xl shadow-amber-500/5">
+                                    <div className="relative aspect-[4/5] overflow-hidden bg-[#0a0a0a] border border-cyan-500/20 shadow-[0_0_60px_rgba(6,182,212,0.1)]">
                                         <img
                                             src={auth.image}
                                             alt={auth.name}
-                                            className="w-full h-full object-cover grayscale brightness-75 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-700 scale-105 group-hover:scale-100"
+                                            className="w-full h-full object-cover grayscale brightness-90 group-hover:grayscale-0 group-hover:brightness-100 transition-all duration-1000 group-hover:scale-105"
                                         />
                                         
-                                        {/* Scanline Effect overlay on image */}
-                                        <div className="absolute inset-0 bg-[linear-gradient(rgba(245,158,11,0.1)_1px,transparent_1px)] bg-[size:100%_4px] pointer-events-none opacity-20" />
+                                        {/* Interference overlay */}
+                                        <div className="absolute inset-0 bg-[linear-gradient(rgba(6,182,212,0.05)_1px,transparent_1px)] bg-[size:100%_3px] pointer-events-none opacity-40" />
                                         
-                                        {/* Identity Label */}
-                                        <div className="absolute bottom-0 inset-x-0 p-6 bg-gradient-to-t from-black via-black/80 to-transparent">
-                                            <div className="flex items-center gap-2 text-amber-500 mb-2">
-                                                <UserCheck className="w-4 h-4" />
-                                                <span className="text-[10px] font-mono tracking-widest uppercase">ID VERIFICADO</span>
+                                        {/* Labels moved to solve overlap */}
+                                        <div className="absolute top-0 inset-x-0 p-4 flex justify-between items-start pointer-events-none">
+                                            <div className="flex items-center gap-2 px-3 py-1 bg-cyan-950/80 border border-cyan-500/40 backdrop-blur-sm rounded-sm">
+                                                <UserCheck className="w-3 h-3 text-cyan-400" />
+                                                <span className="text-[9px] font-mono tracking-widest text-cyan-100 uppercase font-bold">ACCESO CONCEDIDO</span>
                                             </div>
-                                            <h2 className="text-3xl sm:text-4xl font-black text-white uppercase tracking-tighter leading-none mb-1">
+                                            <div className="px-2 py-1 bg-amber-950/80 border border-amber-500/40 backdrop-blur-sm rounded-sm">
+                                                <span className="text-[8px] font-mono text-amber-500 uppercase font-bold tracking-tighter">SEC_LVL_5</span>
+                                            </div>
+                                        </div>
+
+                                        {/* Identity Detail Area */}
+                                        <div className="absolute bottom-0 inset-x-0 p-8 bg-gradient-to-t from-[#05080a] via-[#05080a]/90 to-transparent">
+                                            <h2 className="text-4xl sm:text-5xl font-black text-white uppercase tracking-tighter leading-none mb-2 drop-shadow-lg">
                                                 {auth.name}
                                             </h2>
                                             {auth.alias && (
-                                                <p className="text-amber-500/70 font-mono text-sm tracking-widest italic flicker-text">"{auth.alias}"</p>
+                                                <div className="flex items-center gap-2">
+                                                    <div className="h-[2px] w-4 bg-cyan-500/60" />
+                                                    <p className="text-cyan-400 font-mono text-lg tracking-[0.2em] font-bold italic uppercase drop-shadow-[0_0_8px_rgba(34,211,238,0.5)]">
+                                                        {auth.alias}
+                                                    </p>
+                                                </div>
                                             )}
                                         </div>
                                     </div>
 
-                                    {/* Data Stats Card (Floating) */}
-                                    <div className={`absolute -bottom-8 ${idx % 2 === 0 ? '-right-4 md:-right-8' : '-left-4 md:-left-8'} z-20 bg-zinc-900/90 backdrop-blur-md border border-amber-500/30 p-4 min-w-[200px] shadow-2xl skew-x-[-12deg]`}>
-                                        <div className="skew-x-[12deg] space-y-2">
-                                            <div className="flex justify-between items-center border-b border-amber-500/10 pb-1">
-                                                <span className="text-[8px] font-mono text-amber-500/50 uppercase">RAD_LEVEL</span>
-                                                <span className="text-xs font-mono text-amber-500 font-bold">{auth.stats.level}</span>
+                                    {/* Data Visualizer (Cyberdeck style) */}
+                                    <div className={`absolute -bottom-10 md:-bottom-14 ${idx % 2 === 0 ? '-right-6' : '-left-6'} z-20 bg-cyan-950/90 backdrop-blur-xl border border-cyan-400/30 p-5 min-w-[240px] shadow-2xl overflow-hidden`}>
+                                        <div className="absolute top-0 left-0 w-full h-1 bg-cyan-400 animate-pulse" />
+                                        <div className="space-y-3">
+                                            <div className="flex justify-between items-center text-cyan-400/80">
+                                                <span className="text-[9px] font-mono tracking-widest uppercase">RAD_INTENSITY</span>
+                                                <span className="text-xs font-mono font-black">{auth.stats.level}</span>
                                             </div>
-                                            <div className="flex justify-between items-center border-b border-amber-500/10 pb-1">
-                                                <span className="text-[8px] font-mono text-amber-500/50 uppercase">STA_AUTO</span>
-                                                <span className="text-[10px] font-mono text-green-500 font-bold">{auth.stats.status}</span>
+                                            <div className="w-full h-1 bg-cyan-900/50 rounded-full overflow-hidden">
+                                                <div className="h-full bg-cyan-400 w-3/4 animate-[reactor-pulse_2s_infinite]" />
                                             </div>
-                                            <div className="flex justify-between items-center">
-                                                <span className="text-[8px] font-mono text-amber-500/50 uppercase">ACC_AUTH</span>
-                                                <span className="text-[10px] font-mono text-white font-bold">{auth.stats.auth}</span>
+                                            <div className="flex justify-between items-center text-cyan-400/80">
+                                                <span className="text-[9px] font-mono tracking-widest uppercase">CORE_STATUS</span>
+                                                <span className="text-[11px] font-mono text-cyan-100 font-bold flex items-center gap-1">
+                                                    <span className="w-1.5 h-1.5 rounded-full bg-cyan-400 animate-ping" />
+                                                    {auth.stats.status}
+                                                </span>
                                             </div>
                                         </div>
                                     </div>
@@ -242,45 +272,57 @@ const MesaOIEA = () => {
 
                                 {/* Content Section */}
                                 <div className={`${idx % 2 === 1 ? 'lg:order-1' : ''}`}>
-                                    <div className="flex items-center gap-3 mb-6">
-                                        <div className="p-2 bg-amber-500/10 border border-amber-500/30 rounded">
-                                            <Atom className="w-5 h-5 text-amber-500" />
+                                    <div className="flex items-center gap-4 mb-10">
+                                        <div className="p-3 bg-cyan-500/10 border border-cyan-500/40 rounded-sm relative group/icon">
+                                            <div className="absolute inset-0 bg-cyan-400/20 blur-md opacity-0 group-hover/icon:opacity-100 transition-opacity" />
+                                            <Atom className="w-7 h-7 text-cyan-400 relative z-10" />
                                         </div>
-                                        <div className="h-[2px] flex-1 bg-amber-500/20" />
-                                        <span className="text-amber-500/60 font-mono text-xs tracking-widest font-bold uppercase">{auth.role}</span>
+                                        <div className="flex flex-col">
+                                            <span className="text-cyan-400 font-mono text-[10px] tracking-[0.4em] font-black uppercase mb-1">POSICIÓN DIRECTIVA</span>
+                                            <h3 className="text-2xl font-black text-white uppercase tracking-wider">{auth.role}</h3>
+                                        </div>
                                     </div>
 
-                                    {/* Motto */}
-                                    <div className="mb-10 relative">
-                                        <div className="absolute left-0 top-0 w-[2px] h-full bg-amber-500/40" />
-                                        <p className="pl-6 text-xl sm:text-2xl font-serif italic text-amber-200/90 leading-relaxed">
-                                            {auth.motto}
+                                    {/* Motto with Cherenkov blue highlight */}
+                                    <div className="mb-12 relative p-8 bg-cyan-500/5 border-l-4 border-cyan-500/60 backdrop-blur-sm">
+                                        <Zap className="absolute -top-3 -right-3 w-8 h-8 text-cyan-500/30" />
+                                        <p className="text-2xl sm:text-3xl font-serif italic text-cyan-100/90 leading-tight">
+                                            "{auth.motto}"
                                         </p>
                                     </div>
 
-                                    {/* Bio */}
-                                    <div className="space-y-6">
+                                    {/* Bio Text */}
+                                    <div className="space-y-8 relative">
                                         {auth.bio.map((para, pIdx) => (
-                                            <p key={pIdx} className="text-zinc-400 text-sm sm:text-base leading-relaxed text-justify relative group">
-                                                <span className="absolute -left-4 top-2 w-1 h-1 bg-amber-500/20 group-hover:bg-amber-500/60 transition-colors" />
+                                            <p key={pIdx} className="text-zinc-300 text-base sm:text-lg leading-relaxed text-justify relative pl-6 group/bio">
+                                                <span className="absolute left-0 top-3 w-2 h-[1px] bg-cyan-500/40 group-hover/bio:w-4 group-hover/bio:bg-cyan-400 transition-all duration-300" />
                                                 {para}
                                             </p>
                                         ))}
                                     </div>
 
-                                    {/* Industrial Decoration elements */}
-                                    <div className="mt-12 flex flex-wrap gap-4">
-                                        <div className="flex items-center gap-2 border border-amber-500/20 px-3 py-1.5 rounded-sm bg-zinc-900/50 backdrop-blur-sm">
-                                            <Thermometer className="w-4 h-4 text-amber-500/50" />
-                                            <span className="text-[10px] font-mono text-amber-100 uppercase tracking-widest font-bold">CORE_TEMP: OPTIMAL</span>
+                                    {/* Industrial Decoration elements (Blue focused) */}
+                                    <div className="mt-16 grid grid-cols-2 sm:flex sm:flex-wrap gap-4">
+                                        <div className="flex items-center gap-3 border border-cyan-500/20 px-4 py-2.5 rounded-sm bg-[#05080a] group/stat hover:border-cyan-500/50 transition-colors">
+                                            <Thermometer className="w-5 h-5 text-cyan-500/40 group-hover:text-cyan-400" />
+                                            <div>
+                                                <div className="text-[8px] font-mono text-cyan-700 uppercase tracking-widest font-black leading-none mb-1">REACTOR_TEMP</div>
+                                                <div className="text-[11px] font-mono text-cyan-100 uppercase tracking-widest font-bold">450.2°C</div>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-2 border border-amber-500/20 px-3 py-1.5 rounded-sm bg-zinc-900/50 backdrop-blur-sm">
-                                            <Database className="w-4 h-4 text-amber-500/50" />
-                                            <span className="text-[10px] font-mono text-amber-100 uppercase tracking-widest font-bold">ARCHIVE_01: SYNC</span>
+                                        <div className="flex items-center gap-3 border border-cyan-500/20 px-4 py-2.5 rounded-sm bg-[#05080a] group/stat hover:border-cyan-500/50 transition-colors">
+                                            <Database className="w-5 h-5 text-cyan-500/40 group-hover:text-cyan-400" />
+                                            <div>
+                                                <div className="text-[8px] font-mono text-cyan-700 uppercase tracking-widest font-black leading-none mb-1">ARCHIVE_SYNC</div>
+                                                <div className="text-[11px] font-mono text-cyan-100 uppercase tracking-widest font-bold">EN OPERACIÓN</div>
+                                            </div>
                                         </div>
-                                        <div className="flex items-center gap-2 border border-amber-500/20 px-3 py-1.5 rounded-sm bg-zinc-900/50 backdrop-blur-sm">
-                                            <ShieldAlert className="w-4 h-4 text-red-500/50" />
-                                            <span className="text-[10px] font-mono text-red-100 uppercase tracking-widest font-bold">PROTOCOL_Z: IDLE</span>
+                                        <div className="flex items-center gap-3 border border-red-500/20 px-4 py-2.5 rounded-sm bg-[#05080a] group/stat hover:border-red-500/50 transition-colors col-span-2 sm:col-auto">
+                                            <ShieldAlert className="w-5 h-5 text-red-500/40 group-hover:text-red-400 animate-pulse" />
+                                            <div>
+                                                <div className="text-[8px] font-mono text-red-700 uppercase tracking-widest font-black leading-none mb-1">EVAC_READY</div>
+                                                <div className="text-[11px] font-mono text-red-100 uppercase tracking-widest font-bold">ESPERANDO ORDEN</div>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -288,37 +330,48 @@ const MesaOIEA = () => {
 
                             {/* Separator ornament */}
                             {idx < authorities.length - 1 && (
-                                <div className="mt-32 w-full flex items-center gap-4">
-                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent to-amber-500/20" />
-                                    <Radiation className="w-6 h-6 text-amber-500/20" />
-                                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent to-amber-500/20" />
+                                <div className="mt-40 w-full flex items-center gap-10">
+                                    <div className="h-[1px] flex-1 bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
+                                    <div className="flex items-center gap-4">
+                                        <Radiation className="w-8 h-8 text-cyan-500/20" />
+                                        <div className="w-2 h-2 rounded-full bg-cyan-500/40 animate-ping" />
+                                    </div>
+                                    <div className="h-[1px] flex-1 bg-gradient-to-l from-transparent via-cyan-500/30 to-transparent" />
                                 </div>
                             )}
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Footer Section - Industrial Warning */}
+                {/* Footer Section - Industrial Terminal */}
                 <motion.div 
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
-                    className="mt-40 border-t border-amber-500/20 pt-16"
+                    className="mt-56 border-t border-cyan-500/20 pt-20 relative"
                 >
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                        <div className="flex items-center gap-4 group">
-                            <div className="w-16 h-16 border-2 border-amber-500/30 flex items-center justify-center group-hover:bg-amber-500/10 transition-colors">
-                                <AlertTriangle className="w-8 h-8 text-amber-500 animate-pulse" />
+                    <div className="absolute top-0 left-0 w-32 h-1 bg-cyan-400/40" />
+                    
+                    <div className="flex flex-col md:flex-row justify-between items-center gap-12">
+                        <div className="flex items-center gap-6 group max-w-md">
+                            <div className="relative">
+                                <AlertTriangle className="w-14 h-14 text-cyan-400 animate-pulse relative z-10" />
+                                <div className="absolute inset-0 bg-cyan-400/20 blur-xl animate-pulse" />
                             </div>
-                            <div>
-                                <h4 className="font-black text-amber-100 uppercase tracking-widest text-sm">ZONA DE EXCLUSIÓN ACADÉMICA</h4>
-                                <p className="text-[10px] font-mono text-amber-500/60 uppercase tracking-[0.2em] mt-1">SÓLO PERSONAL DE MESA AUTORIZADO</p>
+                            <div className="space-y-1">
+                                <h4 className="font-black text-white uppercase tracking-[0.3em] text-lg leading-tight">ZONA DE EXCLUSIÓN</h4>
+                                <p className="text-[11px] font-mono text-cyan-500/70 uppercase leading-relaxed text-justify">
+                                    COMITÉ OIEA: SE REQUIERE PROTECCIÓN ACADÉMICA NIVEL 4. CUALQUIER FALLO EN EL DEBATE RESULTARÁ EN COLAPSO DEL PROTOCOLO.
+                                </p>
                             </div>
                         </div>
-                        <div className="md:text-right">
-                            <span className="text-[10px] font-mono text-zinc-600 uppercase tracking-widest">DISEÑADO PARA PAVIMUN 2026</span>
-                            <div className="mt-2 text-zinc-800 font-mono text-[8px] uppercase tracking-[0.4em] overflow-hidden whitespace-nowrap">
-                                010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101010101
+
+                        <div className="text-center md:text-right space-y-4">
+                            <div className="inline-block px-4 py-1.5 border border-cyan-500/30 bg-cyan-500/5 font-mono text-cyan-400 text-[10px] tracking-widest uppercase">
+                                STATUS_CHECK: PAVIMUN_PROD_SERVER_OK
                             </div>
+                            <p className="font-mono text-[9px] text-zinc-700 uppercase tracking-[0.6em] whitespace-nowrap">
+                                001 011 110 001 101 010 110 001 011 110
+                            </p>
                         </div>
                     </div>
                 </motion.div>
