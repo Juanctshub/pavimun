@@ -106,7 +106,7 @@ const MesaPrensa = () => {
 
   return (
     <div className="min-h-screen bg-[#050505] text-[#d1d5db] font-sans selection:bg-blue-500/30 overflow-x-hidden">
-      <audio ref={audioRef} src="/audio/prensamusic.mp3" loop preload="auto" />
+      <audio ref={audioRef} src="/audio/fuera2.mp3" loop preload="auto" />
 
       {/* ═══ CYBER BACKGROUND ═══ */}
       <div className="fixed inset-0 z-0 pointer-events-none overflow-hidden">
@@ -116,7 +116,7 @@ const MesaPrensa = () => {
         <motion.div animate={{ x: [0, 50, 0], y: [0, -30, 0] }} transition={{ duration: 15, repeat: Infinity, ease: 'linear' }} className="absolute -top-1/4 -right-1/4 w-[600px] h-[600px] bg-blue-600/5 rounded-full blur-[100px]" />
         
         {/* ═══ SIDE DECORATIONS (VERTICAL) ═══ */}
-        <motion.div style={{ opacity: sideOpacity }} className="hidden xl:flex fixed left-0 top-0 h-screen w-16 border-r border-blue-500/10 flex-col items-center justify-between py-10 z-[35]">
+        <motion.div style={{ opacity: sideOpacity }} className="hidden md:flex fixed left-0 top-0 h-screen w-16 border-r border-blue-500/10 flex-col items-center justify-between py-10 z-[35]">
           <div className="text-[10px] font-mono text-blue-500/40 vertical-text tracking-[0.8em] uppercase">SYSTEM_P01_PRENSA</div>
           <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
           <div className="flex flex-col gap-6 items-center">
@@ -127,7 +127,7 @@ const MesaPrensa = () => {
           <div className="text-[10px] font-mono text-blue-500/40 vertical-text tracking-[0.8em] uppercase">LIVE_UPLINK_STABLE</div>
         </motion.div>
 
-        <motion.div style={{ opacity: sideOpacity }} className="hidden xl:flex fixed right-0 top-0 h-screen w-16 border-l border-blue-500/10 flex-col items-center justify-between py-10 z-[35]">
+        <motion.div style={{ opacity: sideOpacity }} className="hidden md:flex fixed right-0 top-0 h-screen w-16 border-l border-blue-500/10 flex-col items-center justify-between py-10 z-[35]">
           <div className="text-[10px] font-mono text-blue-500/40 vertical-text tracking-[0.8em] uppercase">TRUTH_MINISTRY_SYNC</div>
           <div className="w-[1px] h-32 bg-gradient-to-b from-transparent via-blue-500/20 to-transparent" />
           <div className="space-y-4">
