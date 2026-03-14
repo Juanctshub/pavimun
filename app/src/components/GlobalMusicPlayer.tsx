@@ -8,7 +8,7 @@ const COMMITTEE_ROUTES = [
   '/crisis', '/crisis/mesa', 
   '/cia', '/cia/mesa', 
   '/consejo-seguridad', '/consejo-seguridad/mesa', 
-  '/oiea', '/prensa', '/prensa/mesa', 
+  '/oiea', '/oiea/mesa', '/prensa', '/prensa/mesa', 
   '/banco'
 ];
 

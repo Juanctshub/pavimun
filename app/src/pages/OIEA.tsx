@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Radiation, FileText, Globe, ShieldAlert, Siren, AlertTriangle, Users } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 const OIEA = () => {
   const [loading, setLoading] = useState(true);
@@ -430,8 +431,8 @@ const OIEA = () => {
                   </div>
                 </a>
 
-                <button
-                  onClick={() => alert("Próximamente: Conoce a tu mesa")}
+                <Link
+                  to="/oiea/mesa"
                   className="group block relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-500/30 p-1 transition-all hover:shadow-[0_0_30px_rgba(0,100,255,0.2)] hover:border-blue-400/50 text-left w-full h-full"
                 >
                   <div className="relative bg-[#050a10] rounded-lg p-6 flex items-center justify-between group-hover:bg-[#0a1525] transition-colors h-full">
@@ -448,7 +449,7 @@ const OIEA = () => {
                       <Users className="w-6 h-6" />
                     </div>
                   </div>
-                </button>
+                </Link>
               </div>
 
             </div>
