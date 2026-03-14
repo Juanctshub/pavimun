@@ -30,6 +30,7 @@ const MesaInvestigacion = lazy(() => import('./pages/MesaInvestigacion'));
 const MesaCorte = lazy(() => import('./pages/MesaCorte'));
 const MesaCrisis = lazy(() => import('./pages/MesaCrisis'));
 const MesaPrensa = lazy(() => import('./pages/MesaPrensa'));
+const MesaCIA = lazy(() => import('./pages/MesaCIA'));
 
 
 
@@ -85,6 +86,7 @@ function AppContent() {
               <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
               <Route path="/crisis/mesa" element={<PageTransition><MesaCrisis /></PageTransition>} />
               <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
+              <Route path="/cia/mesa" element={<PageTransition><MesaCIA /></PageTransition>} />
               <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
               <Route path="/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
               <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
