@@ -82,7 +82,7 @@ const MesaInvestigacion = () => {
     },
     {
       role: 'Vice-Presidente de Mesa',
-      name: 'Maurizio Belloto',
+      name: 'Maurizio Bellotto',
       alias: 'Mau',
       image: '/images/mesas/investigacion/Mauricio.jpeg',
       motto: '"La serenidad es el resultado de aceptar las cosas que no puedes cambiar y actuar con valor sobre las que sí puedes." — Marco Aurelio',

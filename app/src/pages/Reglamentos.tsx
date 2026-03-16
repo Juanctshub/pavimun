@@ -30,7 +30,7 @@ const reglamentos: Reglamento[] = [
     descripcion: 'Guías académicas, background papers y material de preparación por comité.',
     icono: <BookOpen className="w-8 h-8" />,
     color: 'sky',
-    link: 'https://drive.google.com/drive/folders/17vttxxXu2Z2F8j9SxUh7izk2drWeBFph',
+    link: 'https://drive.google.com/drive/folders/1-kv0yNleFmUEuqWakJBeh_M-PSdZhwDp',
   },
 ];
 
