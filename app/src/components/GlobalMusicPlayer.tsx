@@ -8,8 +8,7 @@ const COMMITTEE_ROUTES = [
   '/crisis', '/crisis/mesa', 
   '/cia', '/cia/mesa', 
   '/consejo-seguridad', '/consejo-seguridad/mesa', 
-  '/oiea', '/oiea/mesa', '/prensa', '/prensa/mesa', 
-  '/banco'
+  '/oiea', '/oiea/mesa', '/prensa', '/prensa/mesa'
 ];
 
 const GlobalMusicPlayer = () => {

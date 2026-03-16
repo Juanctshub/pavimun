@@ -24,7 +24,6 @@ const ConsejoSeguridad = lazy(() => import('./pages/ConsejoSeguridad'));
 const OIEA = lazy(() => import('./pages/OIEA'));
 const Prensa = lazy(() => import('./pages/Prensa'));
 const MinistryOfTruth = lazy(() => import('./pages/MinistryOfTruth'));
-const Banco = lazy(() => import('./pages/Banco'));
 const MesaConsejo = lazy(() => import('./pages/MesaConsejo'));
 const MesaInvestigacion = lazy(() => import('./pages/MesaInvestigacion'));
 const MesaCorte = lazy(() => import('./pages/MesaCorte'));
@@ -48,7 +47,7 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa', '/banco'];
+  const transparentNavPaths = ['/crisis', '/cia', '/consejo-seguridad', '/investigacion', '/oiea', '/prensa'];
   const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
@@ -94,7 +93,6 @@ function AppContent() {
               <Route path="/oiea/mesa" element={<PageTransition><MesaOIEA /></PageTransition>} />
               <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
               <Route path="/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
-              <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
               <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
             </Routes>
           </AnimatePresence>
