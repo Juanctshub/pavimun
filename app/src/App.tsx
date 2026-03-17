@@ -15,6 +15,7 @@ const StaffOrganizador = lazy(() => import('./pages/StaffOrganizador'));
 const Matrices = lazy(() => import('./pages/Matrices'));
 const Inscripciones = lazy(() => import('./pages/Inscripciones'));
 const Reglamentos = lazy(() => import('./pages/Reglamentos'));
+const Baremos = lazy(() => import('./pages/Baremos'));
 const Galeria = lazy(() => import('./pages/Galeria'));
 const Corte = lazy(() => import('./pages/Corte'));
 const Investigacion = lazy(() => import('./pages/Investigacion'));
@@ -78,6 +79,7 @@ function AppContent() {
               <Route path="/matrices" element={<PageTransition><Matrices /></PageTransition>} />
               <Route path="/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
               <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
+              <Route path="/baremos" element={<PageTransition><Baremos /></PageTransition>} />
               <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
               <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
               <Route path="/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />

@@ -50,6 +50,7 @@ const Navigation = () => {
     { path: '/matrices', label: 'Matrices' },
     { path: '/inscripciones', label: 'Inscripciones' },
     { path: '/reglamentos', label: 'Reglamentos' },
+    { path: '/baremos', label: 'Baremos' },
     { path: '/galeria', label: 'Galería' },
   ];
 
