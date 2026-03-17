@@ -217,9 +217,14 @@ const MesaCIA = () => {
             </div>
           </div>
           
-          <div className="hidden md:flex items-center gap-8">
-            <div className="text-[10px] tracking-[0.2em] font-bold text-blue-900">PAVIMUN // MK-ULTRA // 2026</div>
-            <img src="/images/colegio-logo.jpg" alt="Logo" className="h-8 opacity-10 filter grayscale brightness-200" />
+          <div className="hidden md:flex flex-col items-end gap-2">
+            <div className="flex items-center gap-8">
+              <div className="text-[10px] tracking-[0.2em] font-bold text-blue-900">PAVIMUN // MK-ULTRA // 2026</div>
+              <img src="/images/colegio-logo.jpg" alt="Logo" className="h-8 opacity-10 filter grayscale brightness-200" />
+            </div>
+            <p className="text-[7px] font-bold text-blue-950 uppercase tracking-[0.3em]">
+              Creador por Samuel Agreda (@fotagreda)
+            </p>
           </div>
         </footer>
 

@@ -114,7 +114,7 @@ const Baremos = () => {
         </div>
 
         {/* School Footer Ornament */}
-        <div className="mt-24 reveal opacity-50 flex flex-col items-center gap-6">
+        <div className="mt-24 reveal opacity-50 flex flex-col items-center gap-6 relative">
           <div className="h-px w-32 bg-gradient-to-r from-transparent via-gray-300 to-transparent" />
           <img
             src="/images/colegio-logo.jpg"
@@ -122,6 +122,11 @@ const Baremos = () => {
             className="h-14 w-auto grayscale opacity-40"
           />
           <p className="text-[10px] font-mono text-gray-400 tracking-[0.5em] uppercase">PAVIMUN · EXCELLENCE SYNCED</p>
+          
+          {/* Creator Credit */}
+          <div className="absolute bottom-0 right-0 py-4 hidden md:block">
+            <p className="text-[8px] font-bold text-gray-400 uppercase tracking-widest opacity-50">Creador por Samuel Agreda (@fotagreda)</p>
+          </div>
         </div>
 
       </div>

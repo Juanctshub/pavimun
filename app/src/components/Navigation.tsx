@@ -265,6 +265,9 @@ const Navigation = () => {
               <p className="text-gray-300 text-[10px] mt-1 tracking-[0.15em] uppercase">
                 PAVIMUN · I Edición
               </p>
+              <p className={`text-[8px] font-bold uppercase tracking-widest mt-6 ${isDarkPage ? 'text-white/20' : 'text-[#1a237e]/20'}`}>
+                Creador por Samuel Agreda (@fotagreda)
+              </p>
             </div>
           </div>
         </div>

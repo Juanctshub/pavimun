@@ -461,7 +461,7 @@ const Home = () => {
       </section>
 
       {/* ====== SCHOOL FOOTER ====== */}
-      <section className="pavi-container pb-20">
+      <section className="pavi-container pb-20 relative">
         <div className="reveal flex flex-col items-center justify-center gap-5">
           <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#1a237e]/15 to-transparent" />
           <img
@@ -475,6 +475,11 @@ const Home = () => {
           <p className="text-gray-300 text-xs text-center tracking-[0.15em] uppercase">
             Bondad · Ciencia · Paz
           </p>
+        </div>
+        
+        {/* Creator Credit */}
+        <div className="absolute bottom-4 right-6 text-[8px] font-bold text-gray-300 uppercase tracking-[0.2em] hidden md:block">
+          Creador por Samuel Agreda (@fotagreda)
         </div>
       </section>
     </div>
