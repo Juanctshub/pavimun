@@ -3,12 +3,12 @@ import { useLocation } from 'react-router-dom';
 import { Volume2, VolumeX } from 'lucide-react';
 
 const COMMITTEE_ROUTES = [
-  '/corte', '/corte/mesa', 
-  '/investigacion', '/investigacion/mesa', 
-  '/crisis', '/crisis/mesa', 
-  '/cia', '/cia/mesa', 
-  '/consejo-seguridad', '/consejo-seguridad/mesa', 
-  '/oiea', '/oiea/mesa', '/prensa', '/prensa/mesa'
+  '/i-edicion/corte', '/i-edicion/corte/mesa', 
+  '/i-edicion/investigacion', '/i-edicion/investigacion/mesa', 
+  '/i-edicion/crisis', '/i-edicion/crisis/mesa', 
+  '/i-edicion/cia', '/i-edicion/cia/mesa', 
+  '/i-edicion/consejo-seguridad', '/i-edicion/consejo-seguridad/mesa', 
+  '/i-edicion/oiea', '/i-edicion/oiea/mesa', '/i-edicion/prensa', '/i-edicion/prensa/mesa'
 ];
 
 const GlobalMusicPlayer = () => {
