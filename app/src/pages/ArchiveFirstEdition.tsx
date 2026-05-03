@@ -1,6 +1,5 @@
-import { motion } from 'framer-motion';
 import { 
-  Users, BookOpen, Clipboard, UserPlus, FileText, Image as ImageIcon, 
+  Users, BookOpen, Clipboard, UserPlus, Image as ImageIcon, 
   Gavel, Search, AlertTriangle, Shield, Radio, Radiation, Newspaper,
   ChevronRight, Award, History
 } from 'lucide-react';
@@ -58,7 +57,7 @@ const ArchiveFirstEdition = () => {
             </div>
             
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4">
-              {infoItems.map((item, idx) => (
+              {infoItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
@@ -85,7 +84,7 @@ const ArchiveFirstEdition = () => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              {committeeItems.map((item, idx) => (
+              {committeeItems.map((item) => (
                 <Link
                   key={item.path}
                   to={item.path}
