@@ -315,7 +315,14 @@ const Corte = () => {
             <span className="hover:text-amber-400 cursor-pointer transition-colors">AGENCIES</span>
             <span className="hover:text-amber-400 cursor-pointer transition-colors">RESOURCES</span>
             <span className="hover:text-amber-400 cursor-pointer transition-colors">NEWS</span>
-            <span className="hover:text-amber-400 cursor-pointer transition-colors">CAREERS</span>
+            <a 
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="px-3 py-1 bg-amber-500 text-[#002244] rounded-sm hover:bg-amber-400 transition-all flex items-center gap-2 text-[10px] font-bold"
+            >
+              REGLAMENTO
+            </a>
             <div className="h-6 w-[1px] bg-white/30 mx-2" />
             <Search className="w-5 h-5 cursor-pointer hover:text-amber-400 transition-colors" />
           </div>
@@ -567,7 +574,7 @@ const Corte = () => {
                 <Download className="w-5 h-5 text-gray-300 group-hover:text-[#005ea2] transition-colors self-center flex-shrink-0" />
               </a>
 
-              <Link to="/corte/mesa"
+              <Link to="/i-edicion/corte/mesa"
                 className="flex items-start gap-4 group bg-white p-4 border border-gray-300 shadow-sm hover:shadow-lg hover:border-[#002244] transition-all rounded w-full text-left">
                 <div className="bg-red-50 p-2 rounded group-hover:bg-red-100 transition-colors">
                   <Users className="w-8 h-8 text-[#cf102d] flex-shrink-0" />

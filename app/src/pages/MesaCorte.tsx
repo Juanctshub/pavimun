@@ -111,10 +111,24 @@ const MesaCorte = () => {
         <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='30' y='35' text-anchor='middle' fill='white' font-size='14'%3E★%3C/text%3E%3C/svg%3E")`, backgroundSize: '60px 60px' }} />
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-32 sm:pt-40 pb-14 sm:pb-20">
-          <Link to="/corte" className="inline-flex items-center gap-2 text-white/40 hover:text-white font-sans text-xs tracking-wider mb-10 transition-colors uppercase group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Regresar a Corte
-          </Link>
+          <div className="flex items-center justify-between mb-10">
+            <Link to="/i-edicion/corte" className="inline-flex items-center gap-2 text-white/40 hover:text-white font-sans text-xs tracking-wider transition-colors uppercase group">
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              Regresar a Corte
+            </Link>
+            
+            <motion.a 
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-[#bf9b30] to-[#8B6914] text-[#002244] font-sans text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-lg shadow-black/20 border border-[#ffcf40]/30"
+            >
+              <FileText className="w-3 h-3" />
+              Reglamento
+            </motion.a>
+          </div>
 
           <div className="flex flex-col md:flex-row md:items-center gap-8">
             {/* Official seal */}

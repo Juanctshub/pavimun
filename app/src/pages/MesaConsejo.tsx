@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, ShieldAlert, Award, Crosshair, Siren, AlertTriangle, Radio, Volume2, VolumeX } from 'lucide-react';
+import { ArrowLeft, ShieldAlert, Award, Crosshair, Siren, AlertTriangle, Radio, Volume2, VolumeX, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const MesaConsejo = () => {
@@ -126,13 +126,27 @@ const MesaConsejo = () => {
           transition={{ duration: 1.2 }}
           className="mb-16 md:mb-20"
         >
-          <Link
-            to="/consejo-seguridad"
-            className="inline-flex items-center gap-2 text-red-500/60 hover:text-red-400 font-mono text-xs tracking-[0.3em] mb-8 transition-colors uppercase group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Retornar al Comité
-          </Link>
+          <div className="flex items-center justify-between mb-8">
+            <Link
+              to="/i-edicion/consejo-seguridad"
+              className="inline-flex items-center gap-2 text-red-500/60 hover:text-red-400 font-mono text-xs tracking-[0.3em] transition-colors uppercase group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              Retornar al Comité
+            </Link>
+
+            <motion.a
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(239, 68, 68, 0.4)" }}
+              whileTap={{ scale: 0.95 }}
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 border border-red-600 bg-red-600/10 text-red-500 font-mono text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(239,68,68,0.2)] group/reg"
+            >
+              <FileText size={18} className="group-hover/reg:animate-pulse" />
+              <span>REGLAMENTO_OFICIAL</span>
+            </motion.a>
+          </div>
 
           {/* Classification bar */}
           <motion.div

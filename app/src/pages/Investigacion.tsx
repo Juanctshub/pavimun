@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { X, AlertTriangle, FileText, Download, Crown, Volume2, VolumeX, Users } from 'lucide-react';
 import { useScrollReveal } from '../hooks/useScrollReveal';
@@ -149,13 +150,28 @@ const Investigacion = () => {
           </p>
 
           {/* London Police Logo */}
-          <div className="mb-12 opacity-80 hover:opacity-100 transition-opacity duration-300">
+          <div className="mb-12 flex flex-col items-center opacity-80 hover:opacity-100 transition-opacity duration-300">
             <img
               src="/images/policia-londres-logo.png"
               alt="Policía Metropolitana de Londres"
               className="h-16 md:h-20 w-auto object-contain drop-shadow-lg mx-auto grayscale hover:grayscale-0 transition-all duration-500"
             />
             <p className="text-[10px] text-white/40 font-mono tracking-widest mt-2 uppercase">Official Investigation</p>
+          </div>
+
+          {/* Prominent Themed Button */}
+          <div className="flex justify-center">
+            <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(255, 215, 0, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-3 bg-[#ffd700] text-black font-serif italic text-sm md:text-base font-bold tracking-widest uppercase rounded-sm group/reg shadow-xl"
+            >
+                <Download size={20} className="group-hover/reg:animate-bounce" />
+                <span>Decreto Real: Reglamento</span>
+            </motion.a>
           </div>
 
         </div>
@@ -217,7 +233,7 @@ const Investigacion = () => {
             <div className="grid md:grid-cols-3 gap-8">
               {/* Mesa */}
               <Link
-                to="/investigacion/mesa"
+                to="/i-edicion/investigacion/mesa"
                 className="reveal group flex items-start p-8 bg-white/[0.03] border border-white/10 hover:border-[#ffd700]/50 transition-all duration-500 hover:-translate-y-1 text-left w-full"
               >
                 <Users className="w-8 h-8 text-[#ffd700] opacity-70 group-hover:opacity-100 mr-6 mt-1 flex-shrink-0" />

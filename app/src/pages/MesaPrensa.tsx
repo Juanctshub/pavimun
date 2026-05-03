@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { ArrowLeft, Newspaper, Mic2, Globe, Volume2, VolumeX, Zap } from 'lucide-react';
+import { ArrowLeft, Newspaper, Mic2, Globe, Volume2, VolumeX, Zap, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 /* ═══════════════════════════════════════════════════════════
@@ -159,10 +159,24 @@ const MesaPrensa = () => {
       </div>
 
       <nav className="relative z-10 max-w-7xl mx-auto px-6 pt-32 pb-12">
-        <Link to="/prensa" className="inline-flex items-center gap-2 text-blue-500/60 hover:text-blue-400 font-mono text-xs tracking-widest transition-all group">
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-          TERMINAL_PRENSA
-        </Link>
+        <div className="flex items-center justify-between">
+          <Link to="/i-edicion/prensa" className="inline-flex items-center gap-2 text-blue-500/60 hover:text-blue-400 font-mono text-xs tracking-widest transition-all group">
+            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+            TERMINAL_PRENSA
+          </Link>
+
+          <motion.a
+            whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(59, 130, 246, 0.4)" }}
+            whileTap={{ scale: 0.95 }}
+            href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-4 py-2 border border-blue-500/30 bg-blue-500/10 text-blue-400 font-mono text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm shadow-[0_0_15px_rgba(59,130,246,0.1)] group/reg"
+          >
+            <FileText size={18} className="group-hover/reg:animate-pulse" />
+            <span>DOWNLOAD_REGS_V.1</span>
+          </motion.a>
+        </div>
       </nav>
 
       {/* ═══ HERO SECTION ═══ */}

@@ -32,6 +32,7 @@ const MesaCrisis = lazy(() => import('./pages/MesaCrisis'));
 const MesaPrensa = lazy(() => import('./pages/MesaPrensa'));
 const MesaCIA = lazy(() => import('./pages/MesaCIA'));
 const MesaOIEA = lazy(() => import('./pages/MesaOIEA'));
+const ArchiveFirstEdition = lazy(() => import('./pages/ArchiveFirstEdition'));
 
 
 
@@ -74,27 +75,28 @@ function AppContent() {
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
               <Route path="/" element={<PageTransition><Home /></PageTransition>} />
-              <Route path="/que-es-mun" element={<PageTransition><QueEsMUN /></PageTransition>} />
-              <Route path="/staff" element={<PageTransition><StaffOrganizador /></PageTransition>} />
-              <Route path="/matrices" element={<PageTransition><Matrices /></PageTransition>} />
-              <Route path="/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
-              <Route path="/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
-              <Route path="/baremos" element={<PageTransition><Baremos /></PageTransition>} />
-              <Route path="/galeria" element={<PageTransition><Galeria /></PageTransition>} />
-              <Route path="/corte" element={<PageTransition><Corte /></PageTransition>} />
-              <Route path="/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />
-              <Route path="/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
-              <Route path="/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
-              <Route path="/crisis" element={<PageTransition><Crisis /></PageTransition>} />
-              <Route path="/crisis/mesa" element={<PageTransition><MesaCrisis /></PageTransition>} />
-              <Route path="/cia" element={<PageTransition><CIA /></PageTransition>} />
-              <Route path="/cia/mesa" element={<PageTransition><MesaCIA /></PageTransition>} />
-              <Route path="/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
-              <Route path="/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
-              <Route path="/oiea" element={<PageTransition><OIEA /></PageTransition>} />
-              <Route path="/oiea/mesa" element={<PageTransition><MesaOIEA /></PageTransition>} />
-              <Route path="/prensa" element={<PageTransition><Prensa /></PageTransition>} />
-              <Route path="/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
+              <Route path="/i-edicion" element={<PageTransition><ArchiveFirstEdition /></PageTransition>} />
+              <Route path="/i-edicion/que-es-mun" element={<PageTransition><QueEsMUN /></PageTransition>} />
+              <Route path="/i-edicion/staff" element={<PageTransition><StaffOrganizador /></PageTransition>} />
+              <Route path="/i-edicion/matrices" element={<PageTransition><Matrices /></PageTransition>} />
+              <Route path="/i-edicion/inscripciones" element={<PageTransition><Inscripciones /></PageTransition>} />
+              <Route path="/i-edicion/reglamentos" element={<PageTransition><Reglamentos /></PageTransition>} />
+              <Route path="/i-edicion/baremos" element={<PageTransition><Baremos /></PageTransition>} />
+              <Route path="/i-edicion/galeria" element={<PageTransition><Galeria /></PageTransition>} />
+              <Route path="/i-edicion/corte" element={<PageTransition><Corte /></PageTransition>} />
+              <Route path="/i-edicion/corte/mesa" element={<PageTransition><MesaCorte /></PageTransition>} />
+              <Route path="/i-edicion/investigacion" element={<PageTransition><Investigacion /></PageTransition>} />
+              <Route path="/i-edicion/investigacion/mesa" element={<PageTransition><MesaInvestigacion /></PageTransition>} />
+              <Route path="/i-edicion/crisis" element={<PageTransition><Crisis /></PageTransition>} />
+              <Route path="/i-edicion/crisis/mesa" element={<PageTransition><MesaCrisis /></PageTransition>} />
+              <Route path="/i-edicion/cia" element={<PageTransition><CIA /></PageTransition>} />
+              <Route path="/i-edicion/cia/mesa" element={<PageTransition><MesaCIA /></PageTransition>} />
+              <Route path="/i-edicion/consejo-seguridad" element={<PageTransition><ConsejoSeguridad /></PageTransition>} />
+              <Route path="/i-edicion/consejo-seguridad/mesa" element={<PageTransition><MesaConsejo /></PageTransition>} />
+              <Route path="/i-edicion/oiea" element={<PageTransition><OIEA /></PageTransition>} />
+              <Route path="/i-edicion/oiea/mesa" element={<PageTransition><MesaOIEA /></PageTransition>} />
+              <Route path="/i-edicion/prensa" element={<PageTransition><Prensa /></PageTransition>} />
+              <Route path="/i-edicion/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
               <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
             </Routes>
           </AnimatePresence>

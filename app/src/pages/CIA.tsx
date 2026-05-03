@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Shield, Lock, AlertTriangle, Fingerprint, FileText, ChevronDown, Volume2, VolumeX, Eye, Brain, Users } from 'lucide-react';
 
@@ -187,10 +188,25 @@ const CIA = () => {
             MK<span className="text-red-600">-</span>ULTRA
           </h1>
 
-          <div className="max-w-2xl mx-auto border-y border-white/10 py-4 bg-black/40 backdrop-blur-sm">
+          <div className="max-w-2xl mx-auto border-y border-white/10 py-4 bg-black/40 backdrop-blur-sm mb-12">
             <h2 className="text-sm md:text-lg text-blue-200 tracking-[0.15em] font-mono leading-relaxed">
               PROTOCOLOS DE MODIFICACIÓN CONDUCTUAL
             </h2>
+          </div>
+
+          {/* Prominent Themed Button */}
+          <div className="flex justify-center">
+            <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(59, 130, 246, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-10 py-4 bg-blue-900/10 border border-blue-500 text-blue-400 font-mono text-sm md:text-base font-black tracking-[0.4em] uppercase rounded-sm group/reg shadow-[0_0_20px_rgba(59,130,246,0.2)]"
+            >
+                <Lock size={20} className="group-hover/reg:text-red-500 transition-colors" />
+                <span>REGLAMENTO_MKULTRA</span>
+            </motion.a>
           </div>
         </div>
 
@@ -335,7 +351,7 @@ const CIA = () => {
 
               {/* Mesa */}
               <Link
-                to="/cia/mesa"
+                to="/i-edicion/cia/mesa"
                 className="group flex flex-col items-center justify-center p-8 bg-[#0f0f20]/80 backdrop-blur-md hover:bg-[#15152a] border border-blue-900/30 hover:border-blue-500/50 rounded-lg transition-all duration-300 w-full h-full"
               >
                 <div className="w-12 h-12 bg-blue-900/20 rounded-full flex items-center justify-center mb-4 text-blue-400 group-hover:text-blue-300 transition-colors">

@@ -1,4 +1,5 @@
-import { FileText, BookOpen, Shirt, ExternalLink } from 'lucide-react';
+import { FileText, BookOpen, Shirt, ExternalLink, Award, ChevronRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 interface Reglamento {
@@ -107,7 +108,34 @@ const Reglamentos = () => {
             📅 Disponible desde el 9 de Marzo
           </span>
         </div>
+      </div>
 
+      {/* ====== BAREMOS SECTION ====== */}
+      <div className="bg-gray-50/50 border-t border-gray-100 py-20 mt-10">
+        <div className="pavi-container max-w-6xl mx-auto">
+          <div className="reveal flex flex-col md:flex-row items-center gap-10 md:gap-16 p-10 md:p-14 bg-white rounded-[3rem] border border-gray-100 shadow-xl relative overflow-hidden">
+            {/* Decoration */}
+            <div className="absolute top-0 right-0 w-64 h-64 bg-amber-50 rounded-full -mr-32 -mt-32 blur-3xl opacity-60" />
+            
+            <div className="relative w-24 h-24 md:w-32 md:h-32 bg-amber-50 rounded-3xl flex items-center justify-center flex-shrink-0 group-hover:scale-110 transition-transform">
+              <Award className="w-12 h-12 md:w-16 md:h-16 text-amber-500" />
+            </div>
+
+            <div className="flex-grow text-center md:text-left">
+              <h2 className="text-3xl md:text-4xl font-black text-gray-900 mb-4">Baremos de Evaluación</h2>
+              <p className="text-gray-600 font-medium leading-relaxed max-w-2xl mb-8">
+                Conoce los criterios y escalas de puntuación que los jueces utilizarán para evaluar el desempeño académico y diplomático de cada delegado durante el modelo.
+              </p>
+              <Link
+                to="/i-edicion/baremos"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-gray-900 text-white rounded-full font-bold hover:bg-amber-600 transition-colors group"
+              >
+                Acceder a Baremos
+                <ChevronRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+              </Link>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

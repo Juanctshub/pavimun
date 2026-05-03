@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
-import { ArrowLeft, Star, Award, Landmark, Flag, BookOpen, Shield, Sword, Volume2, VolumeX, Crown, Quote } from 'lucide-react';
+import { ArrowLeft, Star, Award, Landmark, Flag, BookOpen, Shield, Sword, Volume2, VolumeX, Crown, Quote, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 /* ═══════════════════════════════════════════════════════════
@@ -152,10 +152,30 @@ const MesaCrisis = () => {
       <div className="relative z-10 bg-gradient-to-b from-[#1a1510] via-[#0e0c08] to-transparent">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 pt-28 sm:pt-32 lg:pt-36 pb-16 sm:pb-20">
           
-          <Link to="/crisis" className="inline-flex items-center gap-2 text-[#c9a980]/50 hover:text-[#c9a980] font-mono text-xs tracking-wider mb-10 transition-colors uppercase group">
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Regresar al Comité
-          </Link>
+          <div className="flex items-center justify-between mb-10">
+            <Link to="/i-edicion/crisis" className="inline-flex items-center gap-2 text-[#c9a980]/50 hover:text-[#c9a980] font-mono text-xs tracking-wider transition-colors uppercase group">
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              Regresar al Comité
+            </Link>
+
+            <motion.a
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#FFD700] text-black font-mono text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm border border-[#c9a980]/50 shadow-[0_0_20px_rgba(255,215,0,0.1)] relative group/reg"
+            >
+              {/* Internal tricolor line */}
+              <div className="absolute top-0 left-0 right-0 h-[2px] flex">
+                <div className="flex-1 bg-[#FFCC00]" />
+                <div className="flex-1 bg-[#003DA5]" />
+                <div className="flex-1 bg-[#CF142B]" />
+              </div>
+              <FileText className="w-3 h-3 mt-1" />
+              <span className="mt-1">Reglamento</span>
+            </motion.a>
+          </div>
 
           {/* Venezuelan tricolor bar */}
           <TricolorBar className="mb-8 max-w-sm mx-auto sm:mx-0" />

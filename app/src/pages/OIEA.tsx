@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { Radiation, FileText, Globe, ShieldAlert, Siren, AlertTriangle, Users } from 'lucide-react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 
 const OIEA = () => {
@@ -327,13 +328,29 @@ const OIEA = () => {
         </div>
 
         {/* Crisis Summary */}
-        <div className="max-w-4xl mx-auto bg-[#0a0f14]/70 backdrop-blur-md border-l-4 border-yellow-500 p-8 rounded-r-lg shadow-2xl relative overflow-hidden group hover:bg-[#0a0f14]/90 transition-colors">
+        <div className="max-w-4xl mx-auto bg-[#0a0f14]/70 backdrop-blur-md border-l-4 border-yellow-500 p-8 rounded-r-lg shadow-2xl relative overflow-hidden group hover:bg-[#0a0f14]/90 transition-colors mb-12">
           <div className="absolute -right-10 -top-10 opacity-5 group-hover:opacity-10 transition-opacity duration-700">
             <Radiation className="w-64 h-64 text-yellow-500" />
           </div>
           <p className="text-lg md:text-2xl text-gray-300 font-light leading-relaxed text-justify relative z-10 font-serif italic">
             "La madrugada del 26 de abril de 1986 marcó un punto de inflexión. La explosión del reactor 4 no fue solo un accidente industrial; fue la liberación descontrolada de una <span className="text-yellow-400 font-semibold bg-yellow-900/20 px-1">nube radiactiva que ignoró fronteras</span>, desafiando la gobernanza global y la ética de la energía atómica."
           </p>
+        </div>
+
+        {/* Prominent Themed Button */}
+        <div className="flex justify-center">
+            <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(56, 189, 248, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-4 px-10 py-4 bg-blue-900/20 border-2 border-blue-500 text-blue-300 font-black text-sm md:text-xl tracking-[0.4em] uppercase rounded shadow-[0_0_30px_rgba(30,58,138,0.3)] relative group/reg overflow-hidden"
+            >
+                <div className="absolute inset-0 bg-blue-500/10 translate-y-full group-hover/reg:translate-y-0 transition-transform duration-300"></div>
+                <Radiation size={24} className="group-hover/reg:animate-spin relative z-10" />
+                <span className="relative z-10">SISTEMA: REGLAMENTO</span>
+            </motion.a>
         </div>
 
       </section>
@@ -432,7 +449,7 @@ const OIEA = () => {
                 </a>
 
                 <Link
-                  to="/oiea/mesa"
+                  to="/i-edicion/oiea/mesa"
                   className="group block relative overflow-hidden rounded-xl bg-gradient-to-r from-blue-900/40 to-cyan-900/40 border border-blue-500/30 p-1 transition-all hover:shadow-[0_0_30px_rgba(0,100,255,0.2)] hover:border-blue-400/50 text-left w-full h-full"
                 >
                   <div className="relative bg-[#050a10] rounded-lg p-6 flex items-center justify-between group-hover:bg-[#0a1525] transition-colors h-full">

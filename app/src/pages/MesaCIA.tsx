@@ -138,8 +138,19 @@ const MesaCIA = () => {
                 {isMuted ? <VolumeX size={18} /> : <Volume2 size={18} />}
                 <span className="text-xs font-bold">{isMuted ? "UNMUTE" : "MUTE"} AUDIO</span>
               </button>
+              <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(220, 38, 38, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-4 py-2 border border-red-600 bg-red-600/10 text-red-500 font-bold text-xs rounded-sm shadow-[0_0_15px_rgba(220,38,38,0.2)] group/reg"
+              >
+                <FileText size={18} className="group-hover/reg:animate-pulse" />
+                <span>REGLAMENTO_INTEL</span>
+              </motion.a>
               <Link 
-                to="/cia"
+                to="/i-edicion/cia"
                 className="flex items-center gap-2 px-4 py-2 bg-red-600 text-white font-bold text-xs hover:bg-red-700 transition-colors rounded-sm shadow-[0_0_15px_rgba(220,38,38,0.3)]"
               >
                 BACK_TO_INTEL

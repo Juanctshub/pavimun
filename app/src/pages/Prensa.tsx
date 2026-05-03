@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Volume2, VolumeX, Globe, Newspaper, FileText, Users } from 'lucide-react';
 
@@ -302,12 +303,27 @@ const Prensa = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-r from-blue-900/20 to-black/40 backdrop-blur-md border border-blue-500/20 rounded-2xl p-10 max-w-4xl mx-auto text-center translate-z-20 shadow-[0_0_30px_rgba(30,58,138,0.2)]">
+            <div className="bg-gradient-to-r from-blue-900/20 to-black/40 backdrop-blur-md border border-blue-500/20 rounded-2xl p-10 max-w-4xl mx-auto text-center translate-z-20 shadow-[0_0_30px_rgba(30,58,138,0.2)] mb-12">
               <div className="text-5xl mb-6">📺</div>
               <h3 className="text-3xl font-black text-white mb-6 uppercase tracking-wider">Agencia Mundial de Prensa</h3>
               <p className="text-gray-300 text-lg leading-relaxed max-w-2xl mx-auto">
                 Los corresponsales de prensa tienen la misión de documentar todos los eventos del modelo, entrevistar a delegados y publicar artículos que informen sobre las decisiones tomadas en cada comité.
               </p>
+            </div>
+
+            {/* Prominent Themed Button */}
+            <div className="flex justify-center translate-z-30">
+                <motion.a
+                    whileHover={{ scale: 1.05, boxShadow: "0 0 40px rgba(59, 130, 246, 0.4)" }}
+                    whileTap={{ scale: 0.95 }}
+                    href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-4 px-10 py-5 bg-white text-blue-900 font-black text-sm md:text-xl tracking-[0.3em] uppercase rounded-sm shadow-2xl relative group/reg overflow-hidden border-4 border-blue-600"
+                >
+                    <Newspaper size={24} className="group-hover/reg:rotate-12 transition-transform" />
+                    <span>Editorial: Reglamento</span>
+                </motion.a>
             </div>
           </div>
 
@@ -327,7 +343,7 @@ const Prensa = () => {
               </div>
             </a>
             
-            <Link to="/prensa/mesa" className="group relative cursor-pointer text-left h-full">
+            <Link to="/i-edicion/prensa/mesa" className="group relative cursor-pointer text-left h-full">
               <div className="absolute inset-0 bg-blue-600 blur-2xl opacity-20 group-hover:opacity-50 transition-opacity duration-700" />
               <div className="relative flex items-center gap-5 bg-[#0a0a0a] border border-blue-500/30 px-8 py-5 rounded-full hover:border-blue-400 hover:scale-105 transition-all duration-300 shadow-2xl h-full w-full">
                 <div className="p-3 bg-blue-600/20 rounded-full group-hover:bg-blue-600 text-blue-400 group-hover:text-white transition-colors duration-300">

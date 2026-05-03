@@ -45,24 +45,10 @@ const Navigation = () => {
 
   const menuItems = [
     { path: '/', label: 'Inicio' },
-    { path: '/que-es-mun', label: '¿Qué es el MUN?' },
-    { path: '/staff', label: 'Staff Organizador' },
-    { path: '/matrices', label: 'Matrices' },
-    { path: '/inscripciones', label: 'Inscripciones' },
-    { path: '/reglamentos', label: 'Reglamentos' },
-    { path: '/baremos', label: 'Baremos' },
-    { path: '/galeria', label: 'Galería' },
+    { path: '/i-edicion', label: 'I Edición' },
   ];
 
-  const committees = [
-    { path: '/corte', label: 'Corte' },
-    { path: '/investigacion', label: 'Investigación' },
-    { path: '/crisis', label: 'Crisis' },
-    { path: '/cia', label: 'CIA' },
-    { path: '/consejo-seguridad', label: 'Consejo de Seguridad' },
-    { path: '/oiea', label: 'OIEA' },
-    { path: '/prensa', label: 'Prensa' },
-  ];
+  const committees: any[] = [];
 
   const isActive = (path: string) => location.pathname === path;
 

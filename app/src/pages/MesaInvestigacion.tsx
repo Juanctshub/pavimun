@@ -146,13 +146,27 @@ const MesaInvestigacion = () => {
           transition={{ duration: 1, ease: 'easeOut' }}
           className="mb-16 md:mb-20"
         >
-          <Link
-            to="/investigacion"
-            className="inline-flex items-center gap-2 text-[#ffd700]/60 hover:text-[#ffd700] font-mono text-xs tracking-[0.3em] mb-8 transition-colors uppercase group"
-          >
-            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-            Volver al Comité
-          </Link>
+          <div className="flex items-center justify-between mb-8">
+            <Link
+              to="/i-edicion/investigacion"
+              className="inline-flex items-center gap-2 text-[#ffd700]/60 hover:text-[#ffd700] font-mono text-xs tracking-[0.3em] transition-colors uppercase group"
+            >
+              <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+              Volver al Comité
+            </Link>
+
+            <motion.a
+              whileHover={{ scale: 1.05, boxShadow: "0 0 20px rgba(255, 215, 0, 0.2)" }}
+              whileTap={{ scale: 0.95 }}
+              href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-[#ffd700] text-black font-mono text-[10px] font-bold tracking-[0.2em] uppercase rounded-sm border border-[#ffd700]/50"
+            >
+              <FileText className="w-3 h-3" />
+              Reglamento
+            </motion.a>
+          </div>
 
           {/* Decorative top bar */}
           <div className="flex items-center gap-4 mb-6">

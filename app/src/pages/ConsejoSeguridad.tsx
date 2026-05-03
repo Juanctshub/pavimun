@@ -1,5 +1,5 @@
-
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { AlertTriangle, Users, ShieldAlert, Radio, FileText, Lock, Globe, Flame, Skull } from 'lucide-react';
 
@@ -206,13 +206,28 @@ const ConsejoSeguridad = () => {
           </div>
 
           {/* Crisis Summary Card */}
-          <div className="max-w-4xl mx-auto bg-black/70 backdrop-blur-md border-l-4 border-red-600 p-6 md:p-8 rounded-r-lg shadow-2xl relative overflow-hidden animate-slide-up-fade">
+          <div className="max-w-4xl mx-auto bg-black/70 backdrop-blur-md border-l-4 border-red-600 p-6 md:p-8 rounded-r-lg shadow-2xl relative overflow-hidden animate-slide-up-fade mb-12">
             <div className="absolute top-0 right-0 p-4 opacity-50">
               <AlertTriangle className="w-12 h-12 text-red-600" />
             </div>
             <p className="text-lg md:text-2xl text-gray-300 font-medium leading-relaxed text-justify relative z-10">
               "Haití no está al borde del abismo; <span className="text-white font-bold bg-red-900/40 px-1">ha caído en él.</span> Puerto Príncipe es hoy una zona de guerra urbana donde coaliciones de pandillas armadas controlan más del 80% de la capital, desafiando abiertamente la soberanía del Estado."
             </p>
+          </div>
+
+          {/* Prominent Themed Button */}
+          <div className="flex justify-center">
+            <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(220, 38, 38, 0.4)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-3 bg-red-600 border-2 border-red-500 text-white font-black text-sm md:text-lg tracking-[0.2em] uppercase rounded-sm group/reg shadow-[0_0_20px_rgba(220,38,38,0.3)] animate-pulse"
+            >
+                <Lock size={20} className="group-hover/reg:rotate-12 transition-transform" />
+                <span>Protocolo: Reglamento</span>
+            </motion.a>
           </div>
 
         </section>
@@ -327,7 +342,7 @@ const ConsejoSeguridad = () => {
 
                   {/* Mesa */}
                   <Link
-                    to="/consejo-seguridad/mesa"
+                    to="/i-edicion/consejo-seguridad/mesa"
                     className="flex items-center gap-4 p-4 bg-[#1a0505] hover:bg-[#2a0a0a] border border-red-900/30 hover:border-red-600/50 rounded transition-all group w-full text-left"
                   >
                     <div className="p-3 bg-red-900/20 rounded text-red-500 group-hover:text-white transition-colors">

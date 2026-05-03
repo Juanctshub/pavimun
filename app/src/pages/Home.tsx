@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, ChevronDown, Clock } from 'lucide-react';
+import { Calendar, ChevronDown, Clock, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
 const Home = () => {
@@ -167,6 +168,24 @@ const Home = () => {
                     Los hombres del mañana serán lo que se haga con los jóvenes de hoy
                   </p>
                 </div>
+              </div>
+
+              {/* === I EDITION CTA === */}
+              <div className="mt-10">
+                <Link
+                  to="/i-edicion"
+                  className="group relative inline-flex items-center gap-4 px-8 py-4 bg-white rounded-full shadow-[0_20px_50px_rgba(26,35,126,0.15)] hover:shadow-[0_20px_50px_rgba(26,35,126,0.25)] transition-all duration-500 hover:-translate-y-1 overflow-hidden"
+                >
+                  {/* Hover gradient effect */}
+                  <div className="absolute inset-0 bg-gradient-to-r from-indigo-50 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                  
+                  <span className="relative text-[#1a237e] font-black text-lg tracking-wider uppercase">
+                    Explorar I Edición
+                  </span>
+                  <div className="relative w-10 h-10 rounded-full bg-[#1a237e] flex items-center justify-center text-white group-hover:translate-x-1 transition-transform duration-500">
+                    <ArrowRight className="w-5 h-5" />
+                  </div>
+                </Link>
               </div>
 
             </div>
@@ -478,7 +497,7 @@ const Home = () => {
         </div>
         
         {/* Creator Credit */}
-        <div className="absolute bottom-4 right-6 text-[8px] font-bold text-gray-300 uppercase tracking-[0.2em] hidden md:block">
+        <div className="absolute bottom-4 left-6 md:left-auto md:right-6 text-[8px] font-bold text-gray-400 uppercase tracking-[0.2em]">
           Creador por Samuel Agreda (@fotagreda)
         </div>
       </section>

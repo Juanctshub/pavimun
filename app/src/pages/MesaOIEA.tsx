@@ -148,13 +148,27 @@ const MesaOIEA = () => {
                     transition={{ duration: 1 }}
                     className="mb-32 md:mb-48 text-center md:text-left relative"
                 >
-                    <Link
-                        to="/oiea"
-                        className="inline-flex items-center gap-2 text-cyan-500/60 hover:text-cyan-400 font-mono text-[10px] sm:text-xs tracking-[0.4em] mb-14 transition-colors uppercase group border border-cyan-500/20 px-6 py-2.5 bg-cyan-500/5 backdrop-blur-md rounded-sm"
-                    >
-                        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
-                        TERMINAL DE COMITÉ
-                    </Link>
+                    <div className="flex flex-col md:flex-row items-center justify-between mb-14 gap-6">
+                        <Link
+                            to="/i-edicion/oiea"
+                            className="inline-flex items-center gap-2 text-cyan-500/60 hover:text-cyan-400 font-mono text-[10px] sm:text-xs tracking-[0.4em] transition-colors uppercase group border border-cyan-500/20 px-6 py-2.5 bg-cyan-500/5 backdrop-blur-md rounded-sm"
+                        >
+                            <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" />
+                            TERMINAL DE COMITÉ
+                        </Link>
+
+                        <motion.a
+                            whileHover={{ scale: 1.05, boxShadow: "0 0 25px rgba(6, 182, 212, 0.4)" }}
+                            whileTap={{ scale: 0.95 }}
+                            href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-3 px-6 py-2.5 bg-cyan-950 border border-cyan-400 text-cyan-400 font-mono text-[10px] sm:text-xs font-black tracking-[0.3em] uppercase rounded-sm shadow-[0_0_15px_rgba(6,182,212,0.2)] group/reg"
+                        >
+                            <Radiation className="w-4 h-4 group-hover/reg:animate-spin-slow" />
+                            <span>DESCARGAR_REGLAMENTO</span>
+                        </motion.a>
+                    </div>
 
                     <div className="flex flex-col md:flex-row items-center md:items-baseline gap-8 mb-8">
                         <div className="relative">

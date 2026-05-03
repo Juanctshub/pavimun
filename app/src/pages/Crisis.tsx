@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { BookOpen, FileText, AlertTriangle, History, ChevronDown, Volume2, VolumeX, Users } from 'lucide-react';
 
@@ -144,10 +145,25 @@ const Crisis = () => {
           </div>
 
           {/* Quote Card */}
-          <div className="mt-16 p-8 md:p-10 bg-black/40 backdrop-blur-md border border-[#c9a980]/20 rounded-sm max-w-3xl transform hover:scale-[1.02] transition-transform duration-500">
+          <div className="mt-16 mb-12 p-8 md:p-10 bg-black/40 backdrop-blur-md border border-[#c9a980]/20 rounded-sm max-w-3xl transform hover:scale-[1.02] transition-transform duration-500">
             <p className="text-xl md:text-2xl text-[#e0d8cc] font-serif leading-relaxed italic">
               "Una nación en la encrucijada de su destino, obligada a elegir entre la grandeza o el olvido."
             </p>
+          </div>
+
+          {/* Prominent Themed Button */}
+          <div className="flex justify-center">
+            <motion.a
+                whileHover={{ scale: 1.05, boxShadow: "0 0 30px rgba(201, 169, 128, 0.3)" }}
+                whileTap={{ scale: 0.95 }}
+                href="https://drive.google.com/drive/folders/15EEgAIyok3wvsRYzb8JAwvCqfBk0ctxo"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-3 px-8 py-3 bg-gradient-to-r from-[#c9a980] via-[#e2d5c3] to-[#c9a980] text-[#0a0908] font-serif italic text-sm md:text-base font-bold tracking-[0.2em] uppercase rounded-sm group/reg shadow-[0_10px_40px_rgba(0,0,0,0.5)] border border-[#a89f91]"
+            >
+                <FileText size={20} className="group-hover/reg:animate-pulse" />
+                <span>Gaceta Oficial: Reglamento</span>
+            </motion.a>
           </div>
 
         </div>
@@ -218,7 +234,7 @@ const Crisis = () => {
 
             {/* Mesa */}
             <Link
-              to="/crisis/mesa"
+              to="/i-edicion/crisis/mesa"
               className="group relative p-10 bg-[#1c1917] hover:bg-[#25211e] border border-[#c9a980]/10 hover:border-[#c9a980]/40 transition-all duration-500 overflow-hidden text-left w-full block h-full"
             >
               <div className="absolute inset-0 bg-[url('https://www.transparenttextures.com/patterns/cubes.png')] opacity-[0.03]" />
