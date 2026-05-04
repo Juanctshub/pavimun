@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ArrowLeft, Sparkles, User, Award, ShieldCheck, Crown } from 'lucide-react';
+import { Star, Sparkles, User, Award, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PaviTopStars = () => {
