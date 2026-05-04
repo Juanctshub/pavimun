@@ -1,10 +1,18 @@
-import { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { Star, Sparkles, User, Award, Crown } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useScroll, useTransform } from 'framer-motion';
+import { Star, Sparkles, User, Award, Crown, Shield, Zap } from 'lucide-react';
 
 const PaviTopStars = () => {
   const [loading, setLoading] = useState(true);
   const [mounted, setMounted] = useState(false);
+  const containerRef = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"]
+  });
+
+  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
 
   useEffect(() => {
     setMounted(true);
@@ -15,19 +23,51 @@ const PaviTopStars = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-[#e5e2e1] overflow-hidden font-sans selection:bg-[#d4af37]/30 selection:text-white">
-      {/* Dynamic Background */}
-      <div className="fixed inset-0 pointer-events-none -z-10">
+    <div ref={containerRef} className="min-h-screen bg-[#020202] text-[#e5e2e1] overflow-hidden font-sans selection:bg-[#d4af37]/30 selection:text-white">
+      
+      {/* Cinematic Background Layer */}
+      <div className="fixed inset-0 pointer-events-none -z-10 overflow-hidden">
         <div className="absolute inset-0 bg-[#020202]" />
-        <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-[#d4af37]/5 rounded-full blur-[140px]" />
         
-        {/* Subtle Star Grid */}
-        <div className="absolute inset-0 opacity-[0.1]" 
-          style={{ 
-            backgroundImage: 'radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0)', 
-            backgroundSize: '100px 100px' 
-          }} 
+        {/* Animated Gold Nebula */}
+        <motion.div 
+          animate={{ 
+            scale: [1, 1.2, 1],
+            opacity: [0.1, 0.15, 0.1],
+            rotate: [0, 5, 0]
+          }}
+          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+          className="absolute top-[-20%] left-[-10%] w-[120%] h-[120%] bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.15)_0%,transparent_50%)] blur-[100px]" 
         />
+
+        {/* Dynamic Light Rays */}
+        <div className="absolute inset-0 opacity-[0.2]">
+           <div className="absolute top-0 left-1/4 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37] to-transparent rotate-[15deg] blur-sm" />
+           <div className="absolute top-0 right-1/4 w-[1px] h-full bg-gradient-to-b from-transparent via-[#d4af37] to-transparent -rotate-[15deg] blur-sm" />
+        </div>
+        
+        {/* Floating Particles */}
+        {[...Array(30)].map((_, i) => (
+          <motion.div
+            key={i}
+            initial={{ 
+              x: Math.random() * 100 + "%", 
+              y: Math.random() * 100 + "%",
+              opacity: Math.random() * 0.5
+            }}
+            animate={{ 
+              y: [null, "-20%"],
+              opacity: [null, 0]
+            }}
+            transition={{ 
+              duration: Math.random() * 10 + 10, 
+              repeat: Infinity, 
+              ease: "linear",
+              delay: Math.random() * 10
+            }}
+            className="absolute w-1 h-1 bg-[#d4af37] rounded-full blur-[1px]"
+          />
+        ))}
       </div>
 
       <AnimatePresence>
@@ -41,182 +81,177 @@ const PaviTopStars = () => {
             <motion.div 
               initial={{ x: 0 }}
               exit={{ x: '-100%' }}
-              transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.2 }}
-              className="absolute inset-y-0 left-0 w-1/2 bg-[#0a0a0a] border-r border-[#d4af37]/20 z-10"
+              transition={{ duration: 1.4, ease: [0.85, 0, 0.15, 1], delay: 0.5 }}
+              className="absolute inset-y-0 left-0 w-1/2 bg-[#080808] border-r border-[#d4af37]/10 z-10"
             >
-              <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(45deg, #d4af37 25%, transparent 25%, transparent 50%, #d4af37 50%, #d4af37 75%, transparent 75%, transparent 100%)', backgroundSize: '40px 40px' }} />
+              <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(45deg, #d4af37 25%, transparent 25%, transparent 50%, #d4af37 50%, #d4af37 75%, transparent 75%, transparent 100%)', backgroundSize: '60px 60px' }} />
             </motion.div>
             
             <motion.div 
               initial={{ x: 0 }}
               exit={{ x: '100%' }}
-              transition={{ duration: 1.2, ease: [0.77, 0, 0.175, 1], delay: 0.2 }}
-              className="absolute inset-y-0 right-0 w-1/2 bg-[#0a0a0a] border-l border-[#d4af37]/20 z-10"
+              transition={{ duration: 1.4, ease: [0.85, 0, 0.15, 1], delay: 0.5 }}
+              className="absolute inset-y-0 right-0 w-1/2 bg-[#080808] border-l border-[#d4af37]/10 z-10"
             >
-              <div className="absolute inset-0 opacity-[0.03]" style={{ backgroundImage: 'linear-gradient(-45deg, #d4af37 25%, transparent 25%, transparent 50%, #d4af37 50%, #d4af37 75%, transparent 75%, transparent 100%)', backgroundSize: '40px 40px' }} />
+              <div className="absolute inset-0 opacity-[0.02]" style={{ backgroundImage: 'linear-gradient(-45deg, #d4af37 25%, transparent 25%, transparent 50%, #d4af37 50%, #d4af37 75%, transparent 75%, transparent 100%)', backgroundSize: '60px 60px' }} />
             </motion.div>
 
-            {/* Central Light & Icon */}
+            {/* Central Seal */}
             <div className="relative z-20 flex flex-col items-center">
               <motion.div
-                initial={{ scale: 0, opacity: 0, rotate: -45 }}
-                animate={{ scale: 1, opacity: 1, rotate: 0 }}
-                transition={{ duration: 1, ease: "easeOut" }}
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                exit={{ scale: 1.2, opacity: 0 }}
+                transition={{ duration: 1.2 }}
                 className="relative"
               >
-                {/* Aura */}
-                <div className="absolute inset-[-40px] bg-[#d4af37]/10 rounded-full blur-2xl animate-pulse" />
-                
-                <div className="w-40 h-40 rounded-full border border-[#d4af37]/40 flex items-center justify-center bg-[#050505] shadow-[0_0_60px_rgba(212,175,55,0.2)]">
-                  <Crown className="w-16 h-16 text-[#d4af37] fill-[#d4af37]/10" />
-                  
-                  {/* Decorative rotating border */}
-                  <motion.div 
+                <div className="w-48 h-48 rounded-full border-2 border-[#d4af37]/20 flex items-center justify-center bg-[#050505] shadow-[0_0_100px_rgba(212,175,55,0.15)] overflow-hidden">
+                   {/* Rotating light ring */}
+                   <motion.div 
                     animate={{ rotate: 360 }}
-                    transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
-                    className="absolute inset-2 border-2 border-dashed border-[#d4af37]/20 rounded-full"
-                  />
+                    transition={{ duration: 4, repeat: Infinity, ease: "linear" }}
+                    className="absolute inset-0 border-[4px] border-transparent border-t-[#d4af37]/40 rounded-full"
+                   />
+                   <Crown className="w-20 h-20 text-[#d4af37] fill-[#d4af37]/5" />
                 </div>
               </motion.div>
 
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
+                initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8, duration: 0.8 }}
-                className="mt-12 text-center"
+                className="mt-16 text-center"
               >
-                <h2 className="text-4xl font-serif italic tracking-[0.5em] uppercase text-[#d4af37] mb-2">
+                <h2 className="text-5xl font-serif italic tracking-[0.4em] uppercase text-[#d4af37] mb-4">
                   Top Stars
                 </h2>
-                <div className="flex items-center gap-4 justify-center">
-                   <div className="h-[1px] w-8 bg-[#d4af37]/30" />
-                   <p className="text-[10px] font-black tracking-[0.8em] uppercase text-white/40">
-                    Aureate Prestige
+                <div className="flex items-center gap-6 justify-center">
+                   <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]/50" />
+                   <p className="text-[12px] font-black tracking-[1em] uppercase text-white/50">
+                    Santuario de Élite
                    </p>
-                   <div className="h-[1px] w-8 bg-[#d4af37]/30" />
+                   <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#d4af37]/50" />
                 </div>
               </motion.div>
-
-              {/* Progress Line */}
-              <div className="mt-16 w-48 h-[1px] bg-white/5 relative overflow-hidden">
-                <motion.div 
-                  initial={{ left: '-100%' }}
-                  animate={{ left: '100%' }}
-                  transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-                  className="absolute inset-y-0 w-20 bg-gradient-to-r from-transparent via-[#d4af37] to-transparent"
-                />
-              </div>
             </div>
-
-            {/* Bright Flash on Exit */}
-            <motion.div 
-              initial={{ opacity: 0 }}
-              exit={{ opacity: [0, 1, 0] }}
-              transition={{ duration: 0.8, times: [0, 0.5, 1] }}
-              className="absolute inset-0 bg-white z-[30]"
-            />
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      {/* Main Content Hub */}
       <div className={`relative z-10 transition-all duration-[2000ms] ${mounted && !loading ? 'opacity-100' : 'opacity-0 scale-95 blur-sm'}`}>
         
-        <header className="pavi-container pt-48 pb-24 text-center">
-          <motion.div
-            initial={{ y: 40, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
-          >
-            <div className="flex items-center justify-center gap-4 mb-12">
-               <div className="h-[1px] w-16 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent" />
-               <Sparkles className="w-4 h-4 text-[#d4af37]" />
-               <div className="h-[1px] w-16 bg-gradient-to-l from-transparent via-[#d4af37]/40 to-transparent" />
-            </div>
-            
-            <h1 className="text-[clamp(3rem,12vw,9rem)] font-serif tracking-[-0.05em] mb-8 leading-none">
-              <span className="block text-white mb-2">PAVI</span>
-              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] animate-shimmer-gold italic">
-                Top Stars
-              </span>
-            </h1>
-            
-            <p className="max-w-2xl mx-auto text-[#d4af37]/40 text-[9px] md:text-[10px] font-black leading-relaxed tracking-[0.8em] uppercase">
+        {/* HERO SECTION */}
+        <motion.header 
+          style={{ opacity, scale }}
+          className="pavi-container pt-56 pb-32 text-center"
+        >
+          <div className="inline-flex items-center justify-center gap-6 mb-16">
+             <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent" />
+             <div className="p-3 rounded-full border border-[#d4af37]/20 bg-[#d4af37]/5">
+                <Sparkles className="w-5 h-5 text-[#d4af37]" />
+             </div>
+             <div className="h-[1px] w-24 bg-gradient-to-l from-transparent via-[#d4af37]/60 to-transparent" />
+          </div>
+          
+          <h1 className="text-[clamp(4rem,15vw,12rem)] font-serif tracking-[-0.07em] mb-12 leading-[0.8] mix-blend-difference">
+            <span className="block text-white mb-4">PAVI</span>
+            <span className="block italic text-transparent bg-clip-text bg-gradient-to-b from-[#bf953f] via-[#fcf6ba] to-[#b38728] animate-shine">
+              Top Stars
+            </span>
+          </h1>
+          
+          <div className="max-w-3xl mx-auto space-y-8">
+            <p className="text-[#d4af37]/50 text-[11px] font-black leading-relaxed tracking-[0.9em] uppercase">
               The Sovereign Sanctuary of Diplomatic Excellence
             </p>
-          </motion.div>
-        </header>
+            <div className="flex justify-center gap-4">
+               {[...Array(3)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 text-[#d4af37]/30 fill-[#d4af37]/10" />
+               ))}
+            </div>
+          </div>
+        </motion.header>
 
-        {/* The Vault Grid */}
-        <section className="pavi-container pb-48">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16">
+        {/* EXHIBITION GRID */}
+        <section className="pavi-container pb-64 relative">
+          
+          {/* Vertical Separator Lines */}
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1px] h-full bg-gradient-to-b from-[#d4af37]/20 via-transparent to-transparent hidden lg:block" />
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12 lg:gap-y-32">
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 40 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 * i, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-                className="group relative aspect-[3/4.6] rounded-[0.25rem] bg-[#0a0a0a]/80 border border-white/5 backdrop-blur-md overflow-hidden flex flex-col items-center justify-center transition-all duration-700 hover:border-[#d4af37]/40 hover:-translate-y-4 shadow-[0_0_50px_rgba(0,0,0,0.5)]"
+                initial={{ opacity: 0, y: 60 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-100px" }}
+                transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative"
               >
-                {/* Premium Inner Frame */}
-                <div className="absolute inset-4 border border-white/[0.03] pointer-events-none" />
+                {/* Background Shadow Glow */}
+                <div className="absolute -inset-8 bg-[#d4af37]/5 rounded-full blur-[80px] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
                 
-                {/* Cinematic Hover Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.06)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
-                
-                {/* Content Placeholder */}
-                <div className="relative z-10 flex flex-col items-center p-12 w-full h-full">
-                  <div className="mt-auto mb-16 relative">
-                    <div className="w-32 h-32 rounded-full bg-[#020202] border border-white/10 flex items-center justify-center group-hover:border-[#d4af37]/30 transition-all duration-1000 group-hover:shadow-[0_0_40px_rgba(212,175,55,0.1)]">
-                      <User className="w-12 h-12 text-white/5 group-hover:text-[#d4af37]/40 transition-colors" />
-                    </div>
-                    {/* Floating star on hover */}
-                    <motion.div 
-                      className="absolute -top-4 -right-4 opacity-0 group-hover:opacity-100 transition-all duration-700"
-                    >
-                       <Star className="w-10 h-10 text-[#d4af37]/20 fill-[#d4af37]/10" />
-                    </motion.div>
+                <div className="relative aspect-[3/4.8] rounded-[2px] bg-[#050505] border border-white/[0.08] flex flex-col items-center p-1 overflow-hidden transition-all duration-1000 group-hover:border-[#d4af37]/40 group-hover:-translate-y-6">
+                  
+                  {/* Decorative Bezel */}
+                  <div className="absolute inset-2 border border-white/[0.03] pointer-events-none" />
+                  
+                  {/* Image/Portrait Section */}
+                  <div className="w-full aspect-[3/3.5] bg-[#0a0a0a] relative overflow-hidden">
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#050505] via-transparent to-transparent z-10" />
+                     <div className="absolute inset-0 flex items-center justify-center">
+                        <User className="w-24 h-24 text-white/[0.03] group-hover:text-[#d4af37]/10 transition-colors duration-1000" />
+                     </div>
+                     
+                     {/* Hover Rank Indicator */}
+                     <div className="absolute top-6 left-6 z-20 flex flex-col gap-2">
+                        <div className="w-8 h-8 rounded-full border border-[#d4af37]/30 bg-black/60 flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 translate-x-[-20px] group-hover:translate-x-0">
+                           <Shield className="w-4 h-4 text-[#d4af37]" />
+                        </div>
+                        <div className="w-8 h-8 rounded-full border border-[#d4af37]/30 bg-black/60 flex items-center justify-center backdrop-blur-md opacity-0 group-hover:opacity-100 transition-all duration-700 delay-100 translate-x-[-20px] group-hover:translate-x-0">
+                           <Zap className="w-4 h-4 text-[#d4af37]" />
+                        </div>
+                     </div>
                   </div>
 
-                  <div className="mb-auto space-y-6 w-full">
-                    <div className="space-y-4">
-                       <div className="h-[2px] w-16 bg-gradient-to-r from-transparent via-[#d4af37]/40 to-transparent mx-auto" />
-                       <div className="h-4 w-5/6 bg-white/5 rounded-sm mx-auto relative overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#d4af37]/15 to-transparent animate-shimmer" />
-                       </div>
-                       <div className="h-2 w-3/5 bg-white/5 rounded-sm mx-auto relative overflow-hidden">
-                          <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#d4af37]/5 to-transparent animate-shimmer" />
-                       </div>
-                    </div>
-                    
-                    <motion.div 
-                      className="pt-8 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
-                    >
-                       <div className="inline-flex items-center gap-2 px-4 py-2 bg-[#d4af37]/5 border border-[#d4af37]/20 rounded-sm">
-                          <Award className="w-3 h-3 text-[#d4af37]" />
-                          <span className="text-[8px] font-black uppercase tracking-[0.3em] text-[#d4af37]">Distinguished</span>
-                       </div>
-                    </motion.div>
+                  {/* Info Section */}
+                  <div className="flex-1 w-full flex flex-col items-center justify-center p-8 text-center space-y-6">
+                     <div className="space-y-4">
+                        <div className="h-[1px] w-12 bg-[#d4af37]/40 mx-auto transition-all duration-700 group-hover:w-24" />
+                        <h3 className="text-xl font-serif italic tracking-wide text-white/90 group-hover:text-[#d4af37] transition-colors duration-700">
+                          Honorary Delegate
+                        </h3>
+                        <p className="text-[9px] font-black tracking-[0.5em] uppercase text-white/30">
+                          Class of 2026
+                        </p>
+                     </div>
+
+                     <div className="pt-4 opacity-40 group-hover:opacity-100 transition-all duration-1000">
+                        <div className="inline-flex items-center gap-3 px-6 py-2 border border-white/10 rounded-full group-hover:border-[#d4af37]/30 group-hover:bg-[#d4af37]/5">
+                           <Award className="w-3 h-3 text-[#d4af37]" />
+                           <span className="text-[8px] font-black uppercase tracking-[0.3em]">Excellence Merit</span>
+                        </div>
+                     </div>
                   </div>
+
+                  {/* Corner Ornaments */}
+                  <div className="absolute top-0 left-0 w-8 h-8 border-t-[1px] border-l-[1px] border-[#d4af37]/0 group-hover:border-[#d4af37]/60 transition-all duration-700" />
+                  <div className="absolute bottom-0 right-0 w-8 h-8 border-b-[1px] border-r-[1px] border-[#d4af37]/0 group-hover:border-[#d4af37]/60 transition-all duration-700" />
                 </div>
-
-                {/* Corner Accents */}
-                <div className="absolute top-0 left-0 w-12 h-12 border-t border-l border-[#d4af37]/0 group-hover:border-[#d4af37]/40 transition-all duration-1000" />
-                <div className="absolute bottom-0 right-0 w-12 h-12 border-b border-r border-[#d4af37]/0 group-hover:border-[#d4af37]/40 transition-all duration-1000" />
               </motion.div>
             ))}
           </div>
 
+          {/* Epic Footer Statement */}
           <motion.div 
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="mt-40 text-center"
+            className="mt-64 flex flex-col items-center text-center gap-12"
           >
-             <div className="inline-flex flex-col items-center gap-6">
-                <Crown className="w-8 h-8 text-[#d4af37]/20" />
-                <div className="h-[1px] w-48 bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent" />
-                <p className="text-[9px] font-black uppercase tracking-[0.8em] text-white/10">Eternal Achievement</p>
+             <Crown className="w-12 h-12 text-[#d4af37] animate-pulse" />
+             <div className="space-y-6">
+                <h4 className="text-3xl font-serif italic text-white/80">"Victory is a state of mind"</h4>
+                <div className="h-[1px] w-64 bg-gradient-to-r from-transparent via-[#d4af37]/30 to-transparent mx-auto" />
+                <p className="text-[10px] font-black uppercase tracking-[1em] text-white/20">ETERNAL ACHIEVEMENT</p>
              </div>
           </motion.div>
         </section>
@@ -229,21 +264,20 @@ const PaviTopStars = () => {
           font-family: 'Noto Serif', serif;
         }
         
-        .animate-shimmer-gold {
+        .animate-shine {
           background-size: 200% auto;
-          animation: shimmer-gold 8s linear infinite;
+          animation: shine 6s linear infinite;
         }
-        @keyframes shimmer-gold {
+        @keyframes shine {
           0% { background-position: 0% center; }
           100% { background-position: 200% center; }
         }
-        .animate-shimmer {
-          transform: translateX(-100%);
-          animation: shimmer 3s infinite;
-        }
-        @keyframes shimmer {
-          100% { transform: translateX(100%); }
-        }
+
+        /* Smooth page transition overrides */
+        .page-enter { opacity: 0; transform: translateY(20px); }
+        .page-enter-active { opacity: 1; transform: translateY(0); transition: all 800ms; }
+        .page-exit { opacity: 1; transform: translateY(0); }
+        .page-exit-active { opacity: 0; transform: translateY(-20px); transition: all 500ms; }
       `}</style>
     </div>
   );

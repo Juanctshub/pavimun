@@ -50,8 +50,8 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/', '/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
-  const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || (p !== '/' && location.pathname.startsWith(p + '/')));
+  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
+  const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
     const handleHide = () => setHideNavSpacing(true);
