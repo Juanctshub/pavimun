@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { Calendar, ChevronDown, ArrowRight, Award, Users, Gavel, History } from 'lucide-react';
+import { Calendar, ChevronDown, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
@@ -209,81 +209,6 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ====== LEGACY / IMPACT SECTION ====== */}
-      <section className="relative py-24 md:py-32 overflow-hidden bg-[#0d154a]">
-        {/* Background Decorations */}
-        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-          <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />
-          <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px]" />
-        </div>
-
-        <div className="pavi-container relative z-10">
-          <div className="flex flex-col items-center">
-            <motion.div 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              className="flex items-center gap-2 mb-4"
-            >
-              <Award className="w-5 h-5 text-indigo-400" />
-              <span className="text-indigo-400 text-xs font-bold tracking-[0.4em] uppercase">Impacto Histórico</span>
-            </motion.div>
-
-            <motion.h2 
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-black text-white text-center mb-16 tracking-tight"
-            >
-              Un Legado de <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Excelencia</span>
-            </motion.h2>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
-              {[
-                { label: 'Delegados Participantes', value: '150+', icon: <Users className="w-8 h-8" /> },
-                { label: 'Comités Académicos', value: '7', icon: <Gavel className="w-8 h-8" /> },
-                { label: 'Países Representados', value: '45+', icon: <History className="w-8 h-8" /> },
-              ].map((stat, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + i * 0.1 }}
-                  className="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-md text-center hover:bg-white/10 hover:border-indigo-500/30 transition-all duration-500"
-                >
-                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mx-auto mb-6 group-hover:scale-110 transition-transform">
-                    {stat.icon}
-                  </div>
-                  <h3 className="text-5xl font-black text-white mb-2 tracking-tighter">{stat.value}</h3>
-                  <p className="text-indigo-200/50 text-xs font-bold uppercase tracking-widest">{stat.label}</p>
-                </motion.div>
-              ))}
-            </div>
-
-            <motion.div 
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.6 }}
-              className="mt-20 text-center"
-            >
-              <p className="text-gray-400 max-w-2xl mx-auto text-lg font-medium leading-relaxed mb-10">
-                La I Edición de PAVIMUN no solo fue un evento, fue el inicio de un estándar académico 
-                superior en nuestra institución. Los frutos del debate y la diplomacia perduran hoy.
-              </p>
-              <Link
-                to="/i-edicion"
-                className="inline-flex items-center gap-3 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-indigo-900/40"
-              >
-                Explorar el Archivo Digital
-                <ArrowRight className="w-5 h-5" />
-              </Link>
-            </motion.div>
-          </div>
-        </div>
-      </section>
 
       {/* ====== PHOTO GALLERY STRIP ====== */}
       <section className="relative py-16 md:py-20 overflow-hidden">

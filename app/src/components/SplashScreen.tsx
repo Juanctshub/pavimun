@@ -129,7 +129,7 @@ const SplashScreen = ({ onComplete }: SplashScreenProps) => {
                 >
                     <div className="px-5 py-2 bg-gradient-to-r from-white/[0.04] to-white/[0.08] border border-white/[0.08] rounded-full backdrop-blur-sm">
                         <span className="text-xs font-bold text-white/50 tracking-[0.2em] uppercase">
-                            I Edición · 2026
+                            Pagina Principal
                         </span>
                     </div>
                 </div>
