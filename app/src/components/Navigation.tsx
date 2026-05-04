@@ -46,7 +46,7 @@ const Navigation = () => {
   const menuItems = [
     { path: '/', label: 'Inicio' },
     { path: '/i-edicion', label: 'I Edición' },
-    { path: '/pavi-top-stars', label: 'PAVI TOP STARS' },
+    { path: '/pavi-top-stars', label: 'PAVI Top Stars' },
   ];
 
   const committees: any[] = [];
