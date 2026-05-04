@@ -11,8 +11,8 @@ const PaviTopStars = () => {
     offset: ["start start", "end end"]
   });
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
-  const scale = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+  const opacity = useTransform(scrollYProgress, [0, 0.5], [1, 0]);
+  const scale = useTransform(scrollYProgress, [0, 0.5], [1, 0.9]);
 
   useEffect(() => {
     setMounted(true);
@@ -142,7 +142,7 @@ const PaviTopStars = () => {
         {/* HERO SECTION */}
         <motion.header 
           style={{ opacity, scale }}
-          className="pavi-container pt-56 pb-32 text-center"
+          className="pavi-container pt-40 pb-32 text-center"
         >
           <div className="inline-flex items-center justify-center gap-6 mb-16">
              <div className="h-[1px] w-24 bg-gradient-to-r from-transparent via-[#d4af37]/60 to-transparent" />
@@ -152,7 +152,7 @@ const PaviTopStars = () => {
              <div className="h-[1px] w-24 bg-gradient-to-l from-transparent via-[#d4af37]/60 to-transparent" />
           </div>
           
-          <h1 className="text-[clamp(4rem,15vw,12rem)] font-serif tracking-[-0.07em] mb-12 leading-[0.8] mix-blend-difference">
+          <h1 className="text-[clamp(4rem,15vw,10rem)] font-serif tracking-[-0.07em] mb-12 leading-[0.8] mix-blend-difference">
             <span className="block text-white mb-4">PAVI</span>
             <span className="block italic text-transparent bg-clip-text bg-gradient-to-b from-[#bf953f] via-[#fcf6ba] to-[#b38728] animate-shine">
               Top Stars

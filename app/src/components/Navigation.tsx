@@ -47,6 +47,7 @@ const Navigation = () => {
     { path: '/', label: 'Inicio' },
     { path: '/i-edicion', label: 'I Edición' },
     { path: '/pavi-top-stars', label: 'PAVI Top Stars' },
+    { path: '/banco', label: 'Economía' },
   ];
 
   const committees: any[] = [];

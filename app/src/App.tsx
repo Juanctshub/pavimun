@@ -34,6 +34,7 @@ const MesaCIA = lazy(() => import('./pages/MesaCIA'));
 const MesaOIEA = lazy(() => import('./pages/MesaOIEA'));
 const ArchiveFirstEdition = lazy(() => import('./pages/ArchiveFirstEdition'));
 const PaviTopStars = lazy(() => import('./pages/PaviTopStars'));
+const Banco = lazy(() => import('./pages/Banco'));
 
 
 
@@ -50,7 +51,7 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
+  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars', '/banco'];
   const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
@@ -67,7 +68,7 @@ function AppContent() {
   }, []);
 
   // Determine background color based on path to prevent white/black flash during transitions
-  const isDarkPath = ['/pavi-top-stars', '/i-edicion'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const isDarkPath = ['/pavi-top-stars', '/i-edicion', '/banco'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   return (
     <>
@@ -102,6 +103,7 @@ function AppContent() {
               <Route path="/i-edicion/prensa" element={<PageTransition><Prensa /></PageTransition>} />
               <Route path="/i-edicion/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
               <Route path="/pavi-top-stars" element={<PageTransition><PaviTopStars /></PageTransition>} />
+              <Route path="/banco" element={<PageTransition><Banco /></PageTransition>} />
               <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
             </Routes>
           </AnimatePresence>
