@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Star, ArrowLeft, Sparkles, User, Award, ShieldCheck } from 'lucide-react';
+import { Star, ArrowLeft, Sparkles, User, Award, ShieldCheck, Crown } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const PaviTopStars = () => {
@@ -11,202 +11,198 @@ const PaviTopStars = () => {
     setMounted(true);
     const timer = setTimeout(() => {
       setLoading(false);
-    }, 3000);
+    }, 2800);
     return () => clearTimeout(timer);
   }, []);
 
   return (
-    <div className="min-h-screen bg-[#020202] text-white overflow-hidden font-sans selection:bg-[#d4af37]/30">
+    <div className="min-h-screen bg-[#050505] text-[#e5e2e1] overflow-hidden font-sans selection:bg-[#d4af37]/30 selection:text-white">
+      {/* Dynamic Background */}
+      <div className="fixed inset-0 pointer-events-none -z-10">
+        <div className="absolute inset-0 bg-[#050505]" />
+        
+        {/* Subtle Nebula Effects */}
+        <div className="absolute top-[-10%] left-[-5%] w-[600px] h-[600px] bg-[#d4af37]/5 rounded-full blur-[140px] animate-pulse" style={{ animationDuration: '8s' }} />
+        <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-white/2 rounded-full blur-[120px]" />
+        
+        {/* Gold Dust Particles */}
+        <div className="absolute inset-0 opacity-40">
+           {[...Array(25)].map((_, i) => (
+             <motion.div
+               key={i}
+               className="absolute w-[1px] h-[1px] bg-[#d4af37] rounded-full"
+               initial={{ 
+                 x: Math.random() * 100 + '%', 
+                 y: Math.random() * 100 + '%',
+                 opacity: Math.random() 
+               }}
+               animate={{ 
+                 y: ['-10%', '110%'],
+                 opacity: [0, 1, 0]
+               }}
+               transition={{ 
+                 duration: 10 + Math.random() * 20, 
+                 repeat: Infinity, 
+                 ease: "linear",
+                 delay: Math.random() * 10
+               }}
+             />
+           ))}
+        </div>
+      </div>
+
       <AnimatePresence>
         {loading ? (
           <motion.div
             key="loader"
             initial={{ opacity: 1 }}
-            exit={{ opacity: 0, scale: 1.1, filter: 'blur(30px)' }}
-            transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-[#020202]"
+            exit={{ opacity: 0, scale: 1.05, filter: 'blur(40px)' }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+            className="fixed inset-0 z-[200] flex flex-col items-center justify-center bg-[#050505]"
           >
-            {/* Gold Dust Particles */}
-            <div className="absolute inset-0 overflow-hidden pointer-events-none">
-              {[...Array(40)].map((_, i) => (
-                <motion.div
-                  key={i}
-                  initial={{ 
-                    x: Math.random() * window.innerWidth, 
-                    y: window.innerHeight + 10,
-                    opacity: 0
-                  }}
-                  animate={{ 
-                    y: -100,
-                    opacity: [0, 0.8, 0],
-                    x: `+=${(Math.random() - 0.5) * 200}`
-                  }}
-                  transition={{ 
-                    duration: 3 + Math.random() * 2, 
-                    repeat: Infinity, 
-                    delay: Math.random() * 3,
-                    ease: "linear"
-                  }}
-                  className="absolute w-0.5 h-0.5 bg-[#d4af37] rounded-full shadow-[0_0_8px_#ffd700]"
-                />
-              ))}
-            </div>
-
+            {/* Cinematic Centerpiece */}
             <div className="relative">
-              {/* Spinning Rings */}
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-40px] border border-[#d4af37]/10 rounded-full"
-              />
-              <motion.div 
-                animate={{ rotate: -360 }}
-                transition={{ duration: 12, repeat: Infinity, ease: "linear" }}
-                className="absolute inset-[-60px] border border-[#d4af37]/5 rounded-full"
-              />
-              
               <motion.div
-                initial={{ scale: 0.5, opacity: 0 }}
-                animate={{ scale: [0.5, 1.2, 1], opacity: 1 }}
-                transition={{ duration: 1.5, ease: "easeOut" }}
-                className="relative z-10 w-32 h-32 rounded-full bg-gradient-to-b from-[#d4af37] to-[#b38728] p-[2px] shadow-[0_0_50px_rgba(212,175,55,0.3)]"
+                initial={{ scale: 0.8, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ duration: 1.2 }}
+                className="relative z-10"
               >
-                <div className="w-full h-full rounded-full bg-[#020202] flex items-center justify-center overflow-hidden">
-                   <Star className="w-12 h-12 text-[#d4af37] fill-[#d4af37] animate-pulse" />
+                <div className="w-32 h-32 rounded-full border border-[#d4af37]/20 flex items-center justify-center relative overflow-hidden">
+                   <div className="absolute inset-0 bg-gradient-to-b from-[#d4af37]/10 to-transparent" />
+                   <Crown className="w-12 h-12 text-[#d4af37] fill-[#d4af37]/20 animate-pulse" />
+                   
+                   {/* Scanning Light */}
                    <motion.div 
-                    className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent"
-                    animate={{ x: ['-100%', '200%'] }}
-                    transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+                    className="absolute top-0 left-0 w-full h-[1px] bg-[#d4af37]"
+                    animate={{ top: ['0%', '100%'] }}
+                    transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
                    />
                 </div>
               </motion.div>
+              
+              {/* Expanding Rings */}
+              <motion.div 
+                animate={{ scale: [1, 2], opacity: [0.5, 0] }}
+                transition={{ duration: 2, repeat: Infinity, ease: "easeOut" }}
+                className="absolute inset-0 border border-[#d4af37]/30 rounded-full"
+              />
             </div>
 
             <motion.div
               initial={{ y: 20, opacity: 0 }}
               animate={{ y: 0, opacity: 1 }}
-              transition={{ delay: 0.8, duration: 1 }}
+              transition={{ delay: 1, duration: 1 }}
               className="mt-16 text-center"
             >
-              <h2 className="text-3xl font-black tracking-[0.4em] uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728]">
-                PAVI Top Stars
+              <h2 className="text-3xl font-serif italic tracking-[0.4em] uppercase text-[#d4af37] drop-shadow-[0_0_15px_rgba(212,175,55,0.4)]">
+                Aureate Prestige
               </h2>
-              <div className="h-[1px] w-48 bg-gradient-to-r from-transparent via-[#d4af37]/50 to-transparent mx-auto mt-4" />
+              <p className="mt-4 text-[9px] font-bold tracking-[0.6em] uppercase text-white/20">
+                The Digital Monument of PAVIMUN
+              </p>
             </motion.div>
           </motion.div>
         ) : null}
       </AnimatePresence>
 
-      {/* Main Content */}
-      <div className={`relative z-10 transition-all duration-1500 ${mounted && !loading ? 'opacity-100' : 'opacity-0'}`}>
+      {/* Main Content Hub */}
+      <div className={`relative z-10 transition-all duration-[2000ms] ${mounted && !loading ? 'opacity-100' : 'opacity-0'}`}>
         
-        {/* Fixed Background - No interference with Nav */}
-        <div className="fixed inset-0 pointer-events-none -z-10">
-          <div className="absolute top-[15%] right-[-5%] w-[500px] h-[500px] bg-[#d4af37]/5 rounded-full blur-[120px]" />
-          <div className="absolute bottom-[10%] left-[-5%] w-[400px] h-[400px] bg-[#b38728]/3 rounded-full blur-[100px]" />
-          
-          {/* Subtle star field */}
-          <div className="absolute inset-0 opacity-20" 
-            style={{ 
-              backgroundImage: 'radial-gradient(circle at 1px 1px, #d4af37 1px, transparent 0)', 
-              backgroundSize: '80px 80px' 
-            }} 
-          />
+        {/* Floating Pill Navigation */}
+        <div className="fixed top-8 left-1/2 -translate-x-1/2 z-50">
+          <motion.nav 
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}
+            className="flex items-center gap-8 px-8 py-3 rounded-full bg-white/[0.03] border border-white/10 backdrop-blur-xl shadow-2xl"
+          >
+            <Link to="/" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-[#d4af37] transition-colors">Inicio</Link>
+            <div className="h-3 w-[1px] bg-white/10" />
+            <Link to="/i-edicion" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-[#d4af37] transition-colors">I Edición</Link>
+            <div className="h-3 w-[1px] bg-white/10" />
+            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#d4af37]">Top Stars</span>
+          </motion.nav>
         </div>
 
-        {/* Improved Header Area to avoid Nav interference */}
-        <div className="pt-32 pb-16">
-          <nav className="pavi-container mb-12 flex items-center justify-between">
-            <Link to="/" className="group flex items-center gap-3 text-white/30 hover:text-[#d4af37] transition-all">
-              <div className="w-10 h-10 rounded-full border border-white/5 flex items-center justify-center group-hover:border-[#d4af37]/30 transition-colors bg-white/2">
-                <ArrowLeft className="w-4 h-4" />
-              </div>
-              <span className="text-[10px] font-black uppercase tracking-[0.2em]">Página de Inicio</span>
-            </Link>
-            
-            <div className="flex items-center gap-4">
-               <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]/30" />
-               <Award className="w-5 h-5 text-[#d4af37]" />
-               <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#d4af37]/30" />
+        <header className="pavi-container pt-44 pb-24 text-center">
+          <motion.div
+            initial={{ scale: 0.95, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            transition={{ duration: 1.5, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="flex items-center justify-center gap-4 mb-10">
+               <div className="h-[1px] w-12 bg-gradient-to-r from-transparent to-[#d4af37]/40" />
+               <Star className="w-5 h-5 text-[#d4af37] fill-[#d4af37]" />
+               <div className="h-[1px] w-12 bg-gradient-to-l from-transparent to-[#d4af37]/40" />
             </div>
-          </nav>
+            
+            <h1 className="text-[clamp(3.5rem,10vw,8rem)] font-serif tracking-[-0.04em] mb-8 leading-none">
+              <span className="block text-white">PAVI</span>
+              <span className="block text-transparent bg-clip-text bg-gradient-to-r from-[#d4af37] via-[#fcf6ba] to-[#d4af37] animate-shimmer-gold italic">
+                Top Stars
+              </span>
+            </h1>
+            
+            <p className="max-w-2xl mx-auto text-white/40 text-xs md:text-sm font-medium leading-relaxed tracking-[0.2em] uppercase">
+              The Legacy of Excellence • Since 2024
+            </p>
+          </motion.div>
+        </header>
 
-          <header className="pavi-container text-center">
-            <motion.div
-              initial={{ y: 40, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
-              transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
-            >
-              <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#d4af37]/10 border border-[#d4af37]/20 mb-8">
-                <ShieldCheck className="w-4 h-4 text-[#d4af37]" />
-                <span className="text-[9px] font-black uppercase tracking-[0.3em] text-[#d4af37]">Salón de la Excelencia</span>
-              </div>
-              
-              <h1 className="text-7xl md:text-9xl font-black tracking-tighter mb-8 leading-[0.85]">
-                <span className="text-white">PAVI</span>
-                <br />
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#bf953f] via-[#fcf6ba] to-[#b38728] animate-shimmer-gold">
-                  Top Stars
-                </span>
-              </h1>
-              
-              <p className="max-w-2xl mx-auto text-gray-400 text-sm md:text-lg font-medium leading-relaxed tracking-wide opacity-80">
-                Un tributo a los líderes del mañana. Aquí celebramos la destreza intelectual, 
-                la diplomacia audaz y el carácter excepcional de nuestros delegados estrella.
-              </p>
-            </motion.div>
-          </header>
-        </div>
-
-        {/* The Grid - Premium Gold Placeholders */}
-        <section className="pavi-container pb-40">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+        {/* The Vault - Premium Grid */}
+        <section className="pavi-container pb-48">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
             {[...Array(6)].map((_, i) => (
               <motion.div
                 key={i}
-                initial={{ opacity: 0, y: 30 }}
+                initial={{ opacity: 0, y: 40 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.15 * i, duration: 1 }}
-                className="group relative aspect-[3/4.2] rounded-[2rem] bg-gradient-to-b from-white/[0.04] to-transparent border border-white/[0.05] overflow-hidden flex flex-col items-center justify-center transition-all duration-700 hover:border-[#d4af37]/40 hover:-translate-y-2 shadow-2xl"
+                transition={{ delay: 0.2 * i, duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
+                className="group relative aspect-[3/4.5] rounded-[0.5rem] bg-[#1a1a1a]/40 border border-white/5 backdrop-blur-md overflow-hidden flex flex-col items-center justify-center transition-all duration-700 hover:border-[#d4af37]/30 hover:-translate-y-3"
               >
-                {/* Gold Inner Glow */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.08)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                {/* 22K Bezel Detail */}
+                <div className="absolute inset-[1px] border border-white/[0.02] rounded-[0.45rem] pointer-events-none" />
                 
-                {/* Premium Placeholder Content */}
-                <div className="relative z-10 flex flex-col items-center text-center p-10 w-full h-full">
-                  <div className="mt-auto mb-10 relative">
-                    <div className="w-24 h-24 rounded-full bg-black border border-white/5 flex items-center justify-center group-hover:scale-110 transition-transform duration-700 group-hover:border-[#d4af37]/30 shadow-[0_0_30px_rgba(0,0,0,0.5)]">
-                      <User className="w-10 h-10 text-white/5 group-hover:text-[#d4af37]/40 transition-colors" />
-                    </div>
-                    {/* Floating star on hover */}
-                    <div className="absolute -top-2 -right-2 opacity-0 group-hover:opacity-100 transition-all duration-500 scale-0 group-hover:scale-100">
-                      <Star className="w-6 h-6 text-[#d4af37] fill-[#d4af37] drop-shadow-[0_0_10px_rgba(212,175,55,0.5)]" />
-                    </div>
+                {/* Gold Glow on Hover */}
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(212,175,55,0.05)_0%,transparent_70%)] opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+                
+                {/* Silhouette / Content Placeholder */}
+                <div className="relative z-10 flex flex-col items-center p-12 w-full h-full">
+                  <div className="mt-auto mb-12">
+                     <div className="relative">
+                        <div className="w-28 h-28 rounded-full bg-[#050505] border border-white/10 flex items-center justify-center group-hover:border-[#d4af37]/20 transition-all duration-700 shadow-2xl">
+                          <User className="w-12 h-12 text-white/5 group-hover:text-[#d4af37]/40 transition-colors" />
+                        </div>
+                        {/* Status badge */}
+                        <div className="absolute -bottom-2 right-0 w-8 h-8 rounded-full bg-[#d4af37] flex items-center justify-center shadow-lg transform scale-0 group-hover:scale-100 transition-transform duration-500 delay-100">
+                           <Award className="w-4 h-4 text-[#050505]" />
+                        </div>
+                     </div>
                   </div>
 
-                  <div className="mb-auto space-y-4 w-full">
-                    <div className="h-[2px] w-12 bg-[#d4af37]/20 mx-auto" />
-                    <div className="space-y-2">
-                       <div className="h-4 w-3/4 bg-white/5 rounded-full mx-auto relative overflow-hidden">
+                  <div className="mb-auto space-y-6 w-full">
+                    <div className="space-y-3">
+                       <div className="h-[1px] w-12 bg-[#d4af37]/30 mx-auto" />
+                       <div className="h-4 w-3/4 bg-white/5 rounded-sm mx-auto relative overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#d4af37]/10 to-transparent animate-shimmer" />
                        </div>
-                       <div className="h-3 w-1/2 bg-white/5 rounded-full mx-auto relative overflow-hidden">
+                       <div className="h-2 w-1/2 bg-white/5 rounded-sm mx-auto relative overflow-hidden">
                           <div className="absolute inset-0 bg-gradient-to-r from-transparent via-[#d4af37]/5 to-transparent animate-shimmer" />
                        </div>
                     </div>
-                    <div className="pt-6">
-                       <div className="w-8 h-8 rounded-lg border border-white/5 flex items-center justify-center mx-auto group-hover:border-[#d4af37]/20 transition-colors">
-                          <Sparkles className="w-4 h-4 text-white/5 group-hover:text-[#d4af37]/30" />
-                       </div>
+                    
+                    <div className="flex items-center justify-center gap-4 opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-200">
+                       <Sparkles className="w-3 h-3 text-[#d4af37]/50" />
+                       <span className="text-[9px] font-black uppercase tracking-[0.4em] text-[#d4af37]/60">Ver Perfil</span>
+                       <Sparkles className="w-3 h-3 text-[#d4af37]/50" />
                     </div>
                   </div>
                 </div>
 
-                {/* Metallic Border Overlay */}
-                <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                  <div className="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
-                  <div className="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-[#d4af37] to-transparent" />
-                </div>
+                {/* Corner Brackets */}
+                <div className="absolute top-8 left-8 w-6 h-6 border-t border-l border-white/0 group-hover:border-[#d4af37]/20 transition-all duration-700" />
+                <div className="absolute bottom-8 right-8 w-6 h-6 border-b border-r border-white/0 group-hover:border-[#d4af37]/20 transition-all duration-700" />
               </motion.div>
             ))}
           </div>
@@ -215,18 +211,24 @@ const PaviTopStars = () => {
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
-            className="mt-24 flex flex-col items-center"
+            className="mt-32 text-center"
           >
-             <p className="text-[#d4af37]/30 text-[10px] font-black uppercase tracking-[0.5em] mb-4">Under development</p>
-             <div className="h-[1px] w-20 bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent" />
+             <p className="text-[10px] font-black uppercase tracking-[1em] text-white/10 mb-8">Architectural Design by PaviMUN</p>
+             <div className="h-[1px] w-32 bg-gradient-to-r from-transparent via-[#d4af37]/20 to-transparent mx-auto" />
           </motion.div>
         </section>
       </div>
 
       <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400&display=swap');
+        
+        .font-serif {
+          font-family: 'Noto Serif', serif;
+        }
+        
         .animate-shimmer-gold {
           background-size: 200% auto;
-          animation: shimmer-gold 6s linear infinite;
+          animation: shimmer-gold 8s linear infinite;
         }
         @keyframes shimmer-gold {
           0% { background-position: 0% center; }
@@ -234,14 +236,10 @@ const PaviTopStars = () => {
         }
         .animate-shimmer {
           transform: translateX(-100%);
-          animation: shimmer 2.5s infinite;
+          animation: shimmer 3s infinite;
         }
         @keyframes shimmer {
           100% { transform: translateX(100%); }
-        }
-        @keyframes fadeInUp {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
         }
       `}</style>
     </div>
