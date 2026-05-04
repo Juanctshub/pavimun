@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Star, Sparkles, User, Award, Crown } from 'lucide-react';
-import { Link } from 'react-router-dom';
 
 const PaviTopStars = () => {
   const [loading, setLoading] = useState(true);
