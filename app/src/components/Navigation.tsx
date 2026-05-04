@@ -46,6 +46,7 @@ const Navigation = () => {
   const menuItems = [
     { path: '/', label: 'Inicio' },
     { path: '/i-edicion', label: 'I Edición' },
+    { path: '/pavi-top-stars', label: 'PAVI TOP STARS' },
   ];
 
   const committees: any[] = [];
@@ -57,7 +58,7 @@ const Navigation = () => {
   // When at the top (transparent), text/icons should be WHITE.
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
-  const darkPaths = ['/i-edicion', '/i-edicion/crisis'];
+  const darkPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
   const transparentPaths = [...darkPaths];
   const isTransparentPage = transparentPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isDarkPage = darkPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));

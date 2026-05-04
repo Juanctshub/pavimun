@@ -33,6 +33,7 @@ const MesaPrensa = lazy(() => import('./pages/MesaPrensa'));
 const MesaCIA = lazy(() => import('./pages/MesaCIA'));
 const MesaOIEA = lazy(() => import('./pages/MesaOIEA'));
 const ArchiveFirstEdition = lazy(() => import('./pages/ArchiveFirstEdition'));
+const PaviTopStars = lazy(() => import('./pages/PaviTopStars'));
 
 
 
@@ -49,7 +50,7 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis'];
+  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
   const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
 
   useEffect(() => {
@@ -97,6 +98,7 @@ function AppContent() {
               <Route path="/i-edicion/oiea/mesa" element={<PageTransition><MesaOIEA /></PageTransition>} />
               <Route path="/i-edicion/prensa" element={<PageTransition><Prensa /></PageTransition>} />
               <Route path="/i-edicion/prensa/mesa" element={<PageTransition><MesaPrensa /></PageTransition>} />
+              <Route path="/pavi-top-stars" element={<PageTransition><PaviTopStars /></PageTransition>} />
               <Route path="*" element={<PageTransition><MinistryOfTruth /></PageTransition>} />
             </Routes>
           </AnimatePresence>
