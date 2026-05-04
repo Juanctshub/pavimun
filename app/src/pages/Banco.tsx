@@ -7,12 +7,21 @@ const Banco = () => {
 
   // Hide global navigation during authentication phase
   useEffect(() => {
-    if (authPhase !== 'content') window.dispatchEvent(new Event('hide-nav'));
-    else window.dispatchEvent(new Event('show-nav'));
-    return () => { window.dispatchEvent(new Event('show-nav')); };
+    if (authPhase !== 'content') {
+      window.dispatchEvent(new Event('hide-nav'));
+      window.dispatchEvent(new Event('hide-music-button'));
+    } else {
+      window.dispatchEvent(new Event('show-nav'));
+      window.dispatchEvent(new Event('show-music-button'));
+    }
+    return () => { 
+      window.dispatchEvent(new Event('show-nav'));
+      window.dispatchEvent(new Event('show-music-button'));
+    };
   }, [authPhase]);
   const [pinInput, setPinInput] = useState('');
   const [loadingText, setLoadingText] = useState('INI. PROTOCOLO...');
+  const [bgText, setBgText] = useState('LOADING SYSTEM');
   const [searchTerm, setSearchTerm] = useState('');
   const [flippedNotes, setFlippedNotes] = useState<number[]>([]);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -46,6 +55,13 @@ const Banco = () => {
         setTimeout(() => triggerLoginSequence(), 500);
       }
     }, 150);
+
+    const bgTextInterval = setInterval(() => {
+      const texts = ['ENCRYPT_KEY', 'BÓVEDA_ALPHA', 'SYSTEM_BOOT', 'SECURE_LINK', 'ACCESS_CORE', 'DATA_MINING'];
+      setBgText(texts[Math.floor(Math.random() * texts.length)]);
+    }, 800);
+
+    return () => clearInterval(bgTextInterval);
   };
 
   const triggerLoginSequence = () => {
@@ -207,12 +223,12 @@ const Banco = () => {
       {authPhase === 'loading' && (
         <div className="fixed inset-0 bg-[#b89456] z-50 flex flex-col justify-center items-center text-black font-sans overflow-hidden">
           {/* Background text moving huge */}
-          <div className="absolute whitespace-nowrap text-[30vw] font-black opacity-[0.05] select-none animate-[slide_15s_linear_infinite]">
-            LOADING SYSTEM LOADING SYSTEM LOADING SYSTEM
+          <div className="absolute whitespace-nowrap text-[25vw] font-black opacity-[0.02] select-none animate-[slide_15s_linear_infinite] top-[5%] pointer-events-none">
+            {bgText} {bgText} {bgText}
           </div>
 
-          <Lock className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 mb-8 z-10" strokeWidth={1} />
-          <h2 className="text-4xl sm:text-5xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85]">
+          <Lock className="w-16 h-16 sm:w-24 sm:h-24 md:w-32 md:h-32 mb-8 z-10 text-black/80" strokeWidth={1} />
+          <h2 className="text-4xl sm:text-6xl md:text-8xl font-black uppercase tracking-tighter z-10 text-center px-4 leading-[0.85] text-black">
             DESENCRIPTANDO<br />BÓVEDA
           </h2>
 
@@ -239,7 +255,7 @@ const Banco = () => {
 
             {/* Hugest background text responsive */}
             <div className="absolute top-[45%] left-1/2 -translate-x-1/2 -translate-y-1/2 flex justify-center pointer-events-none z-0 overflow-hidden w-full">
-              <h1 className="text-[18vw] sm:text-[14vw] font-black uppercase tracking-tighter text-transparent select-none scale-y-110 drop-shadow-[0_0_100px_rgba(184,148,86,0.8)]" style={{ WebkitTextStroke: '4px rgba(184,148,86,0.9)' }}>
+              <h1 className="text-[18vw] sm:text-[14vw] font-black uppercase tracking-tighter text-transparent select-none scale-y-110 drop-shadow-[0_0_100px_rgba(184,148,86,0.6)]" style={{ WebkitTextStroke: '1px rgba(184,148,86,0.5)' }}>
                 ECONOMÍA
               </h1>
             </div>

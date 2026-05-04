@@ -8,13 +8,15 @@ const COMMITTEE_ROUTES = [
   '/i-edicion/crisis', '/i-edicion/crisis/mesa', 
   '/i-edicion/cia', '/i-edicion/cia/mesa', 
   '/i-edicion/consejo-seguridad', '/i-edicion/consejo-seguridad/mesa', 
-  '/i-edicion/oiea', '/i-edicion/oiea/mesa', '/i-edicion/prensa', '/i-edicion/prensa/mesa'
+  '/i-edicion/oiea', '/i-edicion/oiea/mesa', '/i-edicion/prensa', '/i-edicion/prensa/mesa',
+  '/banco'
 ];
 
 const GlobalMusicPlayer = () => {
     const location = useLocation();
     const audioRef = useRef<HTMLAudioElement>(null);
     const [isPlaying, setIsPlaying] = useState(false);
+    const [forceHideButton, setForceHideButton] = useState(false);
     const prevWasCommittee = useRef(false);
     const fadeRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const isCommitteePage = COMMITTEE_ROUTES.includes(location.pathname);
@@ -67,8 +69,16 @@ const GlobalMusicPlayer = () => {
         // Delay to let splash finish
         const startTimer = setTimeout(attemptPlay, 4500);
 
+        const handleHideButton = () => setForceHideButton(true);
+        const handleShowButton = () => setForceHideButton(false);
+
+        window.addEventListener('hide-music-button', handleHideButton);
+        window.addEventListener('show-music-button', handleShowButton);
+
         return () => {
             clearTimeout(startTimer);
+            window.removeEventListener('hide-music-button', handleHideButton);
+            window.removeEventListener('show-music-button', handleShowButton);
         };
     }, []);
 
@@ -131,7 +141,7 @@ const GlobalMusicPlayer = () => {
             {/* The actual audio element bound to React DOM */}
             <audio ref={audioRef} src="/audio/musica.mp3" loop preload="auto" />
 
-            {!isCommitteePage && (
+            {!isCommitteePage && !forceHideButton && (
                 <button
                     onClick={toggleMusic}
                     className="fixed bottom-6 right-6 z-[60] group"

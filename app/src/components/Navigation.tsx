@@ -59,7 +59,7 @@ const Navigation = () => {
   // When at the top (transparent), text/icons should be WHITE.
   // When scrolled (white bg), text/icons should be BLUE.
   // When menu is OPEN (white bg), text/icons should be BLUE.
-  const darkPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
+  const darkPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars', '/banco'];
   const transparentPaths = [...darkPaths];
   const isTransparentPage = transparentPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
   const isDarkPage = darkPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
@@ -77,7 +77,9 @@ const Navigation = () => {
   const burgerHoverClass = forceWhite ? 'hover:bg-white/10' : 'hover:bg-black/[0.04]';
 
   const headerBgClass = (scrolled || isOpen || isForceSolidPage)
-    ? (isDarkPage ? 'bg-[#050505]/90 backdrop-blur-md shadow-lg border-b border-white/10' : 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)]')
+    ? (isDarkPage 
+        ? (location.pathname === '/banco' ? 'bg-[#1a1a1a]/80 backdrop-blur-md shadow-lg border-b border-[#b89456]/20' : 'bg-[#050505]/90 backdrop-blur-md shadow-lg border-b border-white/10')
+        : 'bg-white shadow-[0_1px_3px_rgba(0,0,0,0.06)]')
     : 'bg-transparent';
 
   if (isHidden) return null;
