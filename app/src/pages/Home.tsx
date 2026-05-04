@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, ChevronDown, Clock, ArrowRight } from 'lucide-react';
+import { Calendar, ChevronDown, ArrowRight, Award, Users, Gavel, History } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useScrollReveal } from '../hooks/useScrollReveal';
 
@@ -11,70 +11,6 @@ const Home = () => {
   const [activeDay, setActiveDay] = useState(1);
   const [calendarRevealed, setCalendarRevealed] = useState(false);
   const heroRef = useRef<HTMLDivElement>(null);
-
-  // Easter Egg States
-  const [isReversing, setIsReversing] = useState(false);
-  const [fakeYear, setFakeYear] = useState(2025);
-  const [easterEggMsg, setEasterEggMsg] = useState('');
-
-  // Countdown timer to March 20, 2026
-  const getTimeLeft = useCallback(() => {
-    const target = new Date('2026-03-20T08:00:00').getTime();
-    const now = new Date().getTime();
-    const diff = target - now;
-    
-    if (diff <= 0) {
-      return { days: 0, hours: 0, minutes: 0, seconds: 0, hasStarted: true };
-    }
-    
-    return {
-      days: Math.floor(diff / (1000 * 60 * 60 * 24)),
-      hours: Math.floor((diff / (1000 * 60 * 60)) % 24),
-      minutes: Math.floor((diff / (1000 * 60)) % 60),
-      seconds: Math.floor((diff / 1000) % 60),
-      hasStarted: false,
-    };
-  }, []);
-
-  const [timeLeft, setTimeLeft] = useState(getTimeLeft);
-
-  useEffect(() => {
-    // @ts-ignore
-    let timer: NodeJS.Timeout;
-
-    if (isReversing) {
-      // Easter egg crazy countdown
-      timer = setInterval(() => {
-        setTimeLeft({
-          days: Math.floor(Math.random() * 999),
-          hours: Math.floor(Math.random() * 24),
-          minutes: Math.floor(Math.random() * 60),
-          seconds: Math.floor(Math.random() * 60),
-          hasStarted: false,
-        });
-        setFakeYear(prev => {
-          if (prev <= 1986) return 1986;
-          return prev - Math.floor(Math.random() * 5);
-        });
-      }, 50);
-
-      // Stop after 3 seconds
-      setTimeout(() => {
-        setIsReversing(false);
-        setFakeYear(2025);
-        setEasterEggMsg('El tiempo es relativo. La diplomacia es absoluta.');
-
-        // Clear the message after a while
-        setTimeout(() => setEasterEggMsg(''), 4000);
-      }, 3000);
-
-    } else {
-      // Normal countdown
-      timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
-    }
-
-    return () => clearInterval(timer);
-  }, [getTimeLeft, isReversing]);
 
   // Welcome splash sequence
   useEffect(() => {
@@ -273,103 +209,80 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ====== COUNTDOWN SECTION ====== */}
-      <section className="relative py-20 md:py-28 overflow-hidden" style={{ background: 'linear-gradient(180deg, #ffffff 0%, #0d154a 8%, #0d154a 92%, #ffffff 100%)' }}>
-
-        <div className="pavi-container relative z-10">
-          <div className="reveal flex flex-col items-center">
-            <div className="flex items-center gap-2 mb-3">
-              <Clock className="w-4 h-4 text-[#4fc3f7]" />
-              <span className="text-[#4fc3f7] text-xs font-bold tracking-[0.3em] uppercase">Cuenta Regresiva</span>
-            </div>
-            {!timeLeft.hasStarted && (
-              <>
-                <h2 className="text-3xl md:text-4xl font-extrabold text-white text-center mb-4 tracking-tight">
-                  {isReversing ? `Año ${fakeYear}` : 'Faltan'}
-                </h2>
-                <p className="text-white/40 text-sm mb-12 tracking-wide">
-                  {easterEggMsg || 'para la I Edición de PAVIMUN'}
-                </p>
-              </>
-            )}
-
-            <div className="relative w-full flex justify-center min-h-[160px]">
-              <AnimatePresence mode="popLayout">
-                {timeLeft.hasStarted ? (
-                  <motion.div
-                    key="started-msg"
-                    initial={{ opacity: 0, scale: 0.8, filter: 'blur(10px)' }}
-                    animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-                    transition={{ duration: 0.8, ease: "easeOut", bounce: 0.5, type: "spring" }}
-                    className="absolute inset-0 flex flex-col items-center justify-center"
-                  >
-                    <h2 className="text-5xl md:text-7xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#4fc3f7] to-[#ffffff] uppercase tracking-tighter text-center drop-shadow-[0_0_30px_rgba(79,195,247,0.6)]">
-                      Ya empezó el modelo
-                    </h2>
-                  </motion.div>
-                ) : (
-                  <motion.div
-                    key="countdown-boxes"
-                    initial={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 150, zIndex: -1, rotateX: -20 }}
-                    transition={{ duration: 0.7, ease: [0.36, 0, 0.66, -0.56] }}
-                    className={`flex items-center gap-3 md:gap-6 transition-all duration-1000 ${isReversing ? 'blur-[1px] scale-95 opacity-50' : ''}`}
-                    onDoubleClick={() => {
-                      if (!isReversing) setIsReversing(true);
-                    }}
-                  >
-                  {[
-                    { value: timeLeft.days, label: 'Días' },
-                    { value: timeLeft.hours, label: 'Horas' },
-                    { value: timeLeft.minutes, label: 'Minutos' },
-                    { value: timeLeft.seconds, label: 'Segundos' },
-                  ].map((unit) => (
-                    <div key={unit.label} className="flex flex-col items-center gap-3">
-                      <div
-                        className="relative w-16 h-20 md:w-24 md:h-28 rounded-xl overflow-hidden shadow-2xl"
-                        style={{
-                          background: 'linear-gradient(145deg, rgba(40,53,147,0.95) 0%, rgba(26,35,126,0.98) 100%)',
-                          boxShadow: '0 10px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.2)',
-                        }}
-                      >
-                        {/* Top half highlight */}
-                        <div className="absolute top-0 left-0 right-0 h-1/2 bg-white/[0.08] rounded-t-xl" />
-                        {/* Center line */}
-                        <div className="absolute top-1/2 left-0 right-0 h-[1px] bg-black/40 z-10" />
-                        {/* Number */}
-                        <div className="relative z-5 w-full h-full flex items-center justify-center">
-                          <span
-                            key={unit.value}
-                            className="text-3xl md:text-5xl font-extrabold text-white tabular-nums tracking-tight"
-                            style={{ animation: 'flip-in 0.3s ease-out' }}
-                          >
-                            {String(unit.value).padStart(2, '0')}
-                          </span>
-                        </div>
-                      </div>
-                      <span className="text-white/60 text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase">{unit.label}</span>
-                    </div>
-                  ))}
-                </motion.div>
-              )}
-              </AnimatePresence>
-            </div>
-
-            {/* Date reminder */}
-            <div className="mt-12 px-6 py-3 bg-white/10 border border-white/20 rounded-full backdrop-blur-sm">
-              <p className="text-white/90 text-sm font-bold tracking-wide">
-                📅 20 de Marzo, 2026 — <span className="text-[#81c784] font-black">¡Prepárate!</span>
-              </p>
-            </div>
-          </div>
+      {/* ====== LEGACY / IMPACT SECTION ====== */}
+      <section className="relative py-24 md:py-32 overflow-hidden bg-[#0d154a]">
+        {/* Background Decorations */}
+        <div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+          <div className="absolute top-[-10%] right-[-5%] w-[400px] h-[400px] bg-indigo-500/10 rounded-full blur-[100px]" />
+          <div className="absolute bottom-[-10%] left-[-5%] w-[400px] h-[400px] bg-green-500/5 rounded-full blur-[100px]" />
         </div>
 
-        <style>{`
-          @keyframes flip-in {
-            0% { transform: scaleY(0.7) translateY(-4px); opacity: 0.5; }
-            100% { transform: scaleY(1) translateY(0); opacity: 1; }
-          }
-        `}</style>
+        <div className="pavi-container relative z-10">
+          <div className="flex flex-col items-center">
+            <motion.div 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="flex items-center gap-2 mb-4"
+            >
+              <Award className="w-5 h-5 text-indigo-400" />
+              <span className="text-indigo-400 text-xs font-bold tracking-[0.4em] uppercase">Impacto Histórico</span>
+            </motion.div>
+
+            <motion.h2 
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.1 }}
+              className="text-4xl md:text-6xl font-black text-white text-center mb-16 tracking-tight"
+            >
+              Un Legado de <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 to-purple-400">Excelencia</span>
+            </motion.h2>
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full max-w-5xl">
+              {[
+                { label: 'Delegados Participantes', value: '150+', icon: <Users className="w-8 h-8" /> },
+                { label: 'Comités Académicos', value: '7', icon: <Gavel className="w-8 h-8" /> },
+                { label: 'Países Representados', value: '45+', icon: <History className="w-8 h-8" /> },
+              ].map((stat, i) => (
+                <motion.div
+                  key={i}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: 0.2 + i * 0.1 }}
+                  className="group p-8 rounded-[2.5rem] bg-white/5 border border-white/10 backdrop-blur-md text-center hover:bg-white/10 hover:border-indigo-500/30 transition-all duration-500"
+                >
+                  <div className="w-16 h-16 rounded-2xl bg-indigo-500/20 flex items-center justify-center text-indigo-400 mx-auto mb-6 group-hover:scale-110 transition-transform">
+                    {stat.icon}
+                  </div>
+                  <h3 className="text-5xl font-black text-white mb-2 tracking-tighter">{stat.value}</h3>
+                  <p className="text-indigo-200/50 text-xs font-bold uppercase tracking-widest">{stat.label}</p>
+                </motion.div>
+              ))}
+            </div>
+
+            <motion.div 
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: 0.6 }}
+              className="mt-20 text-center"
+            >
+              <p className="text-gray-400 max-w-2xl mx-auto text-lg font-medium leading-relaxed mb-10">
+                La I Edición de PAVIMUN no solo fue un evento, fue el inicio de un estándar académico 
+                superior en nuestra institución. Los frutos del debate y la diplomacia perduran hoy.
+              </p>
+              <Link
+                to="/i-edicion"
+                className="inline-flex items-center gap-3 px-8 py-4 bg-indigo-600 hover:bg-indigo-500 text-white rounded-full font-black text-sm uppercase tracking-widest transition-all shadow-xl shadow-indigo-900/40"
+              >
+                Explorar el Archivo Digital
+                <ArrowRight className="w-5 h-5" />
+              </Link>
+            </motion.div>
+          </div>
+        </div>
       </section>
 
       {/* ====== PHOTO GALLERY STRIP ====== */}
