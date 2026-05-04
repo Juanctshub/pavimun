@@ -50,8 +50,8 @@ function AppContent() {
   const [hideNavSpacing, setHideNavSpacing] = useState(false);
 
   // Pages where the nav is transparent/overlaid — no top padding needed
-  const transparentNavPaths = ['/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
-  const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+  const transparentNavPaths = ['/', '/i-edicion', '/i-edicion/crisis', '/pavi-top-stars'];
+  const isOverlaidNav = transparentNavPaths.some(p => location.pathname === p || (p !== '/' && location.pathname.startsWith(p + '/')));
 
   useEffect(() => {
     const handleHide = () => setHideNavSpacing(true);
@@ -66,12 +66,15 @@ function AppContent() {
     };
   }, []);
 
+  // Determine background color based on path to prevent white/black flash during transitions
+  const isDarkPath = ['/pavi-top-stars', '/i-edicion'].some(p => location.pathname === p || location.pathname.startsWith(p + '/'));
+
   return (
     <>
       <ScrollToTop />
       <Navigation />
       <GlobalMusicPlayer />
-      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"} ${isOverlaidNav ? "bg-[#050505]" : ""}`}>
+      <main className={`transition-all duration-500 ease-in-out ${hideNavSpacing || isOverlaidNav ? "" : "pt-[72px]"} ${isDarkPath ? "bg-[#020202]" : "bg-white"}`}>
         <Suspense fallback={null}>
           <AnimatePresence mode="wait">
             <Routes location={location} key={location.pathname}>
@@ -118,7 +121,7 @@ function App() {
   return (
     <Router>
       {showSplash && <SplashScreen onComplete={handleSplashComplete} />}
-      <div className={`w-full overflow-x-hidden min-h-screen bg-[#050505] ${showSplash ? 'opacity-0' : 'opacity-100'} transition-opacity duration-500`}>
+      <div className={`w-full overflow-x-hidden min-h-screen transition-colors duration-700 ${showSplash ? 'opacity-0' : 'opacity-100'}`}>
         <AppContent />
       </div>
     </Router>

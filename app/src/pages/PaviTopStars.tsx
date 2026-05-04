@@ -123,22 +123,6 @@ const PaviTopStars = () => {
       {/* Main Content Hub */}
       <div className={`relative z-10 transition-all duration-[2000ms] ${mounted && !loading ? 'opacity-100' : 'opacity-0 scale-95 blur-sm'}`}>
         
-        {/* Floating Pill Navigation */}
-        <div className="fixed top-8 left-1/2 -translate-x-1/2 z-[100]">
-          <motion.nav 
-            initial={{ y: -20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5, duration: 1 }}
-            className="flex items-center gap-8 px-8 py-3 rounded-full bg-black/40 border border-[#d4af37]/20 backdrop-blur-2xl shadow-2xl"
-          >
-            <Link to="/" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-[#d4af37] transition-colors">Inicio</Link>
-            <div className="h-3 w-[1px] bg-white/10" />
-            <Link to="/i-edicion" className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 hover:text-[#d4af37] transition-colors">I Edición</Link>
-            <div className="h-3 w-[1px] bg-white/10" />
-            <span className="text-[10px] font-black uppercase tracking-[0.2em] text-[#d4af37] drop-shadow-[0_0_8px_#d4af37]">Top Stars</span>
-          </motion.nav>
-        </div>
-
         <header className="pavi-container pt-48 pb-24 text-center">
           <motion.div
             initial={{ y: 40, opacity: 0 }}
